@@ -41,8 +41,8 @@ export function AuthShowcase() {
   const [resetMethod, setResetMethod] = useState<"email" | "phone">("email")
 
   // Two Factor Props
-  const [tfView, setTfView] = useState<"totp" | "otp">("totp")
-  const [tfMethods, setTfMethods] = useState<("totp" | "otp")[]>(["totp", "otp"])
+  const [tfView, setTfView] = useState<"totp" | "otp" | "backup_code">("totp")
+  const [tfMethods, setTfMethods] = useState<("totp" | "otp" | "backup_code")[]>(["totp", "otp", "backup_code"])
 
   const mockApiError = showError
     ? { message: "Invalid credentials or token expired.", code: "AUTH_001" }
@@ -56,7 +56,7 @@ export function AuthShowcase() {
     )
   }
 
-  const handleTfMethodToggle = (method: "totp" | "otp") => {
+  const handleTfMethodToggle = (method: "totp" | "otp" | "backup_code") => {
     setTfMethods((prev) =>
       prev.includes(method)
         ? prev.filter((m) => m !== method)
@@ -327,6 +327,14 @@ export function AuthShowcase() {
                       />
                       <Label htmlFor="tf-otp">Enable OTP (Email)</Label>
                     </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="tf-backup"
+                        checked={tfMethods.includes("backup_code")}
+                        onCheckedChange={() => handleTfMethodToggle("backup_code")}
+                      />
+                      <Label htmlFor="tf-backup">Enable Backup Code</Label>
+                    </div>
                     <div className="space-y-2 pt-2">
                       <Label>Default View</Label>
                       <div className="flex gap-2">
@@ -343,6 +351,13 @@ export function AuthShowcase() {
                           onClick={() => setTfView("otp")}
                         >
                           OTP
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant={tfView === "backup_code" ? "default" : "outline"}
+                          onClick={() => setTfView("backup_code")}
+                        >
+                          Backup Code
                         </Button>
                       </div>
                     </div>
@@ -485,6 +500,7 @@ export function AuthShowcase() {
                       twofactorMethods={tfMethods}
                       totpLength={6}
                       otpLength={8}
+                      trustDeviceDescription="Don't ask for a code on this device again."
                       onSubmit={async (method, values) => console.log(method, values)}
                       onResendOtp={async () => console.log("Resend OTP")}
                     />

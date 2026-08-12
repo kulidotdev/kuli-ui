@@ -2,9 +2,10 @@ import * as React from "react"
 import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Loader2, Smartphone, Mail } from "lucide-react"
+import { Loader2, Smartphone, Mail, Key } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
   Card,
   CardContent,
@@ -18,6 +19,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import { Checkbox } from "@/components/ui/checkbox"
 import { AlertError } from "@/components/ui/alert-error"
 import {
   Form,
@@ -75,6 +77,11 @@ export interface TwoFactorFormProps {
    * @default 60
    */
   resendCooldown?: number
+  /**
+   * Description for the "Trust this device" checkbox.
+   * If provided, the checkbox will be shown.
+   */
+  trustDeviceDescription?: string
 }
 
 export function TwoFactorForm({
@@ -88,6 +95,7 @@ export function TwoFactorForm({
   totpLength = 6,
   otpLength = 6,
   resendCooldown = 60,
+  trustDeviceDescription,
 }: TwoFactorFormProps) {
   // Ensure the current view is supported by twofactorMethods.
   // If not, default to the first available method.
@@ -128,48 +136,56 @@ export function TwoFactorForm({
 
   const currentLength = activeView === "totp" ? totpLength : otpLength
 
-  const dynamicSchema = React.useMemo(
-    () =>
-      z.object({
-        code: z.string().length(currentLength, {
-          message: `Code must be exactly ${currentLength} digits`,
-        }),
-      }),
-    [currentLength]
-  )
+  const dynamicSchema = React.useMemo(() => {
+    let codeSchema = z.string()
+
+    if (activeView === "backup_code") {
+      codeSchema = codeSchema.min(1, { message: "Backup code is required" })
+    } else {
+      codeSchema = codeSchema.length(currentLength, {
+        message: `Code must be exactly ${currentLength} digits`,
+      })
+    }
+
+    return z.object({
+      code: codeSchema,
+      trustDevice: z.boolean().optional(),
+      method: z.enum(["totp", "otp", "backup_code"]),
+    })
+  }, [currentLength, activeView])
 
   const form = useForm<TwoFactorValues>({
     resolver: zodResolver(dynamicSchema),
-    defaultValues: { code: "" },
+    defaultValues: { code: "", trustDevice: false, method: activeView },
     mode: "onChange",
   })
 
   // Reset form when view changes
   React.useEffect(() => {
-    form.reset({ code: "" })
+    form.reset({ code: "", trustDevice: false, method: activeView })
   }, [activeView, form])
 
   const handleSubmit = async (values: TwoFactorValues) => {
     await onSubmit?.(activeView, values)
   }
 
-  const handleToggleView = () => {
-    setActiveView((prev) => (prev === "totp" ? "otp" : "totp"))
-  }
-
-  const showToggleButton =
-    twofactorMethods.includes("totp") && twofactorMethods.includes("otp")
+  const alternativeMethods = twofactorMethods.filter((m) => m !== activeView)
 
   return (
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
         <CardTitle>
-          {activeView === "totp" ? "Authenticator App" : "Email Verification"}
+          {activeView === "totp" && "Authenticator App"}
+          {activeView === "otp" && "Email Verification"}
+          {activeView === "backup_code" && "Backup Code"}
         </CardTitle>
         <CardDescription>
-          {activeView === "totp"
-            ? `Enter the ${currentLength}-digit code from your authenticator app.`
-            : `Enter the ${currentLength}-digit code sent to your email address.`}
+          {activeView === "totp" &&
+            `Enter the ${currentLength}-digit code from your authenticator app.`}
+          {activeView === "otp" &&
+            `Enter the ${currentLength}-digit code sent to your email address.`}
+          {activeView === "backup_code" &&
+            "Enter one of your emergency backup codes."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -190,31 +206,67 @@ export function TwoFactorForm({
               control={form.control}
               name="code"
               render={({ field }) => (
-                <FormItem className="flex flex-col items-center">
+                <FormItem className="flex flex-col items-start">
                   <FormLabel className="sr-only">Authentication Code</FormLabel>
                   <FormControl>
-                    <InputOTP
-                      maxLength={currentLength}
-                      disabled={isLoading}
-                      {...field}
-                    >
-                      <InputOTPGroup>
-                        {Array.from({ length: currentLength }).map((_, i) => (
-                          <InputOTPSlot key={i} index={i} />
-                        ))}
-                      </InputOTPGroup>
-                    </InputOTP>
+                    {activeView === "backup_code" ? (
+                      <Input
+                        disabled={isLoading}
+                        placeholder="e.g. 1a2b3c4d5e"
+                        autoComplete="off"
+                        {...field}
+                      />
+                    ) : (
+                      <InputOTP
+                        maxLength={currentLength}
+                        disabled={isLoading}
+                        {...field}
+                      >
+                        <InputOTPGroup>
+                          {Array.from({ length: currentLength }).map((_, i) => (
+                            <InputOTPSlot key={i} index={i} />
+                          ))}
+                        </InputOTPGroup>
+                      </InputOTP>
+                    )}
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
+            {trustDeviceDescription && (
+              <FormField
+                control={form.control}
+                name="trustDevice"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-y-0 space-x-3">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Trust this device</FormLabel>
+                      <p className="text-[0.8rem] text-muted-foreground">
+                        {trustDeviceDescription}
+                      </p>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            )}
+
             <Button
               type="submit"
               className="w-full"
               disabled={
-                isLoading || (form.watch("code")?.length || 0) !== currentLength
+                isLoading ||
+                (activeView === "backup_code"
+                  ? (form.watch("code")?.length || 0) === 0
+                  : (form.watch("code")?.length || 0) !== currentLength)
               }
             >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
@@ -224,7 +276,7 @@ export function TwoFactorForm({
         </Form>
       </CardContent>
 
-      {(activeView === "otp" || showToggleButton) && (
+      {(activeView === "otp" || alternativeMethods.length > 0) && (
         <CardFooter className="flex flex-col gap-3">
           {activeView === "otp" && (
             <div className="mt-2 text-center text-sm text-muted-foreground">
@@ -246,27 +298,35 @@ export function TwoFactorForm({
             </div>
           )}
 
-          {showToggleButton && (
+          {alternativeMethods.map((method) => (
             <Button
+              key={method}
               variant="ghost"
               className="w-full text-muted-foreground"
               type="button"
-              onClick={handleToggleView}
+              onClick={() => setActiveView(method)}
               disabled={isLoading}
             >
-              {activeView === "totp" ? (
-                <>
-                  <Mail className="mr-2 h-4 w-4" />
-                  Use Email OTP
-                </>
-              ) : (
+              {method === "totp" && (
                 <>
                   <Smartphone className="mr-2 h-4 w-4" />
                   Use Authenticator App
                 </>
               )}
+              {method === "otp" && (
+                <>
+                  <Mail className="mr-2 h-4 w-4" />
+                  Use Email OTP
+                </>
+              )}
+              {method === "backup_code" && (
+                <>
+                  <Key className="mr-2 h-4 w-4" />
+                  Use Backup Code
+                </>
+              )}
             </Button>
-          )}
+          ))}
         </CardFooter>
       )}
     </Card>

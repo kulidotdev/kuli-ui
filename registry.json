@@ -296,6 +296,35 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "auth-two-factor",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "input-otp",
+        "alert-error",
+        "form",
+        "checkbox"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/two-factor.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/two-factor-types.ts",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }
