@@ -1,0 +1,330 @@
+{
+  "name": "kuli-ui",
+  "homepage": "https://github.com/kulidotdev/kuli-ui",
+  "items": [
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-card",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/alert-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-error",
+      "type": "registry:ui",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "alert"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/alert-error.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "src/components/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui",
+        "react-hook-form"
+      ],
+      "registryDependencies": [
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/form.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "phone-input",
+      "type": "registry:ui",
+      "dependencies": [
+        "react-phone-number-input"
+      ],
+      "registryDependencies": [
+        "input"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/phone-input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "auth-signin",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "checkbox",
+        "separator",
+        "alert-error",
+        "phone-input",
+        "card",
+        "form",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/signin.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/signin-types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/passwordless-buttons.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "auth-signup",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "phone-input",
+        "separator",
+        "alert-error",
+        "card",
+        "form",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/signup.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/signup-types.ts",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "auth-forgot-password",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "tabs",
+        "input",
+        "phone-input",
+        "alert-error",
+        "form",
+        "alert-card",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/forgot-password.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/forgot-password-types.ts",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "auth-reset-password",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "alert-error",
+        "form",
+        "alert-card",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/reset-password.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "auth-two-factor",
+      "type": "registry:component",
+      "dependencies": [
+        "react-hook-form",
+        "@hookform/resolvers",
+        "zod",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "card",
+        "input",
+        "input-otp",
+        "alert-error",
+        "form",
+        "checkbox"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/two-factor.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/components/auth/two-factor-types.ts",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
