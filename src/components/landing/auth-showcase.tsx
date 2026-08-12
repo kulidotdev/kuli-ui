@@ -4,6 +4,7 @@ import { SigninForm } from "@/components/auth/signin"
 import { SignupForm } from "@/components/auth/signup"
 import { ForgotPasswordForm } from "@/components/auth/forgot-password"
 import { ResetPasswordForm } from "@/components/auth/reset-password"
+import { TwoFactorForm } from "@/components/auth/two-factor"
 import {
   SocialProviderButton,
   MagicLinkButton,
@@ -15,7 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { SiGithub, SiGoogle } from "@icons-pack/react-simple-icons"
 
-type FormType = "signin" | "signup" | "forgot" | "reset"
+type FormType = "signin" | "signup" | "forgot" | "reset" | "twofactor"
 
 export function AuthShowcase() {
   const [activeForm, setActiveForm] = useState<FormType>("signin")
@@ -39,12 +40,24 @@ export function AuthShowcase() {
   // Reset Password Props
   const [resetMethod, setResetMethod] = useState<"email" | "phone">("email")
 
+  // Two Factor Props
+  const [tfView, setTfView] = useState<"totp" | "otp">("totp")
+  const [tfMethods, setTfMethods] = useState<("totp" | "otp")[]>(["totp", "otp"])
+
   const mockApiError = showError
     ? { message: "Invalid credentials or token expired.", code: "AUTH_001" }
     : null
 
   const handleSigninMethodToggle = (method: "email" | "username" | "phone") => {
     setSigninMethods((prev) =>
+      prev.includes(method)
+        ? prev.filter((m) => m !== method)
+        : [...prev, method]
+    )
+  }
+
+  const handleTfMethodToggle = (method: "totp" | "otp") => {
+    setTfMethods((prev) =>
       prev.includes(method)
         ? prev.filter((m) => m !== method)
         : [...prev, method]
@@ -78,14 +91,14 @@ export function AuthShowcase() {
           </p>
         </motion.div>
 
-        <div className="relative grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
+        <div className="relative flex flex-col items-start gap-12 lg:flex-row">
           {/* Controls Panel */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="sticky top-28 lg:col-span-4"
+            className="w-full lg:w-1/3"
           >
             <Card className="relative overflow-hidden rounded-2xl border-primary/20 bg-background/40 p-6 shadow-[0_0_30px_rgba(var(--primary),0.1)] backdrop-blur-xl">
               <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
@@ -122,6 +135,13 @@ export function AuthShowcase() {
                   onClick={() => setActiveForm("reset")}
                 >
                   Reset Password Component
+                </Button>
+                <Button
+                  variant={activeForm === "twofactor" ? "default" : "outline"}
+                  className={getButtonClass("twofactor")}
+                  onClick={() => setActiveForm("twofactor")}
+                >
+                  Two-Factor Component
                 </Button>
               </div>
 
@@ -284,11 +304,56 @@ export function AuthShowcase() {
                   </div>
                 </>
               )}
+
+              {activeForm === "twofactor" && (
+                <>
+                  <h3 className="mb-4 text-lg font-semibold">
+                    Two-Factor Options
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="tf-totp"
+                        checked={tfMethods.includes("totp")}
+                        onCheckedChange={() => handleTfMethodToggle("totp")}
+                      />
+                      <Label htmlFor="tf-totp">Enable TOTP (App)</Label>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="tf-otp"
+                        checked={tfMethods.includes("otp")}
+                        onCheckedChange={() => handleTfMethodToggle("otp")}
+                      />
+                      <Label htmlFor="tf-otp">Enable OTP (Email)</Label>
+                    </div>
+                    <div className="space-y-2 pt-2">
+                      <Label>Default View</Label>
+                      <div className="flex gap-2">
+                        <Button
+                          size="sm"
+                          variant={tfView === "totp" ? "default" : "outline"}
+                          onClick={() => setTfView("totp")}
+                        >
+                          TOTP
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant={tfView === "otp" ? "default" : "outline"}
+                          onClick={() => setTfView("otp")}
+                        >
+                          OTP
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </Card>
           </motion.div>
 
           {/* Form Display */}
-          <div className="relative flex min-h-[600px] items-center justify-center overflow-hidden rounded-xl border border-primary/20 bg-background/50 p-4 shadow-[0_0_40px_rgba(var(--primary),0.1)] backdrop-blur-md md:p-8 lg:col-span-8">
+          <div className="relative w-full flex items-center justify-center lg:w-2/3 overflow-hidden rounded-xl border border-primary/20 bg-background/50 p-4 shadow-[0_0_40px_rgba(var(--primary),0.1)] backdrop-blur-md md:p-8">
             {/* Ambient Background Glow inside the form area */}
             <div className="absolute top-1/2 left-1/2 -z-10 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-primary/10 blur-[80px]"></div>
 
@@ -314,11 +379,12 @@ export function AuthShowcase() {
                         <div className="flex flex-col gap-2">
                           <MagicLinkButton
                             label="Continue with Magic Link"
-                            disabled={isLoading || method !== "email"}
+                            isLoading={isLoading}
+                            disabled={method !== "email"}
                           />
                           <PasskeyButton
                             label="Continue with Passkey"
-                            disabled={isLoading}
+                            isLoading={isLoading}
                           />
                         </div>
                       ) : undefined}
@@ -327,12 +393,12 @@ export function AuthShowcase() {
                           <SocialProviderButton
                             icon={<SiGoogle className="h-4 w-4" />}
                             label="Google"
-                            disabled={isLoading}
+                            isLoading={isLoading}
                           />
                           <SocialProviderButton
                             icon={<SiGithub className="h-4 w-4" />}
                             label="GitHub"
-                            disabled={isLoading}
+                            isLoading={isLoading}
                           />
                         </div>
                       }
@@ -358,12 +424,12 @@ export function AuthShowcase() {
                           <SocialProviderButton
                             icon={<SiGoogle className="h-4 w-4" />}
                             label="Google"
-                            disabled={isLoading}
+                            isLoading={isLoading}
                           />
                           <SocialProviderButton
                             icon={<SiGithub className="h-4 w-4" />}
                             label="GitHub"
-                            disabled={isLoading}
+                            isLoading={isLoading}
                           />
                         </div>
                       }
@@ -401,6 +467,26 @@ export function AuthShowcase() {
                       method={resetMethod}
                       onSubmitEmail={async (v) => console.log(v)}
                       onSubmitPhone={async (v) => console.log(v)}
+                    />
+                  </motion.div>
+                )}
+                {activeForm === "twofactor" && (
+                  <motion.div
+                    key="twofactor"
+                    initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <TwoFactorForm
+                      isLoading={isLoading}
+                      apiError={mockApiError}
+                      currentView={tfView}
+                      twofactorMethods={tfMethods}
+                      totpLength={6}
+                      otpLength={8}
+                      onSubmit={async (method, values) => console.log(method, values)}
+                      onResendOtp={async () => console.log("Resend OTP")}
                     />
                   </motion.div>
                 )}

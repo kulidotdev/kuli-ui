@@ -1,6 +1,7 @@
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 import { Button } from "../ui/button"
 import {
   Card,
@@ -89,6 +90,7 @@ export function ForgotPasswordForm({
         />
         {firstSlot}
         <Button className="w-full" type="submit" disabled={isLoading}>
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? "Sending..." : "Send Reset Link"}
         </Button>
       </form>
@@ -121,6 +123,7 @@ export function ForgotPasswordForm({
         />
         {firstSlot}
         <Button className="w-full" type="submit" disabled={isLoading}>
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? "Sending..." : "Send OTP"}
         </Button>
       </form>

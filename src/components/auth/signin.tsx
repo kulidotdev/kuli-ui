@@ -2,6 +2,7 @@ import * as React from "react"
 import { z } from "zod"
 import { useForm, type Control } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -354,6 +355,7 @@ export function SigninForm({
               {firstSlot && <div className="w-full">{typeof firstSlot === "function" ? firstSlot(method) : firstSlot}</div>}
 
               <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>

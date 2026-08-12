@@ -1,6 +1,7 @@
 import { Header } from "./components/landing/header"
 import { HeroSection } from "./components/landing/hero-section"
 import { AuthShowcase } from "./components/landing/auth-showcase"
+import { DashboardShowcase } from "./components/landing/dashboard-showcase"
 import { Footer } from "./components/landing/footer"
 
 export function App() {
@@ -10,6 +11,7 @@ export function App() {
       <main className="flex-1">
         <HeroSection />
         <AuthShowcase />
+        <DashboardShowcase />
       </main>
       <Footer />
     </div>
