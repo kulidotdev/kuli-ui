@@ -5,6 +5,7 @@ import { SignupForm } from "@/components/auth/signup"
 import { ForgotPasswordForm } from "@/components/auth/forgot-password"
 import { ResetPasswordForm } from "@/components/auth/reset-password"
 import { TwoFactorForm } from "@/components/auth/two-factor"
+import { TwoFactorRegistration } from "@/components/auth/two-factor-registration"
 import {
   SocialProviderButton,
   MagicLinkButton,
@@ -16,7 +17,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
 import { SiGithub, SiGoogle } from "@icons-pack/react-simple-icons"
 
-type FormType = "signin" | "signup" | "forgot" | "reset" | "twofactor"
+type FormType =
+  "signin" | "signup" | "forgot" | "reset" | "twofactor" | "tfregistration"
 
 export function AuthShowcase() {
   const [activeForm, setActiveForm] = useState<FormType>("signin")
@@ -42,7 +44,12 @@ export function AuthShowcase() {
 
   // Two Factor Props
   const [tfView, setTfView] = useState<"totp" | "otp" | "backup_code">("totp")
-  const [tfMethods, setTfMethods] = useState<("totp" | "otp" | "backup_code")[]>(["totp", "otp", "backup_code"])
+  const [tfMethods, setTfMethods] = useState<
+    ("totp" | "otp" | "backup_code")[]
+  >(["totp", "otp", "backup_code"])
+
+  // Two Factor Registration Props
+  const [tfRegInitiallyEnabled, setTfRegInitiallyEnabled] = useState(false)
 
   const mockApiError = showError
     ? { message: "Invalid credentials or token expired.", code: "AUTH_001" }
@@ -142,6 +149,15 @@ export function AuthShowcase() {
                   onClick={() => setActiveForm("twofactor")}
                 >
                   Two-Factor Component
+                </Button>
+                <Button
+                  variant={
+                    activeForm === "tfregistration" ? "default" : "outline"
+                  }
+                  className={getButtonClass("tfregistration")}
+                  onClick={() => setActiveForm("tfregistration")}
+                >
+                  Two-Factor Registration
                 </Button>
               </div>
 
@@ -331,7 +347,9 @@ export function AuthShowcase() {
                       <Checkbox
                         id="tf-backup"
                         checked={tfMethods.includes("backup_code")}
-                        onCheckedChange={() => handleTfMethodToggle("backup_code")}
+                        onCheckedChange={() =>
+                          handleTfMethodToggle("backup_code")
+                        }
                       />
                       <Label htmlFor="tf-backup">Enable Backup Code</Label>
                     </div>
@@ -354,7 +372,9 @@ export function AuthShowcase() {
                         </Button>
                         <Button
                           size="sm"
-                          variant={tfView === "backup_code" ? "default" : "outline"}
+                          variant={
+                            tfView === "backup_code" ? "default" : "outline"
+                          }
                           onClick={() => setTfView("backup_code")}
                         >
                           Backup Code
@@ -364,11 +384,29 @@ export function AuthShowcase() {
                   </div>
                 </>
               )}
+
+              {activeForm === "tfregistration" && (
+                <>
+                  <h3 className="mb-4 text-lg font-semibold">
+                    Two-Factor Registration Options
+                  </h3>
+                  <div className="space-y-4">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="tf-reg-enabled"
+                        checked={tfRegInitiallyEnabled}
+                        onCheckedChange={(c) => setTfRegInitiallyEnabled(!!c)}
+                      />
+                      <Label htmlFor="tf-reg-enabled">Initially Enabled</Label>
+                    </div>
+                  </div>
+                </>
+              )}
             </Card>
           </motion.div>
 
           {/* Form Display */}
-          <div className="relative w-full flex items-center justify-center lg:w-2/3 overflow-hidden rounded-xl border border-primary/20 bg-background/50 p-4 shadow-[0_0_40px_rgba(var(--primary),0.1)] backdrop-blur-md md:p-8">
+          <div className="relative flex w-full items-center justify-center overflow-hidden rounded-xl border border-primary/20 bg-background/50 p-4 shadow-[0_0_40px_rgba(var(--primary),0.1)] backdrop-blur-md md:p-8 lg:w-2/3">
             {/* Ambient Background Glow inside the form area */}
             <div className="absolute top-1/2 left-1/2 -z-10 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-primary/10 blur-[80px]"></div>
 
@@ -390,19 +428,23 @@ export function AuthShowcase() {
                       signupPath={signinShowSignupLink ? "#signup" : undefined}
                       footer={signinShowSignupLink}
                       onSubmit={(v) => console.log(v)}
-                      secondSlot={signinShowPasswordless ? (method) => (
-                        <div className="flex flex-col gap-2">
-                          <MagicLinkButton
-                            label="Continue with Magic Link"
-                            isLoading={isLoading}
-                            disabled={method !== "email"}
-                          />
-                          <PasskeyButton
-                            label="Continue with Passkey"
-                            isLoading={isLoading}
-                          />
-                        </div>
-                      ) : undefined}
+                      secondSlot={
+                        signinShowPasswordless
+                          ? (method) => (
+                              <div className="flex flex-col gap-2">
+                                <MagicLinkButton
+                                  label="Continue with Magic Link"
+                                  isLoading={isLoading}
+                                  disabled={method !== "email"}
+                                />
+                                <PasskeyButton
+                                  label="Continue with Passkey"
+                                  isLoading={isLoading}
+                                />
+                              </div>
+                            )
+                          : undefined
+                      }
                       thirdSlot={
                         <div className="grid grid-cols-2 gap-2">
                           <SocialProviderButton
@@ -501,8 +543,55 @@ export function AuthShowcase() {
                       totpLength={6}
                       otpLength={8}
                       trustDeviceDescription="Don't ask for a code on this device again."
-                      onSubmit={async (method, values) => console.log(method, values)}
+                      onSubmit={async (method, values) =>
+                        console.log(method, values)
+                      }
                       onResendOtp={async () => console.log("Resend OTP")}
+                    />
+                  </motion.div>
+                )}
+                {activeForm === "tfregistration" && (
+                  <motion.div
+                    key="tfregistration"
+                    initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <TwoFactorRegistration
+                      enabled={tfRegInitiallyEnabled}
+                      onEnable={async () => {
+                        return new Promise((resolve) => {
+                          setTimeout(() => {
+                            resolve({
+                              secret: "JBSWY3DPEHPK3PXP",
+                              totpUri:
+                                "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example",
+                              backupCodes: [
+                                "1a2b3c4d",
+                                "5e6f7g8h",
+                                "9i0j1k2l",
+                                "3m4n5o6p",
+                                "7q8r9s0t",
+                              ],
+                            })
+                          }, 1000)
+                        })
+                      }}
+                      onVerifyOtp={async (otp, trustedDevice) => {
+                        console.log({ otp, trustedDevice })
+                        return new Promise((resolve, reject) => {
+                          setTimeout(() => {
+                            if (otp === "123456") resolve()
+                            else reject(new Error("Invalid code. Try 123456."))
+                          }, 1000)
+                        })
+                      }}
+                      onDisable={async () => {
+                        return new Promise((resolve) =>
+                          setTimeout(resolve, 1000)
+                        )
+                      }}
                     />
                   </motion.div>
                 )}
