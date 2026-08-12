@@ -325,6 +325,34 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "auth-two-factor-registration",
+      "type": "registry:component",
+      "dependencies": [
+        "lucide-react",
+        "react-qr-code"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label",
+        "empty",
+        "collapsible",
+        "alert-error",
+        "input-otp",
+        "checkbox"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/two-factor-registration.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-two-factor-registration.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }
