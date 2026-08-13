@@ -351,7 +351,7 @@ export function TwoFactorShowQrView() {
           <div className="flex w-full flex-col space-y-2">
             <div className="space-y-1">
               <Label htmlFor="otp">Authentication Code</Label>
-              <p className="flex items-start text-xs text-muted-foreground">
+              <p className="text-start text-xs text-muted-foreground">
                 Enter the 6-digit code from your authenticator app.
               </p>
             </div>
