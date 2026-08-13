@@ -353,6 +353,29 @@
           "type": "registry:hook"
         }
       ]
+    },
+    {
+      "name": "auth-passkey-manager",
+      "type": "registry:component",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "button",
+        "empty",
+        "item",
+        "dropdown-menu"
+      ],
+      "files": [
+        {
+          "path": "src/components/auth/passkey-manager.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-passkey-manager.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }
