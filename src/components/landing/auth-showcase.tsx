@@ -11,6 +11,8 @@ import {
   MagicLinkButton,
   PasskeyButton,
 } from "@/components/auth/passwordless-buttons"
+import { PasskeyManager } from "@/components/auth/passkey-manager"
+import { type Passkey } from "@/hooks/use-passkey-manager"
 import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -18,7 +20,13 @@ import { Button } from "@/components/ui/button"
 import { SiGithub, SiGoogle } from "@icons-pack/react-simple-icons"
 
 type FormType =
-  "signin" | "signup" | "forgot" | "reset" | "twofactor" | "tfregistration"
+  | "signin"
+  | "signup"
+  | "forgot"
+  | "reset"
+  | "twofactor"
+  | "tfregistration"
+  | "passkey"
 
 export function AuthShowcase() {
   const [activeForm, setActiveForm] = useState<FormType>("signin")
@@ -50,6 +58,17 @@ export function AuthShowcase() {
 
   // Two Factor Registration Props
   const [tfRegInitiallyEnabled, setTfRegInitiallyEnabled] = useState(false)
+
+  // Passkey Props
+  const [mockPasskeys, setMockPasskeys] = useState<Passkey[]>([
+    {
+      id: "1",
+      name: "My MacBook",
+      createdAt: new Date(),
+      lastUsedAt: new Date(),
+      deviceType: "laptop",
+    },
+  ])
 
   const mockApiError = showError
     ? { message: "Invalid credentials or token expired.", code: "AUTH_001" }
@@ -158,6 +177,13 @@ export function AuthShowcase() {
                   onClick={() => setActiveForm("tfregistration")}
                 >
                   Two-Factor Registration
+                </Button>
+                <Button
+                  variant={activeForm === "passkey" ? "default" : "outline"}
+                  className={getButtonClass("passkey")}
+                  onClick={() => setActiveForm("passkey")}
+                >
+                  Passkey Manager
                 </Button>
               </div>
 
@@ -587,7 +613,8 @@ export function AuthShowcase() {
                           return new Promise((resolve, reject) => {
                             setTimeout(() => {
                               if (otp === "123456") resolve()
-                              else reject(new Error("Invalid code. Try 123456."))
+                              else
+                                reject(new Error("Invalid code. Try 123456."))
                             }, 1000)
                           })
                         }}
@@ -597,6 +624,94 @@ export function AuthShowcase() {
                           )
                         }}
                       />
+                    </Card>
+                  </motion.div>
+                )}
+                {activeForm === "passkey" && (
+                  <motion.div
+                    key="passkey"
+                    initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                    transition={{ duration: 0.3 }}
+                    className="w-full"
+                  >
+                    <Card className="p-6">
+                      <PasskeyManager
+                        passkeys={mockPasskeys}
+                        isLoading={isLoading}
+                        onAddPasskey={() => {
+                          return new Promise((resolve) => {
+                            setTimeout(() => {
+                              setMockPasskeys((prev) => [
+                                ...prev,
+                                {
+                                  id: Math.random().toString(),
+                                  name: "New Device",
+                                  createdAt: new Date(),
+                                  deviceType: "mobile",
+                                },
+                              ])
+                              resolve(undefined)
+                            }, 1000)
+                          })
+                        }}
+                        onRemovePasskey={(id) => {
+                          return new Promise((resolve) => {
+                            setTimeout(() => {
+                              setMockPasskeys((prev) =>
+                                prev.filter((p) => p.id !== id)
+                              )
+                              resolve(undefined)
+                            }, 500)
+                          })
+                        }}
+                        onUpdatePasskey={(passkey) => {
+                          return new Promise((resolve) => {
+                            setTimeout(() => {
+                              setMockPasskeys((prev) =>
+                                prev.map((p) =>
+                                  p.id === passkey.id
+                                    ? {
+                                        ...p,
+                                        name:
+                                          (p.name || "Passkey") + " (Updated)",
+                                      }
+                                    : p
+                                )
+                              )
+                              resolve(undefined)
+                            }, 300)
+                          })
+                        }}
+                      >
+                        <PasskeyManager.Header>
+                          <PasskeyManager.Title>Passkeys</PasskeyManager.Title>
+                          <PasskeyManager.Description>
+                            Sign in securely with your device's passkey.
+                          </PasskeyManager.Description>
+                        </PasskeyManager.Header>
+
+                        <PasskeyManager.List>
+                          <PasskeyManager.EmptyState />
+                          {mockPasskeys.map((passkey) => (
+                            <PasskeyManager.Item
+                              key={passkey.id}
+                              passkey={passkey}
+                              variant="outline"
+                            >
+                              <PasskeyManager.ItemDetails />
+                              <PasskeyManager.ItemActions />
+                            </PasskeyManager.Item>
+                          ))}
+                        </PasskeyManager.List>
+
+                        {mockPasskeys.length > 0 && (
+                          <div className="mt-4">
+                            <PasskeyManager.AddAction />
+                          </div>
+                        )}
+                      </PasskeyManager>
                     </Card>
                   </motion.div>
                 )}
