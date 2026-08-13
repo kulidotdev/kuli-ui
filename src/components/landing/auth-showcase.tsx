@@ -11,7 +11,7 @@ import {
   MagicLinkButton,
   PasskeyButton,
 } from "@/components/auth/passwordless-buttons"
-import { Card } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Button } from "@/components/ui/button"
@@ -558,41 +558,46 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <TwoFactorRegistration
-                      enabled={tfRegInitiallyEnabled}
-                      onEnable={async () => {
-                        return new Promise((resolve) => {
-                          setTimeout(() => {
-                            resolve({
-                              secret: "JBSWY3DPEHPK3PXP",
-                              totpUri:
-                                "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example",
-                              backupCodes: [
-                                "1a2b3c4d",
-                                "5e6f7g8h",
-                                "9i0j1k2l",
-                                "3m4n5o6p",
-                                "7q8r9s0t",
-                              ],
-                            })
-                          }, 1000)
-                        })
-                      }}
-                      onVerifyOtp={async (otp, trustedDevice) => {
-                        console.log({ otp, trustedDevice })
-                        return new Promise((resolve, reject) => {
-                          setTimeout(() => {
-                            if (otp === "123456") resolve()
-                            else reject(new Error("Invalid code. Try 123456."))
-                          }, 1000)
-                        })
-                      }}
-                      onDisable={async () => {
-                        return new Promise((resolve) =>
-                          setTimeout(resolve, 1000)
-                        )
-                      }}
-                    />
+                    <Card className="p-6">
+                      <CardHeader className="px-0 pt-0">
+                        <CardTitle>Two Factor Authentication</CardTitle>
+                      </CardHeader>
+                      <TwoFactorRegistration
+                        enabled={tfRegInitiallyEnabled}
+                        onEnable={async () => {
+                          return new Promise((resolve) => {
+                            setTimeout(() => {
+                              resolve({
+                                secret: "JBSWY3DPEHPK3PXP",
+                                totpUri:
+                                  "otpauth://totp/Example:alice@google.com?secret=JBSWY3DPEHPK3PXP&issuer=Example",
+                                backupCodes: [
+                                  "1a2b3c4d",
+                                  "5e6f7g8h",
+                                  "9i0j1k2l",
+                                  "3m4n5o6p",
+                                  "7q8r9s0t",
+                                ],
+                              })
+                            }, 1000)
+                          })
+                        }}
+                        onVerifyOtp={async (otp, trustedDevice) => {
+                          console.log({ otp, trustedDevice })
+                          return new Promise((resolve, reject) => {
+                            setTimeout(() => {
+                              if (otp === "123456") resolve()
+                              else reject(new Error("Invalid code. Try 123456."))
+                            }, 1000)
+                          })
+                        }}
+                        onDisable={async () => {
+                          return new Promise((resolve) =>
+                            setTimeout(resolve, 1000)
+                          )
+                        }}
+                      />
+                    </Card>
                   </motion.div>
                 )}
               </AnimatePresence>

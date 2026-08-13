@@ -356,6 +356,7 @@ export function TwoFactorShowQrView() {
               </p>
             </div>
             <InputOTP
+              id="otp"
               maxLength={6}
               value={otp}
               onChange={setOtp}
