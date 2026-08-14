@@ -1,6 +1,15 @@
 import { z } from "zod";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
+export const signinBaseSchema = z.object({
+  method: z.enum(["email", "username", "phone"]),
+  identifier: z.string().min(1),
+  password: z.string().min(1),
+  remember: z.boolean().default(false).optional(),
+});
+
+export type BaseFormValues = z.infer<typeof signinBaseSchema>;
+
 // Discriminated union — each method produces a distinct shape so the
 // consumer can narrow on `values.method` without casting.
 

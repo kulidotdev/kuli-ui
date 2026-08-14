@@ -1,15 +1,13 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "motion/react"
-import { SigninForm } from "@/components/auth/signin"
-import { SignupForm } from "@/components/auth/signup"
-import { ForgotPasswordForm } from "@/components/auth/forgot-password"
-import { ResetPasswordForm } from "@/components/auth/reset-password"
-import { TwoFactorForm } from "@/components/auth/two-factor"
+import { SignIn } from "@/components/auth/signin"
+import { SignUp } from "@/components/auth/signup"
+import { ForgotPassword } from "@/components/auth/forgot-password"
+import { ResetPassword } from "@/components/auth/reset-password"
+import { TwoFactor } from "@/components/auth/two-factor"
 import { TwoFactorRegistration } from "@/components/auth/two-factor-registration"
 import {
   SocialProviderButton,
-  MagicLinkButton,
-  PasskeyButton,
 } from "@/components/auth/passwordless-buttons"
 import { PasskeyManager } from "@/components/auth/passkey-manager"
 import { type Passkey } from "@/hooks/use-passkey-manager"
@@ -446,46 +444,46 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <SigninForm
+                    <SignIn
                       isLoading={isLoading}
                       apiError={mockApiError}
                       methods={signinMethods}
-                      forgotPasswordPath="#forgot"
-                      signupPath={signinShowSignupLink ? "#signup" : undefined}
-                      footer={signinShowSignupLink}
                       onSubmit={(v) => console.log(v)}
-                      secondSlot={
-                        signinShowPasswordless
-                          ? (method) => (
-                              <div className="flex flex-col gap-2">
-                                <MagicLinkButton
-                                  label="Continue with Magic Link"
-                                  isLoading={isLoading}
-                                  disabled={method !== "email"}
-                                />
-                                <PasskeyButton
-                                  label="Continue with Passkey"
-                                  isLoading={isLoading}
-                                />
-                              </div>
-                            )
-                          : undefined
-                      }
-                      thirdSlot={
-                        <div className="grid grid-cols-2 gap-2">
-                          <SocialProviderButton
-                            icon={<SiGoogle className="h-4 w-4" />}
-                            label="Google"
-                            isLoading={isLoading}
-                          />
-                          <SocialProviderButton
-                            icon={<SiGithub className="h-4 w-4" />}
-                            label="GitHub"
-                            isLoading={isLoading}
-                          />
-                        </div>
-                      }
-                    />
+                    >
+                      <SignIn.Header />
+                      <SignIn.Content>
+                        <SignIn.Form>
+                          <SignIn.IdentifierField />
+                          <SignIn.PasswordField forgotPasswordPath="#forgot" />
+                          <SignIn.RememberMe />
+                          <SignIn.SubmitButton />
+                        </SignIn.Form>
+
+                        {(signinShowPasswordless || signinShowSignupLink) && (
+                          <>
+                            {signinShowPasswordless && (
+                              <SignIn.Passwordless
+                                magicLink={true}
+                                passkey={true}
+                                showSeparator={true}
+                              />
+                            )}
+                            <SignIn.Social
+                              showSeparator={!signinShowPasswordless}
+                              providers={[
+                                { id: "google", label: "Google", icon: <SiGoogle className="h-4 w-4" /> },
+                                { id: "github", label: "GitHub", icon: <SiGithub className="h-4 w-4" /> },
+                              ]}
+                            />
+                          </>
+                        )}
+                      </SignIn.Content>
+                      <SignIn.Footer
+                        signupPath={
+                          signinShowSignupLink ? "#signup" : undefined
+                        }
+                      />
+                    </SignIn>
                   </motion.div>
                 )}
                 {activeForm === "signup" && (
@@ -496,13 +494,24 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <SignupForm
+                    <SignUp
                       isLoading={isLoading}
                       apiError={mockApiError}
                       showUsername={signupShowUsername}
                       showPhone={signupShowPhone}
                       onSubmit={(v) => console.log(v)}
-                      secondSlot={
+                    >
+                      <SignUp.Header />
+                      <SignUp.Content>
+                        <SignUp.Form>
+                          <SignUp.NameField />
+                          <SignUp.EmailField />
+                          <SignUp.UsernameField />
+                          <SignUp.PhoneField />
+                          <SignUp.PasswordField />
+                          <SignUp.SubmitButton />
+                        </SignUp.Form>
+                        <SignUp.Separator />
                         <div className="grid grid-cols-2 gap-2">
                           <SocialProviderButton
                             icon={<SiGoogle className="h-4 w-4" />}
@@ -515,8 +524,9 @@ export function AuthShowcase() {
                             isLoading={isLoading}
                           />
                         </div>
-                      }
-                    />
+                      </SignUp.Content>
+                      <SignUp.Footer signinPath="#signin" />
+                    </SignUp>
                   </motion.div>
                 )}
                 {activeForm === "forgot" && (
@@ -527,13 +537,27 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ForgotPasswordForm
+                    <ForgotPassword
                       isLoading={isLoading}
                       apiError={mockApiError}
                       allowPhone={forgotAllowPhone}
                       onSubmitEmail={async (v) => console.log(v)}
                       onSubmitPhone={async (v) => console.log(v)}
-                    />
+                    >
+                      <ForgotPassword.Header />
+                      <ForgotPassword.Content>
+                        <ForgotPassword.Tabs>
+                          <ForgotPassword.EmailForm>
+                            <ForgotPassword.EmailField />
+                            <ForgotPassword.SubmitButton />
+                          </ForgotPassword.EmailForm>
+                          <ForgotPassword.PhoneForm>
+                            <ForgotPassword.PhoneField />
+                            <ForgotPassword.SubmitButton />
+                          </ForgotPassword.PhoneForm>
+                        </ForgotPassword.Tabs>
+                      </ForgotPassword.Content>
+                    </ForgotPassword>
                   </motion.div>
                 )}
                 {activeForm === "reset" && (
@@ -544,13 +568,23 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <ResetPasswordForm
+                    <ResetPassword
                       isLoading={isLoading}
                       apiError={mockApiError}
                       method={resetMethod}
                       onSubmitEmail={async (v) => console.log(v)}
                       onSubmitPhone={async (v) => console.log(v)}
-                    />
+                    >
+                      <ResetPassword.Header />
+                      <ResetPassword.Content>
+                        <ResetPassword.Form>
+                          <ResetPassword.OtpField />
+                          <ResetPassword.PasswordField />
+                          <ResetPassword.ConfirmPasswordField />
+                          <ResetPassword.SubmitButton />
+                        </ResetPassword.Form>
+                      </ResetPassword.Content>
+                    </ResetPassword>
                   </motion.div>
                 )}
                 {activeForm === "twofactor" && (
@@ -561,7 +595,7 @@ export function AuthShowcase() {
                     exit={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
                     transition={{ duration: 0.3 }}
                   >
-                    <TwoFactorForm
+                    <TwoFactor
                       isLoading={isLoading}
                       apiError={mockApiError}
                       currentView={tfView}
@@ -573,7 +607,17 @@ export function AuthShowcase() {
                         console.log(method, values)
                       }
                       onResendOtp={async () => console.log("Resend OTP")}
-                    />
+                    >
+                      <TwoFactor.Header />
+                      <TwoFactor.Content>
+                        <TwoFactor.Form>
+                          <TwoFactor.CodeInput />
+                          <TwoFactor.TrustDevice />
+                          <TwoFactor.SubmitButton />
+                        </TwoFactor.Form>
+                      </TwoFactor.Content>
+                      <TwoFactor.Footer />
+                    </TwoFactor>
                   </motion.div>
                 )}
                 {activeForm === "tfregistration" && (

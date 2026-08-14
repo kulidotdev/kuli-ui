@@ -211,6 +211,10 @@
         {
           "path": "src/components/auth/passwordless-buttons.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-signin.ts",
+          "type": "registry:hook"
         }
       ]
     },
@@ -240,6 +244,10 @@
         {
           "path": "src/components/auth/signup-types.ts",
           "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-signup.ts",
+          "type": "registry:hook"
         }
       ]
     },
@@ -270,6 +278,10 @@
         {
           "path": "src/components/auth/forgot-password-types.ts",
           "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-forgot-password.ts",
+          "type": "registry:hook"
         }
       ]
     },
@@ -294,6 +306,10 @@
         {
           "path": "src/components/auth/reset-password.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-reset-password.ts",
+          "type": "registry:hook"
         }
       ]
     },
@@ -323,6 +339,10 @@
         {
           "path": "src/components/auth/two-factor-types.ts",
           "type": "registry:component"
+        },
+        {
+          "path": "src/hooks/use-two-factor.ts",
+          "type": "registry:hook"
         }
       ]
     },

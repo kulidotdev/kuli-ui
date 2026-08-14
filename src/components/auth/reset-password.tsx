@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
@@ -30,21 +31,26 @@ import {
   type ResetPasswordPhoneValues,
 } from "./forgot-password-types"
 
-export interface ResetPasswordFormProps {
-  method?: "email" | "phone"
+import { ResetPasswordContext, useResetPasswordContext, type ResetPasswordMethod, type ResetPasswordContextValue } from "@/hooks/use-reset-password"
+
+// --- Provider ---
+export interface ResetPasswordProps {
+  method?: ResetPasswordMethod
   onSubmitEmail?: (values: ResetPasswordEmailValues) => Promise<void>
   onSubmitPhone?: (values: ResetPasswordPhoneValues) => Promise<void>
-  isLoading: boolean
-  apiError: { message: string; code?: string } | null
+  isLoading?: boolean
+  apiError?: { message: string; code?: string } | null
+  children: React.ReactNode
 }
 
-export function ResetPasswordForm({
+export function ResetPassword({
   method = "email",
   onSubmitEmail,
   onSubmitPhone,
-  isLoading,
-  apiError,
-}: ResetPasswordFormProps) {
+  isLoading = false,
+  apiError = null,
+  children,
+}: ResetPasswordProps) {
   const emailForm = useForm<ResetPasswordEmailValues>({
     resolver: zodResolver(resetPasswordEmailSchema),
     defaultValues: { password: "", confirmPassword: "" },
@@ -57,149 +63,170 @@ export function ResetPasswordForm({
     mode: "onChange",
   })
 
+  const contextValue: ResetPasswordContextValue = {
+    method,
+    emailForm,
+    phoneForm,
+    onSubmitEmail,
+    onSubmitPhone,
+    isLoading,
+    apiError,
+  }
+
   return (
-    <Card className="mx-auto w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Reset Password</CardTitle>
-        <CardDescription>Enter your new password below.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        {apiError && (
-          <AlertError
-            message={apiError.message}
-            code={apiError.code}
-            className="mb-4"
-          />
-        )}
+    <ResetPasswordContext.Provider value={contextValue}>
+      <Card className="mx-auto w-full max-w-md">
+        {children}
+      </Card>
+    </ResetPasswordContext.Provider>
+  )
+}
 
-        {method === "email" ? (
-          <Form {...emailForm}>
-            <form
-              onSubmit={emailForm.handleSubmit(onSubmitEmail!)}
-              className="space-y-4"
-            >
-              <FormField
-                control={emailForm.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        id="new-password"
-                        type="password"
-                        placeholder="New Password"
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+// --- Compound Components ---
 
-              <FormField
-                control={emailForm.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        id="confirm-password"
-                        type="password"
-                        placeholder="Confirm New Password"
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+ResetPassword.Header = function ResetPasswordHeader({ title = "Reset Password", description = "Enter your new password below." }: { title?: React.ReactNode, description?: React.ReactNode }) {
+  return (
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+      {description && <CardDescription>{description}</CardDescription>}
+    </CardHeader>
+  )
+}
 
-              <Button className="w-full" type="submit" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isLoading ? "Resetting..." : "Reset Password"}
-              </Button>
-            </form>
-          </Form>
-        ) : (
-          <Form {...phoneForm}>
-            <form
-              onSubmit={phoneForm.handleSubmit(onSubmitPhone!)}
-              className="space-y-4"
-            >
-              <FormField
-                control={phoneForm.control}
-                name="code"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Verification Code</FormLabel>
-                    <FormControl>
-                      <InputOTP maxLength={6} disabled={isLoading} {...field}>
-                        <InputOTPGroup>
-                          <InputOTPSlot index={0} />
-                          <InputOTPSlot index={1} />
-                          <InputOTPSlot index={2} />
-                          <InputOTPSlot index={3} />
-                          <InputOTPSlot index={4} />
-                          <InputOTPSlot index={5} />
-                        </InputOTPGroup>
-                      </InputOTP>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+ResetPassword.Content = function ResetPasswordContent({ children }: { children: React.ReactNode }) {
+  const { apiError } = useResetPasswordContext()
+  return (
+    <CardContent>
+      {apiError && (
+        <AlertError
+          message={apiError.message}
+          code={apiError.code}
+          className="mb-4"
+        />
+      )}
+      {children}
+    </CardContent>
+  )
+}
 
-              <FormField
-                control={phoneForm.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="new-password-phone"
-                        type="password"
-                        placeholder=""
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+ResetPassword.Form = function ResetPasswordForm({ children }: { children: React.ReactNode }) {
+  const { method, emailForm, phoneForm, onSubmitEmail, onSubmitPhone } = useResetPasswordContext()
 
-              <FormField
-                control={phoneForm.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm New Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="confirm-password-phone"
-                        type="password"
-                        placeholder=""
-                        disabled={isLoading}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+  if (method === "email") {
+    return (
+      <Form {...emailForm}>
+        <form onSubmit={emailForm.handleSubmit(onSubmitEmail!)} className="space-y-4">
+          {children}
+        </form>
+      </Form>
+    )
+  }
 
-              <Button className="w-full" type="submit" disabled={isLoading}>
-                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isLoading ? "Resetting..." : "Reset Password"}
-              </Button>
-            </form>
-          </Form>
-        )}
-      </CardContent>
-    </Card>
+  return (
+    <Form {...phoneForm}>
+      <form onSubmit={phoneForm.handleSubmit(onSubmitPhone!)} className="space-y-4">
+        {children}
+      </form>
+    </Form>
+  )
+}
+
+ResetPassword.OtpField = function ResetPasswordOtpField() {
+  const { method, phoneForm, isLoading } = useResetPasswordContext()
+
+  if (method !== "phone") return null
+
+  return (
+    <FormField
+      control={phoneForm.control}
+      name="code"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Verification Code</FormLabel>
+          <FormControl>
+            <InputOTP maxLength={6} disabled={isLoading} {...field}>
+              <InputOTPGroup>
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
+                <InputOTPSlot index={4} />
+                <InputOTPSlot index={5} />
+              </InputOTPGroup>
+            </InputOTP>
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+ResetPassword.PasswordField = function ResetPasswordPasswordField() {
+  const { method, emailForm, phoneForm, isLoading } = useResetPasswordContext()
+  const formControl = method === "email" ? emailForm.control : phoneForm.control
+
+  return (
+    <FormField
+      // react-hook-form's FormField expects a single, strict generic type for control.
+      // Since formControl is a union type (EmailControl | PhoneControl), we cast to any 
+      // to bypass the TS mismatch, as the 'password' field exists in both schemas.
+      control={formControl as any}
+      name="password"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>New Password</FormLabel>
+          <FormControl>
+            <Input
+              type="password"
+              placeholder={method === "email" ? "New Password" : ""}
+              disabled={isLoading}
+              {...field}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+ResetPassword.ConfirmPasswordField = function ResetPasswordConfirmPasswordField() {
+  const { method, emailForm, phoneForm, isLoading } = useResetPasswordContext()
+  const formControl = method === "email" ? emailForm.control : phoneForm.control
+
+  return (
+    <FormField
+      // react-hook-form's FormField expects a single, strict generic type for control.
+      // Since formControl is a union type (EmailControl | PhoneControl), we cast to any 
+      // to bypass the TS mismatch, as the 'confirmPassword' field exists in both schemas.
+      control={formControl as any}
+      name="confirmPassword"
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Confirm New Password</FormLabel>
+          <FormControl>
+            <Input
+              type="password"
+              placeholder={method === "email" ? "Confirm New Password" : ""}
+              disabled={isLoading}
+              {...field}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  )
+}
+
+ResetPassword.SubmitButton = function ResetPasswordSubmitButton({ children }: { children?: React.ReactNode }) {
+  const { isLoading } = useResetPasswordContext()
+  return (
+    <Button className="w-full" type="submit" disabled={isLoading}>
+      {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+      {children || (isLoading ? "Resetting..." : "Reset Password")}
+    </Button>
   )
 }
 
