@@ -3,6 +3,7 @@ import PhoneInputPrimitive, {
   type Country,
   type Value,
 } from "react-phone-number-input";
+import flags from "react-phone-number-input/flags";
 import "react-phone-number-input/style.css";
 
 import { cn } from "@/lib/utils";
@@ -168,6 +169,7 @@ function PhoneInput({
       disabled={disabled}
       placeholder={placeholder}
       international
+      flags={flags}
       countrySelectComponent={CountrySelect}
       inputComponent={PhoneNumberInput}
       containerComponent={PhoneInputContainer}
