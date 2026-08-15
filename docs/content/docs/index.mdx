@@ -1,0 +1,39 @@
+---
+title: Introduction
+description: Production-ready UI components with pre-designed flows, built on top of shadcn/ui.
+---
+
+**kuli/ui** is a collection of production-ready UI components built on top of [shadcn/ui](https://ui.shadcn.com). Every component ships as a complete, pre-wired flow — validation, error handling, and loading states are all included. Copy it into your project, wire up your backend, and move on.
+
+## Why kuli/ui?
+
+Building the same UI flows from scratch every project is tedious. kuli/ui handles the repetitive parts so you can focus on what's unique to your product.
+
+- **Copy-paste, not a package** — No vendor lock-in. Code lands directly in your project and is fully yours to modify.
+- **Designed flows, not loose parts** — Each component is a complete, pre-wired flow ready to connect to any backend.
+- **Compound components** — Compose layouts exactly how you want using the compound component pattern with React Context.
+- **Type-safe** — All form schemas use [Zod](https://zod.dev), and every callback is properly typed.
+- **Headless hooks** — UI and logic are separated via custom hooks, making it easy to swap the underlying library.
+- **Accessible** — Built on Radix UI primitives via shadcn/ui, meeting ARIA standards out of the box.
+
+## Available Components
+
+| Component | Description |
+|---|---|
+| [SignIn](/docs/components/auth-signin) | Sign-in form with support for email, username, phone, magic link, passkey, and social providers |
+| [SignUp](/docs/components/auth-signup) | Registration form with name, email, password, optional username, and optional phone |
+| [ForgotPassword](/docs/components/auth-forgot-password) | Request a password reset via email or phone (OTP) |
+| [ResetPassword](/docs/components/auth-reset-password) | Set a new password via URL token (email) or OTP (phone) |
+| [TwoFactor](/docs/components/auth-two-factor) | 2FA verification supporting TOTP, email OTP, and backup codes |
+| [TwoFactorRegistration](/docs/components/auth-two-factor-registration) | Setup and manage 2FA with QR code scanning and backup codes |
+| [PasskeyManager](/docs/components/auth-passkey-manager) | Manage passkeys — list, add, rename, and remove |
+
+## Stack
+
+kuli/ui is built with:
+
+- [React 19](https://react.dev) + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [shadcn/ui](https://ui.shadcn.com) (Radix UI primitives)
+- [React Hook Form](https://react-hook-form.com) + [Zod](https://zod.dev)
+- [Lucide React](https://lucide.dev)

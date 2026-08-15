@@ -31,7 +31,7 @@ import {
   type ResetPasswordPhoneValues,
 } from "./forgot-password-types"
 
-import { ResetPasswordContext, useResetPasswordContext, type ResetPasswordMethod, type ResetPasswordContextValue } from "@/hooks/use-reset-password"
+import { ResetPasswordContext, useResetPasswordContext, type ResetPasswordMethod, type ResetPasswordContextValue } from "../../hooks/use-reset-password"
 
 // --- Provider ---
 export interface ResetPasswordProps {

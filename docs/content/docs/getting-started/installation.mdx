@@ -1,0 +1,33 @@
+---
+title: Installation
+description: How to install dependencies and add kuli/ui components to your project.
+---
+
+kuli/ui uses a **copy-paste via shadcn CLI** approach — components are copied directly into your project rather than installed as an npm package. This gives you full control over every line of code.
+
+## Prerequisites
+
+Make sure your project already has:
+
+- React 18+ (React 19 recommended)
+- Tailwind CSS v4
+- shadcn/ui configured ([shadcn installation guide](https://ui.shadcn.com/docs/installation))
+- TypeScript
+
+## Adding Components via CLI
+
+Use the `shadcn` CLI to add components directly from the kuli/ui registry:
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-signin.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-signin.json
+```
+
+```bash tab="bun"
+bunx shadcn@latest add REGISTRY_URL/r/auth-signin.json
+```
+
+The CLI will automatically install all required dependencies and copy the component files into your `components/` directory.

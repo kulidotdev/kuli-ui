@@ -25,7 +25,7 @@ import {
   type ForgotPasswordPhoneValues,
 } from "./forgot-password-types"
 
-import { ForgotPasswordContext, useForgotPasswordContext, type ForgotPasswordTab, type ForgotPasswordContextValue } from "@/hooks/use-forgot-password"
+import { ForgotPasswordContext, useForgotPasswordContext, type ForgotPasswordTab, type ForgotPasswordContextValue } from "../../hooks/use-forgot-password"
 
 // --- Provider ---
 export interface ForgotPasswordProps {

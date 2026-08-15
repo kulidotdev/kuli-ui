@@ -1,0 +1,147 @@
+---
+title: PasskeyManager
+description: Passkey management component that lists registered passkeys with the ability to add, rename, and remove them.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-passkey-manager.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-passkey-manager.json
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="auth-passkey-manager" />
+
+## Usage
+
+### Full Example
+
+```tsx
+import { PasskeyManager } from "@/components/auth/passkey-manager";
+import type { Passkey } from "@/hooks/use-passkey-manager";
+
+export default function SecurityPage() {
+  const rawPasskeys = usePasskeys(); // your data fetching
+  const passkeys: Passkey[] = rawPasskeys.map((pk) => ({
+    id: pk.id,
+    name: pk.name ?? "Passkey",
+    createdAt: new Date(pk.createdAt),
+    lastUsedAt: pk.lastUsedAt ? new Date(pk.lastUsedAt) : undefined,
+    deviceType: pk.deviceType,
+  }));
+
+  return (
+    <PasskeyManager
+      passkeys={passkeys}
+      onAddPasskey={() => yourAuthLibrary.passkey.add()}
+      onRemovePasskey={(id) => yourAuthLibrary.passkey.remove(id)}
+      onUpdatePasskey={(pk) => yourAuthLibrary.passkey.rename(pk.id, pk.name)}
+    >
+      <PasskeyManager.Header>
+        <PasskeyManager.Title>Passkeys</PasskeyManager.Title>
+        <PasskeyManager.Description>
+          Sign in securely without a password using biometrics or a security key.
+        </PasskeyManager.Description>
+      </PasskeyManager.Header>
+
+      <PasskeyManager.EmptyState />
+
+      <PasskeyManager.List>
+        {passkeys.map((pk) => (
+          <PasskeyManager.Item key={pk.id} passkey={pk}>
+            <PasskeyManager.ItemDetails />
+            <PasskeyManager.ItemActions />
+          </PasskeyManager.Item>
+        ))}
+      </PasskeyManager.List>
+
+      <PasskeyManager.AddAction />
+    </PasskeyManager>
+  );
+}
+```
+
+### Add and Remove Only (No Rename)
+
+Omit `onUpdatePasskey` — the rename option hides automatically:
+
+```tsx
+<PasskeyManager
+  passkeys={passkeys}
+  onAddPasskey={handleAdd}
+  onRemovePasskey={handleRemove}
+>
+  <PasskeyManager.EmptyState />
+  <PasskeyManager.List>
+    {passkeys.map((pk) => (
+      <PasskeyManager.Item key={pk.id} passkey={pk}>
+        <PasskeyManager.ItemDetails />
+        <PasskeyManager.ItemActions />
+      </PasskeyManager.Item>
+    ))}
+  </PasskeyManager.List>
+  <PasskeyManager.AddAction />
+</PasskeyManager>
+```
+
+## Props
+
+### `<PasskeyManager>` (Root Provider)
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `passkeys` | `Passkey[]` | — | **Required.** List of passkeys to display |
+| `onAddPasskey` | `() => Promise<void> \| void` | — | Register a new passkey |
+| `onRemovePasskey` | `(id: string) => Promise<void> \| void` | — | Delete a passkey |
+| `onUpdatePasskey` | `(passkey: Passkey) => Promise<void> \| void` | — | Rename a passkey |
+| `isLoading` | `boolean` | `false` | Disables `AddAction` |
+| `className` | `string` | — | Additional CSS class for the container |
+
+### `<PasskeyManager.ItemDetails>`
+
+Renders an icon (auto-selected by `deviceType`) and the passkey name + dates.
+
+Icon mapping:
+- `phone` / `mobile` → `Smartphone`
+- `mac` / `windows` / `laptop` / `desktop` → `Laptop`
+- `fingerprint` / `touch` → `Fingerprint`
+- Anything else → `KeyRound`
+
+### `<PasskeyManager.ItemActions>`
+
+Dropdown menu with Rename and Remove options. Each only appears if the corresponding callback is provided.
+
+### `<PasskeyManager.EmptyState>`
+
+Hidden automatically when `passkeys.length > 0`.
+
+### `<PasskeyManager.AddAction>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `children` | `ReactNode` | `"Register a new Passkey"` | Button label |
+
+Only rendered when `onAddPasskey` is provided.
+
+## Types
+
+```ts
+interface Passkey {
+  id: string;
+  name?: string;
+  createdAt: Date;
+  lastUsedAt?: Date;
+  deviceType?: string;
+}
+```
+
+## Accessibility
+
+- Every action button has a `sr-only` label for screen readers.
+- Dropdown uses Radix UI `DropdownMenu` — fully keyboard navigable.
+- Loading state is managed per-item to avoid disabling the entire list.

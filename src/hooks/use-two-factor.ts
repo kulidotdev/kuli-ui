@@ -1,6 +1,6 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type TwoFactorValues, type TwoFactorMethod } from "@/components/auth/two-factor-types"
+import { type TwoFactorValues, type TwoFactorMethod } from "../components/auth/two-factor-types"
 
 export interface TwoFactorContextValue {
   activeView: TwoFactorMethod

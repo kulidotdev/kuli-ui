@@ -1,6 +1,6 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type BaseFormValues, type SigninMethod, type SigninFormValues } from "@/components/auth/signin-types"
+import { type BaseFormValues, type SigninMethod, type SigninFormValues } from "../components/auth/signin-types"
 
 export interface SignInContextValue {
   method: SigninMethod

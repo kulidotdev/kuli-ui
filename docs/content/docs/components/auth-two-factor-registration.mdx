@@ -1,0 +1,165 @@
+---
+title: TwoFactorRegistration
+description: Setup and manage TOTP 2FA — scan a QR code, save backup codes, verify the first OTP, and disable 2FA, all within a single state machine flow.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-two-factor-registration.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-two-factor-registration.json
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="auth-two-factor-registration" />
+
+## Usage
+
+### Default Usage (Recommended)
+
+Provide three callbacks — the component manages the entire state machine on its own:
+
+```tsx
+import { TwoFactorRegistration } from "@/components/auth/two-factor-registration";
+
+export default function SecurityPage() {
+  const is2FAEnabled = useCurrentUser()?.twoFactorEnabled ?? false;
+
+  const handleEnable = async (password: string) => {
+    const data = await yourAuthLibrary.twoFactor.enable(password);
+    // Must return TotpData
+    return { totpUri: data.totpURI, secret: data.secret, backupCodes: data.backupCodes };
+  };
+
+  const handleVerifyOtp = async (otp: string, trustedDevice: boolean) => {
+    await yourAuthLibrary.twoFactor.verifyTotp({ code: otp, trustDevice: trustedDevice });
+  };
+
+  const handleDisable = async (password: string) => {
+    await yourAuthLibrary.twoFactor.disable(password);
+  };
+
+  return (
+    <TwoFactorRegistration
+      enabled={is2FAEnabled}
+      onEnable={handleEnable}
+      onVerifyOtp={handleVerifyOtp}
+      onDisable={handleDisable}
+    />
+  );
+}
+```
+
+<Callout type="info">
+  When no `children` are provided, `TwoFactorRegistration` renders `TwoFactorDefaultViews` — built-in views that manage the entire flow. This is the fastest way to get started.
+</Callout>
+
+### Custom Views
+
+```tsx
+import { useTwoFactorRegistration } from "@/hooks/use-two-factor-registration";
+
+function MyCustomView() {
+  const { view, setView } = useTwoFactorRegistration();
+
+  if (view !== "unconfigured") return null;
+
+  return (
+    <div>
+      <p>2FA is not enabled.</p>
+      <button onClick={() => setView("enabling_password")}>Enable</button>
+    </div>
+  );
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `enabled` | `boolean` | `false` | Current 2FA status. Determines the initial view |
+| `onEnable` | `(password: string) => Promise<TotpData>` | — | Enable callback. **Must** return `TotpData` |
+| `onVerifyOtp` | `(otp: string, trustedDevice: boolean) => Promise<void>` | — | First-time OTP verification callback |
+| `onDisable` | `(password: string) => Promise<void>` | — | Disable callback |
+| `children` | `ReactNode` | — | When omitted, renders `TwoFactorDefaultViews` |
+
+## Types
+
+```ts
+interface TotpData {
+  totpUri: string;       // URI for the QR code, e.g. "otpauth://totp/..."
+  secret: string;        // Plain-text secret for manual entry
+  backupCodes: string[];
+}
+
+type TwoFactorViewState =
+  | "unconfigured"
+  | "enabling_password"
+  | "show_qr"
+  | "configured"
+  | "disabling_password";
+```
+
+## State Machine Flow
+
+```
+unconfigured
+    │ (click "Enable 2FA")
+    ▼
+enabling_password
+    │ (password submitted → onEnable() → receives TotpData)
+    ▼
+show_qr
+    │ (scan QR, enter OTP → onVerifyOtp() succeeds)
+    ▼
+configured
+    │ (click "Disable 2FA")
+    ▼
+disabling_password
+    │ (password submitted → onDisable() succeeds)
+    ▼
+unconfigured
+```
+
+Each view has a "Cancel" button that returns to the previous view without making changes.
+
+## View Components
+
+| Component | Condition | Content |
+|---|---|---|
+| `<TwoFactorUnconfiguredView>` | `view === "unconfigured"` | Empty state with "Enable 2FA" button |
+| `<TwoFactorEnablingPasswordView>` | `view === "enabling_password"` | Password confirmation form |
+| `<TwoFactorShowQrView>` | `view === "show_qr"` | QR code, secret text, backup codes, OTP form |
+| `<TwoFactorConfiguredView>` | `view === "configured"` | Active confirmation with "Disable 2FA" button |
+| `<TwoFactorDisablingPasswordView>` | `view === "disabling_password"` | Password confirmation form |
+
+## QR Code View Details
+
+`TwoFactorShowQrView` displays:
+
+1. **QR Code** — rendered from `totpData.totpUri`
+2. **Secret Key** — plain text for manual authenticator entry
+3. **Backup Codes** — collapsible section with a 2-column grid and "Copy All" button
+4. **OTP Input** — 6-slot `InputOTP` for first-time verification
+5. **Trust Device** — "Trust this device for 30 days" checkbox
+
+<Callout type="warn">
+  Make sure users save their backup codes before leaving this view. They cannot be shown again after setup is complete.
+</Callout>
+
+## Error Handling
+
+If any callback throws, the error message is shown as an `AlertError` inside the relevant view. Reset by retrying.
+
+```ts
+// Throw an Error so the component can catch it
+const handleEnable = async (password: string) => {
+  const data = await yourAuthLibrary.twoFactor.enable(password);
+  if (!data) throw new Error("Failed to enable 2FA.");
+  return { totpUri: data.totpURI, secret: data.secret, backupCodes: data.backupCodes };
+};
+```

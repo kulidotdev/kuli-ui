@@ -1,6 +1,6 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type ForgotPasswordEmailValues, type ForgotPasswordPhoneValues } from "@/components/auth/forgot-password-types"
+import { type ForgotPasswordEmailValues, type ForgotPasswordPhoneValues } from "../components/auth/forgot-password-types"
 
 export type ForgotPasswordTab = "email" | "phone"
 

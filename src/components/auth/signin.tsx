@@ -4,10 +4,10 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
-import { SignInContext, useSignInContext, type SignInContextValue } from "@/hooks/use-signin"
+import { SignInContext, useSignInContext, type SignInContextValue } from "../../hooks/use-signin"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 import {
   Card,
   CardContent,
@@ -15,9 +15,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Separator } from "@/components/ui/separator"
+} from "../ui/card"
+import { Checkbox } from "../ui/checkbox"
+import { Separator } from "../ui/separator"
 import {
   Form,
   FormControl,
@@ -25,15 +25,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "../ui/form"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@/components/ui/select"
-import { AlertError } from "@/components/ui/alert-error"
-import { PhoneInput } from "@/components/ui/phone-input"
+} from "../ui/select"
+import { AlertError } from "../ui/alert-error"
+import { PhoneInput } from "../ui/phone-input"
 import { AlertCard } from "../ui/alert-card"
 import {
   MagicLinkButton,

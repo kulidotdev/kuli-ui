@@ -1,0 +1,181 @@
+---
+title: TwoFactor
+description: 2FA verification component supporting TOTP (authenticator app), email OTP, and backup codes, with dynamic method switching.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-two-factor.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-two-factor.json
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="auth-two-factor" />
+
+## Usage
+
+### TOTP Only
+
+```tsx
+import { TwoFactor } from "@/components/auth/two-factor";
+import type { TwoFactorMethod, TwoFactorValues } from "@/components/auth/two-factor-types";
+
+export default function TwoFactorPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+
+  const handleSubmit = async (method: TwoFactorMethod, values: TwoFactorValues) => {
+    setIsLoading(true);
+    setApiError(null);
+    try {
+      await yourAuthLibrary.verifyTotp({ code: values.code, trustDevice: values.trustDevice });
+    } catch (err) {
+      setApiError({ message: err.message ?? "Invalid code." });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <TwoFactor onSubmit={handleSubmit} isLoading={isLoading} apiError={apiError} twofactorMethods={["totp"]}>
+      <TwoFactor.Header />
+      <TwoFactor.Content>
+        <TwoFactor.Form>
+          <TwoFactor.CodeInput />
+          <TwoFactor.TrustDevice />
+          <TwoFactor.SubmitButton />
+        </TwoFactor.Form>
+      </TwoFactor.Content>
+    </TwoFactor>
+  );
+}
+```
+
+### Multi-Method (TOTP + Email OTP + Backup Code)
+
+```tsx
+import { TwoFactor } from "@/components/auth/two-factor";
+import type { TwoFactorMethod, TwoFactorValues } from "@/components/auth/two-factor-types";
+
+export default function TwoFactorPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+
+  const handleSubmit = async (method: TwoFactorMethod, values: TwoFactorValues) => {
+    setIsLoading(true);
+    setApiError(null);
+    try {
+      if (method === "totp") await yourAuthLibrary.verifyTotp(values);
+      else if (method === "otp") await yourAuthLibrary.verifyOtp(values);
+      else if (method === "backup_code") await yourAuthLibrary.verifyBackupCode(values);
+    } catch (err) {
+      setApiError({ message: err.message ?? "Invalid code." });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setIsResending(true);
+    await yourAuthLibrary.sendOtp();
+    setIsResending(false);
+  };
+
+  return (
+    <TwoFactor
+      onSubmit={handleSubmit}
+      onResendOtp={handleResend}
+      isLoading={isLoading}
+      isResending={isResending}
+      apiError={apiError}
+      twofactorMethods={["totp", "otp", "backup_code"]}
+      currentView="totp"
+      resendCooldown={60}
+      trustDeviceDescription="Skip 2FA on this device for 30 days"
+    >
+      <TwoFactor.Header />
+      <TwoFactor.Content>
+        <TwoFactor.Form>
+          <TwoFactor.CodeInput />
+          <TwoFactor.TrustDevice />
+          <TwoFactor.SubmitButton />
+        </TwoFactor.Form>
+      </TwoFactor.Content>
+      <TwoFactor.Footer />
+    </TwoFactor>
+  );
+}
+```
+
+## Props
+
+### `<TwoFactor>` (Root Provider)
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `onSubmit` | `(method: TwoFactorMethod, values: TwoFactorValues) => Promise<void>` | `async () => {}` | Verification callback |
+| `twofactorMethods` | `TwoFactorMethod[]` | `["totp", "otp"]` | Available methods |
+| `currentView` | `TwoFactorMethod` | `"totp"` | Method active on first render |
+| `onResendOtp` | `() => Promise<void>` | — | Resend OTP callback. Required when `"otp"` is in `twofactorMethods` |
+| `isLoading` | `boolean` | `false` | Disables all inputs |
+| `isResending` | `boolean` | `false` | Loading state specific to the resend button |
+| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error to display |
+| `totpLength` | `number` | `6` | Number of digits for TOTP |
+| `otpLength` | `number` | `6` | Number of digits for email OTP |
+| `resendCooldown` | `number` | `60` | Cooldown in seconds after resending OTP |
+| `trustDeviceDescription` | `string` | — | Description for the "Trust device" checkbox. Hidden when not provided |
+| `children` | `ReactNode` | — | **Required.** |
+
+### `<TwoFactor.Header>`
+
+Automatically changes title and description based on `activeView`:
+
+| `activeView` | Default Title | Default Description |
+|---|---|---|
+| `"totp"` | `"Authenticator App"` | "Enter the N-digit code from your authenticator app." |
+| `"otp"` | `"Email Verification"` | "Enter the N-digit code sent to your email address." |
+| `"backup_code"` | `"Backup Code"` | "Enter one of your emergency backup codes." |
+
+### `<TwoFactor.TrustDevice>`
+
+"Trust this device" checkbox. Only rendered when `trustDeviceDescription` is set on the root.
+
+### `<TwoFactor.ResendOtp>`
+
+Only rendered when `activeView === "otp"`. Shows a "Resend" button with a countdown timer.
+
+### `<TwoFactor.AlternativeMethods>`
+
+Rendered inside `<TwoFactor.Footer>`. Displays ghost buttons for every method not currently active.
+
+## Types
+
+```ts
+type TwoFactorMethod = "totp" | "otp" | "backup_code";
+
+type TwoFactorValues = {
+  method: TwoFactorMethod;
+  code: string;
+  trustDevice?: boolean;
+};
+```
+
+## Validation
+
+The schema is built **dynamically** based on `activeView`:
+
+| Method | `code` validation |
+|---|---|
+| `"totp"` | Exactly `totpLength` digits (default: 6) |
+| `"otp"` | Exactly `otpLength` digits (default: 6) |
+| `"backup_code"` | `min(1)` — no format constraint |
+
+## Method Switching
+
+When a user clicks an `AlternativeMethods` button, `activeView` changes, the form resets, and the schema is recreated dynamically — all without page navigation.

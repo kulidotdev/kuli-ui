@@ -1,0 +1,120 @@
+---
+title: Usage
+description: How to use kuli/ui components with any backend or auth library.
+---
+
+All kuli/ui components follow the same pattern: **you provide the callbacks, the component handles the UI and state**.
+
+## Core Pattern
+
+Every component is a **compound component** controlled by a root Provider. The Provider receives your callbacks (e.g. `onSubmit`) and passes state down to all child sub-components via React Context.
+
+```tsx
+import { SignIn } from "@/components/auth/signin";
+
+export default function SignInPage() {
+  const handleSignIn = async (values) => {
+    // Wire up to your backend or auth library
+    await yourAuthLibrary.signIn({
+      email: values.identifier,
+      password: values.password,
+    });
+  };
+
+  return (
+    <SignIn onSubmit={handleSignIn} isLoading={false}>
+      <SignIn.Header />
+      <SignIn.Content>
+        <SignIn.Form>
+          <SignIn.IdentifierField />
+          <SignIn.PasswordField forgotPasswordPath="/forgot-password" />
+          <SignIn.RememberMe />
+          <SignIn.SubmitButton />
+        </SignIn.Form>
+      </SignIn.Content>
+    </SignIn>
+  );
+}
+```
+
+## Wiring Up Your Backend
+
+The `onSubmit` callback receives typed, validated form values. Connect it to whatever backend or auth library you use:
+
+```tsx
+// With any fetch-based API
+const handleSubmit = async (values: SigninFormValues) => {
+  const res = await fetch("/api/auth/signin", {
+    method: "POST",
+    body: JSON.stringify({ email: values.identifier, password: values.password }),
+  });
+
+  if (!res.ok) {
+    const { message } = await res.json();
+    setApiError({ message });
+    return;
+  }
+
+  router.push("/dashboard");
+};
+```
+
+## Composition Flexibility
+
+Because of the compound component pattern, you can rearrange sub-components however you need:
+
+```tsx
+// Social providers only, no password form
+<SignIn onSubmit={handleSubmit} methods={[]}>
+  <SignIn.Header title="Welcome back" description="Sign in with your account" />
+  <SignIn.Content>
+    <SignIn.Social providers={providers} showSeparator={false} />
+  </SignIn.Content>
+</SignIn>
+```
+
+```tsx
+// Move the sign-up link inside Content instead of Footer
+<SignIn onSubmit={handleSubmit} methods={["email"]}>
+  <SignIn.Header />
+  <SignIn.Content>
+    <SignIn.Form>
+      <SignIn.IdentifierField />
+      <SignIn.PasswordField />
+      <SignIn.SubmitButton />
+    </SignIn.Form>
+    <p className="mt-4 text-center text-sm text-muted-foreground">
+      New here?{" "}
+      <a href="/signup" className="text-primary hover:underline">
+        Create account
+      </a>
+    </p>
+  </SignIn.Content>
+</SignIn>
+```
+
+## Error Handling
+
+All components accept an `apiError` prop to display server-side errors. Pass it alongside `onSubmit`:
+
+```tsx
+const [apiError, setApiError] = useState<{
+  message: string;
+  code?: string;
+} | null>(null);
+
+const handleSubmit = async (values) => {
+  setApiError(null);
+  try {
+    await yourAuthLibrary.signIn(values);
+  } catch (err) {
+    setApiError({ message: err.message });
+  }
+};
+
+<SignIn onSubmit={handleSubmit} apiError={apiError}>
+  ...
+</SignIn>
+```
+
+The error is automatically rendered as an `AlertError` banner inside the component's `Content`.

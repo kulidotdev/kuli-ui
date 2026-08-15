@@ -1,0 +1,160 @@
+---
+title: SignIn
+description: Sign-in form with multi-method support (email, username, phone), passwordless options (magic link, passkey), and social providers.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-signin.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-signin.json
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="auth-signin" />
+
+## Usage
+
+### Email only
+
+The simplest setup — a single email + password form.
+
+<ComponentPreview name="signin/email-only" />
+
+### Method switch
+
+When `methods` has more than one value, a "Switch?" select appears inline next to the identifier label. Users switch between email, username, and phone without leaving the page. The form resets automatically on switch.
+
+<ComponentPreview name="signin/multi-method" />
+
+### With social providers
+
+Pass a `providers` array to `SignIn.Social`. Each provider renders as a button in a 2-column grid.
+
+<ComponentPreview name="signin/with-social" />
+
+### With passwordless
+
+`SignIn.Passwordless` renders Magic Link and/or Passkey buttons. Magic Link is automatically disabled when the active method is not `email`.
+
+<ComponentPreview name="signin/with-passwordless" />
+
+### Loading state
+
+Pass `isLoading={true}` to disable all inputs and show a spinner on the submit button.
+
+<ComponentPreview name="signin/loading" />
+
+### Error state
+
+Pass `apiError` to render an `AlertError` banner at the top of `SignIn.Content`.
+
+<ComponentPreview name="signin/with-error" />
+
+## Props
+
+### `<SignIn>` (Root Provider)
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `onSubmit` | `(values: SigninFormValues) => void` | — | **Required.** Called when the form is submitted with valid values |
+| `methods` | `SigninMethod[]` | `["email", "username", "phone"]` | Identifier methods to show. An empty array hides the form entirely |
+| `isLoading` | `boolean` | `false` | Disables all inputs and shows a spinner |
+| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error displayed as an `AlertError` banner |
+| `children` | `ReactNode` | — | **Required.** |
+
+### `<SignIn.Header>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `title` | `ReactNode` | `"Sign In"` | Card title |
+| `description` | `ReactNode` | `"Select your preferred authentication method"` | Card subtitle |
+
+### `<SignIn.PasswordField>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `forgotPasswordPath` | `string` | — | URL for the "Forgot password?" link. Omit to hide the link |
+
+### `<SignIn.Separator>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `children` | `ReactNode` | `"Or continue with"` | Text in the middle of the separator |
+
+### `<SignIn.Passwordless>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `magicLink` | `boolean` | `true` | Show Magic Link button |
+| `passkey` | `boolean` | `true` | Show Passkey button |
+| `showSeparator` | `boolean` | `true` | Show separator above the buttons |
+| `separatorText` | `ReactNode` | `"Or continue with"` | Separator label |
+
+### `<SignIn.Social>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `providers` | `SocialProviderConfig[]` | — | **Required.** List of providers |
+| `showSeparator` | `boolean` | `true` | Show separator above the grid |
+| `separatorText` | `ReactNode` | `"Or continue with"` | Separator label |
+
+```ts
+interface SocialProviderConfig {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  onClick?: (id: string) => void;
+}
+```
+
+### `<SignIn.Footer>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `signupPath` | `string` | — | Shows "Don't have an account?" when set |
+| `children` | `ReactNode` | — | Custom content inside the footer |
+
+## Types
+
+### `SigninMethod`
+
+```ts
+type SigninMethod = 'email' | 'username' | 'phone';
+```
+
+### `SigninFormValues`
+
+Discriminated union — narrow on `values.method`:
+
+```ts
+type SigninEmailValues    = { method: 'email';    identifier: string; password: string; remember?: boolean };
+type SigninUsernameValues = { method: 'username'; identifier: string; password: string; remember?: boolean };
+type SigninPhoneValues    = { method: 'phone';    identifier: string; password: string; remember?: boolean };
+
+type SigninFormValues = SigninEmailValues | SigninUsernameValues | SigninPhoneValues;
+```
+
+```ts
+const handleSubmit = async (values: SigninFormValues) => {
+  if (values.method === 'email') {
+    await yourAuthLibrary.signInWithEmail(values.identifier, values.password);
+  } else if (values.method === 'phone') {
+    await yourAuthLibrary.signInWithPhone(values.identifier, values.password);
+  } else {
+    await yourAuthLibrary.signInWithUsername(values.identifier, values.password);
+  }
+};
+```
+
+## Validation
+
+| Method | `identifier` | `password` |
+|---|---|---|
+| `email` | `z.string().email()` | `z.string().min(1)` |
+| `username` | `z.string().min(1)` | `z.string().min(1)` |
+| `phone` | E.164 via `isValidPhoneNumber()` | `z.string().min(1)` |

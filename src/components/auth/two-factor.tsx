@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2, Smartphone, Mail, Key } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
 import {
   Card,
   CardContent,
@@ -15,14 +15,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "../ui/card"
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { Checkbox } from "@/components/ui/checkbox"
-import { AlertError } from "@/components/ui/alert-error"
+} from "../ui/input-otp"
+import { Checkbox } from "../ui/checkbox"
+import { AlertError } from "../ui/alert-error"
 import {
   Form,
   FormControl,
@@ -30,11 +30,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "../ui/form"
 
 import { type TwoFactorValues, type TwoFactorMethod } from "./two-factor-types"
 
-import { TwoFactorContext, useTwoFactorContext, type TwoFactorContextValue } from "@/hooks/use-two-factor"
+import { TwoFactorContext, useTwoFactorContext, type TwoFactorContextValue } from "../../hooks/use-two-factor"
 
 // --- Provider ---
 export interface TwoFactorProps {

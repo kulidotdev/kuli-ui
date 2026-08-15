@@ -166,6 +166,19 @@
       ]
     },
     {
+      "name": "storytelling",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/storytelling.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "tabs",
       "type": "registry:ui",
       "dependencies": [

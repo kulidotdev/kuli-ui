@@ -1,0 +1,195 @@
+---
+title: SignUp
+description: Registration form with name, email, password, and optional username and phone number fields.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-signup.json
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/r/auth-signup.json
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="auth-signup" />
+
+## Usage
+
+### Basic Example
+
+```tsx
+import { SignUp } from "@/components/auth/signup";
+
+export default function SignUpPage() {
+  return (
+    <SignUp
+      onSubmit={async (values) => {
+        await yourAuthLibrary.signUp({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+        });
+      }}
+    >
+      <SignUp.Header />
+      <SignUp.Content>
+        <SignUp.Form>
+          <SignUp.NameField />
+          <SignUp.EmailField />
+          <SignUp.PasswordField />
+          <SignUp.SubmitButton />
+        </SignUp.Form>
+      </SignUp.Content>
+      <SignUp.Footer signinPath="/signin" />
+    </SignUp>
+  );
+}
+```
+
+### With Username and Phone
+
+```tsx
+import { SignUp } from "@/components/auth/signup";
+import type { SignupFormValues } from "@/components/auth/signup-types";
+
+export default function SignUpPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+
+  const handleSubmit = async (values: SignupFormValues) => {
+    setIsLoading(true);
+    setApiError(null);
+    try {
+      await yourAuthLibrary.signUp({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+        ...(values.username && { username: values.username }),
+        ...(values.phone && { phoneNumber: values.phone }),
+      });
+    } catch (err) {
+      setApiError({ message: err.message ?? "Registration failed." });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <SignUp
+      onSubmit={handleSubmit}
+      isLoading={isLoading}
+      apiError={apiError}
+      showUsername
+      showPhone
+    >
+      <SignUp.Header
+        title="Create an account"
+        description="Fill in the details below to get started"
+      />
+      <SignUp.Content>
+        <SignUp.Form>
+          <SignUp.NameField />
+          <SignUp.EmailField />
+          <SignUp.UsernameField />
+          <SignUp.PhoneField />
+          <SignUp.PasswordField />
+          <SignUp.SubmitButton />
+        </SignUp.Form>
+      </SignUp.Content>
+      <SignUp.Footer signinPath="/signin" />
+    </SignUp>
+  );
+}
+```
+
+### Success View
+
+```tsx
+import { SignUp, SignupSuccessView } from "@/components/auth/signup";
+
+export default function SignUpPage() {
+  const [success, setSuccess] = useState(false);
+
+  if (success) return <SignupSuccessView redirectUrl="/signin" />;
+
+  return (
+    <SignUp onSubmit={async (values) => { /* ... */ setSuccess(true); }}>
+      ...
+    </SignUp>
+  );
+}
+```
+
+## Props
+
+### `<SignUp>` (Root Provider)
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `onSubmit` | `(values: SignupFormValues) => void` | — | **Required.** Submit callback |
+| `isLoading` | `boolean` | `false` | Disables all inputs |
+| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error to display |
+| `showUsername` | `boolean` | `false` | Show `SignUp.UsernameField` |
+| `showPhone` | `boolean` | `false` | Show `SignUp.PhoneField` |
+| `children` | `ReactNode` | — | **Required.** |
+
+### `<SignUp.Header>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `title` | `ReactNode` | `"Sign Up"` | Card title |
+| `description` | `ReactNode` | `"Create an account to get started"` | Card subtitle |
+
+### `<SignUp.Footer>`
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `signinPath` | `string` | — | Sign-in page URL. Shows "Already have an account?" when set |
+| `children` | `ReactNode` | — | Additional custom content |
+
+## Types
+
+```ts
+type SignupFormValues = {
+  name: string;
+  email: string;
+  password: string;
+  username?: string;  // only present when showUsername={true}
+  phone?: string;     // E.164 format, only present when showPhone={true}
+};
+```
+
+## Validation
+
+| Field | Rule |
+|---|---|
+| `name` | `min(1)` |
+| `email` | Valid email format |
+| `password` | `min(8)`, must contain uppercase, lowercase, and a digit |
+| `username` | `min(3)`, `max(20)`, alphanumeric + underscore |
+| `phone` | E.164 via `isValidPhoneNumber()` |
+
+<Callout type="info">
+  `username` and `phone` are **optional** in the Zod schema — only validated if the user fills them in.
+</Callout>
+
+## Sub-Components
+
+| Sub-component | Description |
+|---|---|
+| `<SignUp.Header>` | Card header with title and description |
+| `<SignUp.Content>` | Card content wrapper, automatically renders `apiError` |
+| `<SignUp.Form>` | `<form>` wrapper connected to React Hook Form |
+| `<SignUp.NameField>` | "Name" field — always visible |
+| `<SignUp.EmailField>` | "Email" field — always visible |
+| `<SignUp.UsernameField>` | "Username" field — visible when `showUsername={true}` |
+| `<SignUp.PhoneField>` | "Phone Number" field — visible when `showPhone={true}` |
+| `<SignUp.PasswordField>` | "Password" field — always visible |
+| `<SignUp.SubmitButton>` | Submit button with built-in loading state |
+| `<SignUp.Separator>` | Horizontal separator with a text label |
+| `<SignUp.Footer>` | Card footer with "Already have an account?" link |
+| `<SignupSuccessView>` | Standalone success screen after registration |

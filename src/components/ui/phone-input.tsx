@@ -6,8 +6,8 @@ import PhoneInputPrimitive, {
 import flags from "react-phone-number-input/flags";
 import "react-phone-number-input/style.css";
 
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
+import { cn } from "../../lib/utils";
+import { Input } from "./input";
 
 // ---------------------------------------------------------------------------
 // Country select — flag icon + invisible native <select> overlay
