@@ -30,7 +30,7 @@ function Step1Narrative() {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
         <Layers className="h-3.5 w-3.5" />
-        <span>Step 1 · Compositional Freedom</span>
+        <span>Compositional Freedom</span>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
@@ -102,7 +102,7 @@ function Step2Narrative({ previewState, setPreviewState }: Step2Props) {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
         <Sparkles className="h-3.5 w-3.5" />
-        <span>Step 2 · Pre-Engineered Lifecycle</span>
+        <span>Pre-Engineered Lifecycle</span>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
@@ -208,7 +208,7 @@ function Step3Narrative() {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
         <ShieldCheck className="h-3.5 w-3.5" />
-        <span>Step 3 · Full Ownership</span>
+        <span>Full Ownership</span>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
@@ -345,7 +345,7 @@ export function WhySectionClient({ codeSnippet }: { codeSnippet: string }) {
 
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-4 flex flex-col items-center text-center sm:mb-6 lg:mb-4">
+        <div className="mb-8 flex flex-col items-center text-center">
           <div className="border-fd-primary/20 bg-fd-primary/10 text-fd-primary inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-xs font-semibold">
             <Boxes className="h-3 w-3" />
             <span>Benefits</span>
