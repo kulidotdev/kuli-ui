@@ -3,19 +3,6 @@
   "homepage": "https://github.com/kulidotdev/kuli-ui",
   "items": [
     {
-      "name": "alert",
-      "type": "registry:ui",
-      "dependencies": [
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/alert.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "alert-card",
       "type": "registry:ui",
       "dependencies": [
@@ -45,84 +32,6 @@
       ]
     },
     {
-      "name": "button",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui",
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/button.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "card",
-      "type": "registry:ui",
-      "files": [
-        {
-          "path": "src/components/ui/card.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "checkbox",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/checkbox.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "form",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui",
-        "react-hook-form"
-      ],
-      "registryDependencies": [
-        "label"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/form.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "files": [
-        {
-          "path": "src/components/ui/input.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/label.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "phone-input",
       "type": "registry:ui",
       "dependencies": [
@@ -139,33 +48,6 @@
       ]
     },
     {
-      "name": "select",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/select.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "separator",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/separator.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "storytelling",
       "type": "registry:ui",
       "dependencies": [
@@ -174,20 +56,6 @@
       "files": [
         {
           "path": "src/components/ui/storytelling.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "tabs",
-      "type": "registry:ui",
-      "dependencies": [
-        "radix-ui",
-        "class-variance-authority"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]

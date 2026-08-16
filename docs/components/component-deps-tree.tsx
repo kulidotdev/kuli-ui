@@ -58,11 +58,17 @@ function collectComponentFiles(
   visited.add(name);
 
   const item = items.find((it) => it.name === name);
-  if (!item) return [];
+  const files: string[] = [];
 
-  const files: string[] = (item.files || []).map((f) => f.path);
+  if (item) {
+    files.push(...(item.files || []).map((f) => f.path));
+  } else {
+    // Fallback for external components (like official shadcn components)
+    // that are not explicitly defined in the local registry.json
+    files.push(`src/components/ui/${name}.tsx`);
+  }
 
-  if (includeDependencies && item.registryDependencies) {
+  if (includeDependencies && item?.registryDependencies) {
     for (const dep of item.registryDependencies) {
       files.push(...collectComponentFiles(dep, items, true, visited));
     }
