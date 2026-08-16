@@ -6,7 +6,7 @@ import { TwoFactorRegistration } from '@kuli-ui/components/components/auth/two-f
 export function TwoFactorRegistrationDefault() {
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
 
-  const handleEnable = async (password: string) => {
+  const handleEnable = async (_password: string) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return {
       totpUri: 'otpauth://totp/Acme:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Acme',
@@ -15,12 +15,12 @@ export function TwoFactorRegistrationDefault() {
     };
   };
 
-  const handleVerifyOtp = async (otp: string, trustedDevice: boolean) => {
+  const handleVerifyOtp = async (_otp: string, _trustedDevice: boolean) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIs2FAEnabled(true);
   };
 
-  const handleDisable = async (password: string) => {
+  const handleDisable = async (_password: string) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIs2FAEnabled(false);
   };

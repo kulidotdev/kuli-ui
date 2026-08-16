@@ -9,13 +9,13 @@ export function ResetPasswordPhone() {
   const [done, setDone] = useState(false);
   const [apiError, setApiError] = useState<{ message: string } | null>(null);
 
-  const handleSubmit = async (values: ResetPasswordPhoneValues) => {
+  const handleSubmit = async (_values: ResetPasswordPhoneValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setDone(true);
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Reset failed.' });
     } finally {
       setIsLoading(false);

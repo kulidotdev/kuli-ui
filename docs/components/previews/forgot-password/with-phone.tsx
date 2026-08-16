@@ -15,26 +15,26 @@ export function ForgotPasswordWithPhone() {
   const [sent, setSent] = useState(false);
   const [apiError, setApiError] = useState<{ message: string } | null>(null);
 
-  const handleEmail = async (values: ForgotPasswordEmailValues) => {
+  const handleEmail = async (_values: ForgotPasswordEmailValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSent(true);
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Failed to send reset link.' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handlePhone = async (values: ForgotPasswordPhoneValues) => {
+  const handlePhone = async (_values: ForgotPasswordPhoneValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSent(true);
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Failed to send OTP.' });
     } finally {
       setIsLoading(false);

@@ -9,12 +9,12 @@ export function TwoFactorMultiMethod() {
   const [isResending, setIsResending] = useState(false);
   const [apiError, setApiError] = useState<{ message: string } | null>(null);
 
-  const handleSubmit = async (method: TwoFactorMethod, values: TwoFactorValues) => {
+  const handleSubmit = async (_method: TwoFactorMethod, _values: TwoFactorValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Invalid code.' });
     } finally {
       setIsLoading(false);

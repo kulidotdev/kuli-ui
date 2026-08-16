@@ -9,13 +9,13 @@ export function SignUpWithUsernamePhone() {
   const [apiError, setApiError] = useState<{ message: string } | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (values: SignupFormValues) => {
+  const handleSubmit = async (_values: SignupFormValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSuccess(true);
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Registration failed.' });
     } finally {
       setIsLoading(false);

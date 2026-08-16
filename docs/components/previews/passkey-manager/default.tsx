@@ -4,7 +4,13 @@ import { useState } from 'react';
 import { PasskeyManager } from '@kuli-ui/components/components/auth/passkey-manager';
 
 export function PasskeyManagerDefault() {
-  const [passkeys, setPasskeys] = useState([
+  const [passkeys, setPasskeys] = useState<Array<{
+    id: string;
+    name?: string;
+    createdAt: Date;
+    lastUsedAt?: Date;
+    deviceType?: string;
+  }>>([
     {
       id: '1',
       name: 'Macbook Touch ID',

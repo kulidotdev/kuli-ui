@@ -10,7 +10,7 @@ export function SignUpBasic() {
 
   return (
     <SignUp
-      onSubmit={async (values) => {
+      onSubmit={async (_values) => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         setSuccess(true);
       }}

@@ -12,13 +12,13 @@ export function ForgotPasswordEmailOnly() {
   const [sent, setSent] = useState(false);
   const [apiError, setApiError] = useState<{ message: string } | null>(null);
 
-  const handleEmail = async (values: ForgotPasswordEmailValues) => {
+  const handleEmail = async (_values: ForgotPasswordEmailValues) => {
     setIsLoading(true);
     setApiError(null);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSent(true);
-    } catch (err) {
+    } catch {
       setApiError({ message: 'Failed to send.' });
     } finally {
       setIsLoading(false);
