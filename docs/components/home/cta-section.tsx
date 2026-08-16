@@ -3,10 +3,13 @@
 import Link from 'next/link';
 import { ArrowRight, Sparkles, Terminal } from 'lucide-react';
 import { SiGithub } from '@icons-pack/react-simple-icons';
-import { gitConfig } from '@/lib/shared';
+import { gitConfig, registryUrl } from '@/lib/shared';
 import { CopyButton } from './copy-button';
 
-const quickCmd = 'pnpm dlx shadcn@latest add https://kuli-ui.dev/r/auth-signin.json';
+const quickCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`;
+
+
+
 
 export function CtaSection() {
   return (

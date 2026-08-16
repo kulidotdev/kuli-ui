@@ -1,2 +1,3 @@
-/** Single source of truth for the registry base URL. */
-export const registryUrl = 'https://kuli-ui.dev';
+/** Single source of truth for site and registry URLs. */
+export const siteUrl = 'https://ui.kuli.dev';
+export const registryUrl = `${siteUrl}/r`;

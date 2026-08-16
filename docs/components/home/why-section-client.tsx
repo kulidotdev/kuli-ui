@@ -18,8 +18,13 @@ import {
 } from "lucide-react"
 import { SiNextdotjs, SiSupabase } from "@icons-pack/react-simple-icons"
 import { CopyButton } from "./copy-button"
+import { registryUrl } from "@/lib/shared"
 import { previewRegistry as registry } from "@/components/previews/registry"
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock"
+
+const installCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
+
+
 
 // ---------------------------------------------------------------------------
 // Step 1: Compound Component Architecture
@@ -261,13 +266,8 @@ function Step3Preview() {
           Install directly into your codebase
         </span>
         <div className="bg-fd-background/80 text-fd-foreground mt-1 flex items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 font-mono text-xs">
-          <span className="truncate">
-            pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-signin.json
-          </span>
-          <CopyButton
-            text="pnpm dlx shadcn@latest add REGISTRY_URL/r/auth-signin.json"
-            variant="icon"
-          />
+          <span className="truncate">{installCmd}</span>
+          <CopyButton text={installCmd} variant="icon" />
         </div>
       </div>
 

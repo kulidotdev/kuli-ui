@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import { Tabs, Tab } from 'fumadocs-ui/components/tabs';
 import { DynamicCodeBlock } from 'fumadocs-ui/components/dynamic-codeblock';
 import { previewRegistry } from './previews/registry';
+import { registryUrl } from '@/lib/shared';
 
 export function readPreviewSource(name: string): string {
   const filePath = join(process.cwd(), 'components/previews', `${name}.tsx`);
@@ -14,6 +15,7 @@ export function readPreviewSource(name: string): string {
     // Rewrite workspace import to be copy-paste friendly
     .replace(/@kuli-ui\/components\/components\//g, '@/components/')
     .replace(/@kuli-ui\/components\/hooks\//g, '@/hooks/')
+    .replaceAll('REGISTRY_URL', registryUrl)
     .trim();
 }
 

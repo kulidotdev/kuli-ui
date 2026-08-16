@@ -1,12 +1,9 @@
 import type { Metadata } from 'next';
 import { RootProvider } from 'fumadocs-ui/provider/next';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/geist-mono';
 import './global.css';
-import { Inter } from 'next/font/google';
 import { siteUrl } from '@/lib/shared';
-
-const inter = Inter({
-  subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -21,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <RootProvider>{children}</RootProvider>
       </body>

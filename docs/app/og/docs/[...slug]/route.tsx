@@ -30,7 +30,7 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
           justifyContent: 'space-between',
           padding: '60px',
           backgroundColor: '#09090b',
-          fontFamily: 'Inter, sans-serif',
+          fontFamily: 'Plus Jakarta Sans, sans-serif',
         }}
       >
         {/* Logo + site name */}
