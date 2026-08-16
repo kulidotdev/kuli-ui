@@ -21,90 +21,11 @@ Files added to your project:
 
 ### Basic Example
 
-```tsx
-import { SignUp } from "@/components/auth/signup";
-
-export default function SignUpPage() {
-  return (
-    <SignUp
-      onSubmit={async (values) => {
-        await yourAuthLibrary.signUp({
-          name: values.name,
-          email: values.email,
-          password: values.password,
-        });
-      }}
-    >
-      <SignUp.Header />
-      <SignUp.Content>
-        <SignUp.Form>
-          <SignUp.NameField />
-          <SignUp.EmailField />
-          <SignUp.PasswordField />
-          <SignUp.SubmitButton />
-        </SignUp.Form>
-      </SignUp.Content>
-      <SignUp.Footer signinPath="/signin" />
-    </SignUp>
-  );
-}
-```
+<ComponentPreview name="signup/basic" />
 
 ### With Username and Phone
 
-```tsx
-import { SignUp } from "@/components/auth/signup";
-import type { SignupFormValues } from "@/components/auth/signup-types";
-
-export default function SignUpPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
-
-  const handleSubmit = async (values: SignupFormValues) => {
-    setIsLoading(true);
-    setApiError(null);
-    try {
-      await yourAuthLibrary.signUp({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        ...(values.username && { username: values.username }),
-        ...(values.phone && { phoneNumber: values.phone }),
-      });
-    } catch (err) {
-      setApiError({ message: err.message ?? "Registration failed." });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <SignUp
-      onSubmit={handleSubmit}
-      isLoading={isLoading}
-      apiError={apiError}
-      showUsername
-      showPhone
-    >
-      <SignUp.Header
-        title="Create an account"
-        description="Fill in the details below to get started"
-      />
-      <SignUp.Content>
-        <SignUp.Form>
-          <SignUp.NameField />
-          <SignUp.EmailField />
-          <SignUp.UsernameField />
-          <SignUp.PhoneField />
-          <SignUp.PasswordField />
-          <SignUp.SubmitButton />
-        </SignUp.Form>
-      </SignUp.Content>
-      <SignUp.Footer signinPath="/signin" />
-    </SignUp>
-  );
-}
-```
+<ComponentPreview name="signup/with-username-phone" />
 
 ### Success View
 

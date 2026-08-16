@@ -21,97 +21,11 @@ Files added to your project:
 
 ### TOTP Only
 
-```tsx
-import { TwoFactor } from "@/components/auth/two-factor";
-import type { TwoFactorMethod, TwoFactorValues } from "@/components/auth/two-factor-types";
-
-export default function TwoFactorPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
-
-  const handleSubmit = async (method: TwoFactorMethod, values: TwoFactorValues) => {
-    setIsLoading(true);
-    setApiError(null);
-    try {
-      await yourAuthLibrary.verifyTotp({ code: values.code, trustDevice: values.trustDevice });
-    } catch (err) {
-      setApiError({ message: err.message ?? "Invalid code." });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <TwoFactor onSubmit={handleSubmit} isLoading={isLoading} apiError={apiError} twofactorMethods={["totp"]}>
-      <TwoFactor.Header />
-      <TwoFactor.Content>
-        <TwoFactor.Form>
-          <TwoFactor.CodeInput />
-          <TwoFactor.TrustDevice />
-          <TwoFactor.SubmitButton />
-        </TwoFactor.Form>
-      </TwoFactor.Content>
-    </TwoFactor>
-  );
-}
-```
+<ComponentPreview name="two-factor/totp" />
 
 ### Multi-Method (TOTP + Email OTP + Backup Code)
 
-```tsx
-import { TwoFactor } from "@/components/auth/two-factor";
-import type { TwoFactorMethod, TwoFactorValues } from "@/components/auth/two-factor-types";
-
-export default function TwoFactorPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isResending, setIsResending] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
-
-  const handleSubmit = async (method: TwoFactorMethod, values: TwoFactorValues) => {
-    setIsLoading(true);
-    setApiError(null);
-    try {
-      if (method === "totp") await yourAuthLibrary.verifyTotp(values);
-      else if (method === "otp") await yourAuthLibrary.verifyOtp(values);
-      else if (method === "backup_code") await yourAuthLibrary.verifyBackupCode(values);
-    } catch (err) {
-      setApiError({ message: err.message ?? "Invalid code." });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleResend = async () => {
-    setIsResending(true);
-    await yourAuthLibrary.sendOtp();
-    setIsResending(false);
-  };
-
-  return (
-    <TwoFactor
-      onSubmit={handleSubmit}
-      onResendOtp={handleResend}
-      isLoading={isLoading}
-      isResending={isResending}
-      apiError={apiError}
-      twofactorMethods={["totp", "otp", "backup_code"]}
-      currentView="totp"
-      resendCooldown={60}
-      trustDeviceDescription="Skip 2FA on this device for 30 days"
-    >
-      <TwoFactor.Header />
-      <TwoFactor.Content>
-        <TwoFactor.Form>
-          <TwoFactor.CodeInput />
-          <TwoFactor.TrustDevice />
-          <TwoFactor.SubmitButton />
-        </TwoFactor.Form>
-      </TwoFactor.Content>
-      <TwoFactor.Footer />
-    </TwoFactor>
-  );
-}
-```
+<ComponentPreview name="two-factor/multi-method" />
 
 ## Props
 

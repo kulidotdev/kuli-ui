@@ -23,36 +23,7 @@ Files added to your project:
 
 Provide three callbacks — the component manages the entire state machine on its own:
 
-```tsx
-import { TwoFactorRegistration } from "@/components/auth/two-factor-registration";
-
-export default function SecurityPage() {
-  const is2FAEnabled = useCurrentUser()?.twoFactorEnabled ?? false;
-
-  const handleEnable = async (password: string) => {
-    const data = await yourAuthLibrary.twoFactor.enable(password);
-    // Must return TotpData
-    return { totpUri: data.totpURI, secret: data.secret, backupCodes: data.backupCodes };
-  };
-
-  const handleVerifyOtp = async (otp: string, trustedDevice: boolean) => {
-    await yourAuthLibrary.twoFactor.verifyTotp({ code: otp, trustDevice: trustedDevice });
-  };
-
-  const handleDisable = async (password: string) => {
-    await yourAuthLibrary.twoFactor.disable(password);
-  };
-
-  return (
-    <TwoFactorRegistration
-      enabled={is2FAEnabled}
-      onEnable={handleEnable}
-      onVerifyOtp={handleVerifyOtp}
-      onDisable={handleDisable}
-    />
-  );
-}
-```
+<ComponentPreview name="two-factor-registration/default" />
 
 <Callout type="info">
   When no `children` are provided, `TwoFactorRegistration` renders `TwoFactorDefaultViews` — built-in views that manage the entire flow. This is the fastest way to get started.
