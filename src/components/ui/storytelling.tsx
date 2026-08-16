@@ -520,7 +520,7 @@ export function StorytellingCornerTicks({ className }: { className?: string }) {
 // ---------------------------------------------------------------------------
 
 export function StorytellingProgress({
-  label = "Scroll down to transition through in-place flows",
+  label = "",
   className,
   ...props
 }: React.ComponentProps<"div"> & { label?: string }) {

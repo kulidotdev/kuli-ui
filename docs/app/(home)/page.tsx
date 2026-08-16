@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { HeroSection } from '@/components/home/hero-section';
 import { WhySection } from '@/components/home/why-section';
-import { ComponentShowcase } from '@/components/home/component-showcase';
+
 import { CtaSection } from '@/components/home/cta-section';
 
 export const metadata: Metadata = {
@@ -19,8 +19,7 @@ export default function HomePage() {
       {/* 2. Why Section (Features & Architecture) */}
       <WhySection />
 
-      {/* 3. Production Component Showcase Catalog */}
-      <ComponentShowcase />
+
 
       {/* 4. Bottom Call to Action & GitHub Links */}
       <CtaSection />

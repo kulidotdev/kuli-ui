@@ -19,12 +19,12 @@ import {
 import { SiNextdotjs, SiSupabase } from "@icons-pack/react-simple-icons"
 import { CopyButton } from "./copy-button"
 import { registryUrl } from "@/lib/shared"
+import { AnimatedGradientText } from "@kuli-ui/components/components/ui/animated-gradient-text"
+import { Highlighter } from "@kuli-ui/components/components/ui/highlighter"
 import { previewRegistry as registry } from "@/components/previews/registry"
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock"
 
 const installCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
-
-
 
 // ---------------------------------------------------------------------------
 // Step 1: Compound Component Architecture
@@ -35,11 +35,15 @@ function Step1Narrative() {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
         <Layers className="h-3.5 w-3.5" />
-        <span>Compositional Freedom</span>
+        <AnimatedGradientText colorFrom="#3b82f6" colorTo="#60a5fa">
+          Compositional Freedom
+        </AnimatedGradientText>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
-        Compound Component Architecture
+        <Highlighter action="underline" color="#3b82f6" padding={2}>
+          Compound Component Architecture
+        </Highlighter>
       </h3>
 
       <p className="text-fd-muted-foreground text-sm leading-relaxed">
@@ -107,17 +111,21 @@ function Step2Narrative({ previewState, setPreviewState }: Step2Props) {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
         <Sparkles className="h-3.5 w-3.5" />
-        <span>Pre-Engineered Lifecycle</span>
+        <AnimatedGradientText colorFrom="#f59e0b" colorTo="#fbbf24">
+          Pre-Engineered Lifecycle
+        </AnimatedGradientText>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
-        Live Pre-Designed Component Flows
+        <Highlighter action="underline" color="#f59e0b" padding={2}>
+          Pre-Designed Component
+        </Highlighter>
       </h3>
 
       <p className="text-fd-muted-foreground text-sm leading-relaxed">
         Not just static input primitives. Form validation schemas with Zod,
-        interactive loading spinners, error alerts, and redirect transitions are
-        already designed and wired up.
+        interactive loading spinners, and error alerts are already designed and
+        wired up.
       </p>
 
       {/* Interactive State Toggle Buttons */}
@@ -180,7 +188,7 @@ function Step2Preview({
         <div className="flex items-center gap-2">
           <span className="flex h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
           <span className="text-fd-card-foreground text-xs font-bold">
-            Live Component Output
+            Preview
           </span>
         </div>
         <span className="text-fd-muted-foreground font-mono text-[11px]">
@@ -213,17 +221,24 @@ function Step3Narrative() {
     <>
       <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
         <ShieldCheck className="h-3.5 w-3.5" />
-        <span>Full Ownership</span>
+        <AnimatedGradientText colorFrom="#10b981" colorTo="#34d399">
+          Full Ownership
+        </AnimatedGradientText>
       </div>
 
       <h3 className="text-fd-foreground text-2xl font-bold tracking-tight sm:text-3xl">
-        Zero Vendor Lock-in
+        <Highlighter action="underline" color="#10b981" padding={2}>
+          Zero Vendor Lock-in
+        </Highlighter>
       </h3>
 
       <p className="text-fd-muted-foreground text-sm leading-relaxed">
-        Installed directly into your repository via the shadcn CLI. You own 100%
-        of the source code. Decoupled headless hooks let you plug in any auth
-        provider without changing UI templates.
+        Installed directly into your repository via the shadcn CLI. You own{" "}
+        <span className="relative z-10 font-semibold text-white">
+          100% of the source code
+        </span>
+        . Decoupled headless hooks let you plug in any auth provider without
+        changing UI templates.
       </p>
 
       <div className="space-y-1.5 pt-1 text-xs">
@@ -266,7 +281,9 @@ function Step3Preview() {
           Install directly into your codebase
         </span>
         <div className="bg-fd-background/80 text-fd-foreground mt-1 flex items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 font-mono text-xs">
-          <span className="truncate">{installCmd}</span>
+          <span className="flex-1 min-w-0 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {installCmd}
+          </span>
           <CopyButton text={installCmd} variant="icon" />
         </div>
       </div>
@@ -348,7 +365,7 @@ export function WhySectionClient({ codeSnippet }: { codeSnippet: string }) {
         <div className="mb-8 flex flex-col items-center text-center">
           <div className="border-fd-primary/20 bg-fd-primary/10 text-fd-primary inline-flex items-center gap-1.5 rounded-full border px-3 py-0.5 text-xs font-semibold">
             <Boxes className="h-3 w-3" />
-            <span>Benefits</span>
+            <AnimatedGradientText>Benefits</AnimatedGradientText>
           </div>
           <h2 className="text-fd-foreground mt-1.5 text-2xl font-extrabold tracking-tight sm:text-3xl lg:text-3xl">
             Why <span className="text-fd-primary">kuli/ui</span>?

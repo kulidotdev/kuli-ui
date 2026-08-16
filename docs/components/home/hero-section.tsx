@@ -4,10 +4,13 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "motion/react"
 import { ArrowRight, BookOpen } from "lucide-react"
+import { AnimatedGradientText } from "@kuli-ui/components/components/ui/animated-gradient-text"
+import { MorphingText } from "@kuli-ui/components/components/ui/morphing-text"
+import { Highlighter } from "@kuli-ui/components/components/ui/highlighter"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen lg:h-screen w-full overflow-hidden flex flex-col justify-center pt-16 pb-20 md:pt-20 md:pb-28">
+    <section className="relative flex min-h-screen w-full flex-col justify-center overflow-hidden pt-16 pb-20 md:pt-20 md:pb-28 lg:h-screen">
       {/* Background Glows & Mesh */}
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="bg-grid-pattern absolute inset-0 opacity-60 dark:opacity-40" />
@@ -24,7 +27,9 @@ export function HeroSection() {
             className="border-fd-border/70 bg-fd-muted/60 text-fd-muted-foreground hover:border-fd-primary/40 hover:bg-fd-muted mb-6 inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium shadow-xs backdrop-blur-md transition-all"
           >
             <span className="flex h-2 w-2 animate-pulse rounded-full bg-emerald-500 ring-2 ring-emerald-500/20" />
-            <span className="text-fd-foreground font-semibold">kuli/ui</span>
+            <AnimatedGradientText className="font-semibold">
+              kuli/ui
+            </AnimatedGradientText>
             {/* <span>·</span>
             <span className="flex items-center gap-1 text-fd-primary">
               <Sparkles className="h-3 w-3" /> Reusable UI Components with Pre-designed Flows
@@ -50,12 +55,18 @@ export function HeroSection() {
               />
             </div>
 
-            <h1 className="text-fd-foreground max-w-4xl text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-              Reusable components with{" "}
-              <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 bg-clip-text text-transparent dark:from-blue-400 dark:via-cyan-300 dark:to-indigo-400">
-                pre-designed flows
-              </span>
-            </h1>
+            <div className="text-fd-foreground flex max-w-4xl flex-col items-center text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+              <span>Reusable components with</span>
+              <MorphingText
+                texts={[
+                  "Pre-designed UI",
+                  "Form Schema",
+                  "Loading States",
+                  "Error States",
+                ]}
+                className="mt-2 h-16 text-4xl text-blue-600 filter-[url(#threshold)_blur(1px)] sm:text-5xl md:h-20 md:text-6xl lg:h-24 dark:text-blue-400"
+              />
+            </div>
           </motion.div>
 
           {/* Subtitle */}
@@ -65,10 +76,20 @@ export function HeroSection() {
             transition={{ duration: 0.45, delay: 0.2 }}
             className="text-fd-muted-foreground mt-6 max-w-2xl text-base sm:text-lg"
           >
-            kuli/ui is a collection of production-ready UI components where the
-            complete flow is already engineered for you — validation schemas,
-            error handling, and loading states all included. Copy-paste into
-            your codebase and wire up your backend.
+            kuli/ui is a collection of{" "}
+            <Highlighter
+              action="underline"
+              color="#3b82f6"
+              padding={4}
+              isView={true}
+            >
+              <span className="relative z-10 font-semibold dark:text-white">
+                production-ready UI components
+              </span>
+            </Highlighter>{" "}
+            where the complete flow is already engineered for you — validation
+            schemas, error handling, and loading states all included. Copy-paste
+            into your codebase and wire up your backend.
           </motion.p>
 
           {/* CTA Action Buttons */}
