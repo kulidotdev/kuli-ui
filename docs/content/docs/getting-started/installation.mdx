@@ -24,7 +24,7 @@ Open your `components.json` and add the `"registries"` field (if it doesn't exis
 {
   // Add this section:
   "registries": {
-    "@kuli": "https://ui.kuli.dev/r/{name}"
+    "@kuli-ui": "https://ui.kuli.dev/r/{name}"
   }
 }
 ```
@@ -35,18 +35,18 @@ Open your `components.json` and add the `"registries"` field (if it doesn't exis
   **Always use `shadcn@latest`** when adding components. Our custom registry depends on the modern dependency resolution architecture introduced in recent versions of the CLI.
 </Callout>
 
-Once the namespace is configured, you can add components directly using the `@kuli` prefix:
+Once the namespace is configured, you can add components directly using the `@kuli-ui` prefix:
 
 ```bash tab="pnpm"
-pnpm dlx shadcn@latest add @kuli/auth-signin
+pnpm dlx shadcn@latest add @kuli-ui/auth-signin
 ```
 
 ```bash tab="npm"
-npx shadcn@latest add @kuli/auth-signin
+npx shadcn@latest add @kuli-ui/auth-signin
 ```
 
 ```bash tab="bun"
-bunx shadcn@latest add @kuli/auth-signin
+bunx shadcn@latest add @kuli-ui/auth-signin
 ```
 
 The CLI will automatically fetch the component from the Kuli Registry, resolve all its dependencies (including official shadcn components like `button`), and place the files into your project.
