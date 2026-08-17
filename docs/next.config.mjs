@@ -7,6 +7,10 @@ const withMDX = createMDX();
 const config = {
   reactStrictMode: true,
   transpilePackages: ['@kuli-ui/components'],
+  output: 'export',
+  images: {
+    unoptimized: true
+  }
 };
 
 export default withMDX(config);

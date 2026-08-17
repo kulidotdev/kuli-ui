@@ -2,4 +2,4 @@ name = "kuli-ui"
 compatibility_date = "2026-08-10"
 
 [assets]
-directory = "dist/registry"
+directory = "docs/out"

@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react"
 import type React from "react"
 import { useInView } from "motion/react"
 import { annotate } from "rough-notation"
-import { type RoughAnnotation } from "rough-notation/lib/model"
+
 
 type AnnotationAction =
   | "highlight"
@@ -51,7 +51,6 @@ export function Highlighter({
   // Use useEffect instead of useLayoutEffect to allow the DOM to paint and animations to settle
   useEffect(() => {
     const element = elementRef.current
-    let annotation: RoughAnnotation | null = null
     // let resizeObserver: ResizeObserver | null = null
     let timeoutId: ReturnType<typeof setTimeout>
 
@@ -70,7 +69,6 @@ export function Highlighter({
       // 800ms allows typical framer-motion initial animations to complete before drawing the SVG
       timeoutId = setTimeout(() => {
         const currentAnnotation = annotate(element, annotationConfig)
-        annotation = currentAnnotation
         currentAnnotation.show()
       }, 800)
     }
