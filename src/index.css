@@ -47,7 +47,6 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   --animate-gradient: gradient 8s linear infinite;
-  --animate-gradient: gradient 8s linear infinite;
 
   @keyframes gradient {
       to {

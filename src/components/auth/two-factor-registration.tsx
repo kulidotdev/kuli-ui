@@ -42,6 +42,9 @@ import {
   type TwoFactorContextValue,
 } from "../../hooks/use-two-factor-registration"
 
+/**
+ * Props for the TwoFactorRegistration component.
+ */
 export interface TwoFactorRegistrationProps {
   /**
    * Initial 2FA status
@@ -66,6 +69,9 @@ export interface TwoFactorRegistrationProps {
   children?: React.ReactNode
 }
 
+/**
+ * The main component for the Two-Factor Authentication registration flow.
+ */
 export function TwoFactorRegistration({
   enabled = false,
   onEnable,

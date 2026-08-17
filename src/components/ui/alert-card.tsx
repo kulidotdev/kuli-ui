@@ -8,13 +8,36 @@ import {
   CardFooter
 } from "./card";
 
+/**
+ * Represents the available visual variants for the alert card.
+ * Controls the color scheme, gradient, and default icon.
+ */
 export type AlertVariant = "info" | "error" | "warning" | "success";
 
+/**
+ * Props for the AlertCard component.
+ */
 export interface AlertCardProps {
+  /**
+   * The visual variant of the alert.
+   * @default "info"
+   */
   variant?: AlertVariant;
+  /**
+   * The main title text of the alert.
+   */
   title: string;
+  /**
+   * The detailed description or message of the alert.
+   */
   description: React.ReactNode;
+  /**
+   * Optional custom icon to replace the default variant icon.
+   */
   icon?: React.ReactNode;
+  /**
+   * Optional footer content, typically used for action buttons.
+   */
   footer?: React.ReactNode;
 }
 
@@ -65,6 +88,10 @@ const variantStyles: Record<AlertVariant, {
   },
 };
 
+/**
+ * AlertCard displays a prominent message card with an icon, title, description, and optional footer actions.
+ * It's suitable for important notifications, error messages, or success states.
+ */
 export function AlertCard({ variant = "info", title, description, icon, footer }: AlertCardProps) {
   const styles = variantStyles[variant];
   const IconComponent = styles.DefaultIcon;

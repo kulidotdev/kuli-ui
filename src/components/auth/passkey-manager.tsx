@@ -46,14 +46,35 @@ import {
   usePasskeyItemContext,
 } from "../../hooks/use-passkey-manager"
 
-export interface PasskeyManagerProps extends React.HTMLAttributes<HTMLDivElement> {
+/**
+ * Props for the PasskeyManager component.
+ */
+export interface PasskeyManagerProps {
+  /**
+   * The list of passkeys registered to the current user.
+   */
   passkeys: Passkey[]
+  /**
+   * Callback triggered when the user initiates adding a new passkey.
+   */
   onAddPasskey?: () => Promise<void> | void
+  /**
+   * Callback triggered when the user removes a passkey.
+   */
   onRemovePasskey?: (id: string) => Promise<void> | void
+  /**
+   * Callback triggered when the user updates a passkey (e.g., renaming it).
+   */
   onUpdatePasskey?: (passkey: Passkey) => Promise<void> | void
+  /**
+   * Whether the component is in a loading state (e.g., while processing the addition of a new passkey).
+   */
   isLoading?: boolean
 }
 
+/**
+ * The main component for managing passkeys.
+ */
 export function PasskeyManager({
   passkeys,
   onAddPasskey,
@@ -63,10 +84,16 @@ export function PasskeyManager({
   className,
   children,
   ...props
-}: PasskeyManagerProps) {
+}: PasskeyManagerProps & React.HTMLAttributes<HTMLDivElement>) {
   return (
     <PasskeyContext.Provider
-      value={{ passkeys, isLoading, onAddPasskey, onRemovePasskey, onUpdatePasskey }}
+      value={{
+        passkeys,
+        isLoading,
+        onAddPasskey,
+        onRemovePasskey,
+        onUpdatePasskey,
+      }}
     >
       <div className={cn("flex flex-col space-y-6", className)} {...props}>
         {children}
@@ -148,8 +175,16 @@ PasskeyManager.List = function PasskeyManagerList({
 
 // --- Item Component ---
 
-export interface PasskeyItemProps extends React.HTMLAttributes<HTMLDivElement> {
+/**
+ * Props for an individual PasskeyManager.Item component.
+ */
+export interface PasskeyItemProps {
+  /**
+   * The passkey data associated with this item.
+   */
   passkey: Passkey
+  className?: string
+  children?: React.ReactNode
 }
 
 PasskeyManager.Item = function PasskeyManagerItem({
@@ -160,10 +195,7 @@ PasskeyManager.Item = function PasskeyManagerItem({
 }: PasskeyItemProps & React.ComponentProps<typeof Item>) {
   return (
     <PasskeyItemContext.Provider value={{ passkey }}>
-      <Item
-        className={className}
-        {...props}
-      >
+      <Item className={className} {...props}>
         {children}
       </Item>
     </PasskeyItemContext.Provider>
@@ -215,9 +247,7 @@ PasskeyManager.ItemDetails = function PasskeyManagerItemDetails({
     <>
       <PasskeyManager.ItemIcon />
       <ItemContent className={className} {...props}>
-        <ItemTitle>
-          {passkey.name || "Passkey"}
-        </ItemTitle>
+        <ItemTitle>{passkey.name || "Passkey"}</ItemTitle>
         <ItemDescription>
           Added{" "}
           {new Intl.DateTimeFormat("en-US", { dateStyle: "medium" }).format(
@@ -310,9 +340,7 @@ PasskeyManager.ItemActions = function PasskeyManagerItemActions({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           {onUpdatePasskey && (
-            <DropdownMenuItem
-              onClick={() => onUpdatePasskey(passkey)}
-            >
+            <DropdownMenuItem onClick={() => onUpdatePasskey(passkey)}>
               <Pencil className="mr-2 h-4 w-4" />
               <span>Rename</span>
             </DropdownMenuItem>
@@ -359,9 +387,9 @@ PasskeyManager.AddAction = function PasskeyManagerAddAction({
       {...props}
     >
       {isAdding || isLoading ? (
-        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        <Loader2 className="h-4 w-4 animate-spin" />
       ) : (
-        <Plus className="mr-2 h-4 w-4" />
+        <Plus className="h-4 w-4" />
       )}
       {children || "Register a new Passkey"}
     </Button>

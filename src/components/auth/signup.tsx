@@ -28,12 +28,34 @@ export { signupSchema };
 import { SignUpContext, useSignUpContext, type SignUpContextValue } from "../../hooks/use-signup";
 
 // --- Provider ---
+
+/**
+ * Props for the SignUp component.
+ */
 export interface SignUpProps {
+  /**
+   * Callback for when the user successfully submits the registration form.
+   */
   onSubmit: (values: SignupFormValues) => void;
+  /**
+   * Whether the component is currently in a loading state (e.g. submitting).
+   */
   isLoading?: boolean;
+  /**
+   * An optional API error to display at the top of the form.
+   */
   apiError?: { message: string; code?: string } | null;
+  /**
+   * Whether to display the username field.
+   */
   showUsername?: boolean;
+  /**
+   * Whether to display the phone number field.
+   */
   showPhone?: boolean;
+  /**
+   * The subcomponents to render within the sign up card.
+   */
   children: React.ReactNode;
 }
 
@@ -77,7 +99,21 @@ export function SignUp({
 
 // --- Compound Components ---
 
-SignUp.Header = function SignUpHeader({ title = "Sign Up", description = "Create an account to get started" }: { title?: React.ReactNode, description?: React.ReactNode }) {
+/**
+ * Props for the SignUpHeader component.
+ */
+export interface SignUpHeaderProps {
+  /**
+   * The title of the card. Defaults to "Sign Up".
+   */
+  title?: React.ReactNode
+  /**
+   * The description of the card. Defaults to "Create an account to get started".
+   */
+  description?: React.ReactNode
+}
+
+SignUp.Header = function SignUpHeader({ title = "Sign Up", description = "Create an account to get started" }: SignUpHeaderProps) {
   return (
     <CardHeader className="space-y-1 text-center">
       <CardTitle className="text-2xl font-bold tracking-tight">
@@ -88,7 +124,17 @@ SignUp.Header = function SignUpHeader({ title = "Sign Up", description = "Create
   );
 }
 
-SignUp.Content = function SignUpContent({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the SignUpContent component.
+ */
+export interface SignUpContentProps {
+  /**
+   * Content to render inside the card body, typically the sign up form.
+   */
+  children: React.ReactNode
+}
+
+SignUp.Content = function SignUpContent({ children }: SignUpContentProps) {
   const { apiError } = useSignUpContext();
   return (
     <CardContent>
@@ -98,7 +144,17 @@ SignUp.Content = function SignUpContent({ children }: { children: React.ReactNod
   );
 }
 
-SignUp.Form = function SignUpForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the SignUpForm component.
+ */
+export interface SignUpFormProps {
+  /**
+   * Form fields for the sign up flow.
+   */
+  children: React.ReactNode
+}
+
+SignUp.Form = function SignUpForm({ children }: SignUpFormProps) {
   const { form, onSubmit } = useSignUpContext();
 
   const handleSubmit = (values: SignupFormValues) => onSubmit(values);
@@ -214,7 +270,17 @@ SignUp.PasswordField = function SignUpPasswordField() {
   );
 }
 
-SignUp.SubmitButton = function SignUpSubmitButton({ children }: { children?: React.ReactNode }) {
+/**
+ * Props for the SignUpSubmitButton component.
+ */
+export interface SignUpSubmitButtonProps {
+  /**
+   * Custom label for the submit button. Defaults to "Create account".
+   */
+  children?: React.ReactNode
+}
+
+SignUp.SubmitButton = function SignUpSubmitButton({ children }: SignUpSubmitButtonProps) {
   const { isLoading } = useSignUpContext();
   return (
     <Button type="submit" className="w-full" disabled={isLoading}>
@@ -224,7 +290,17 @@ SignUp.SubmitButton = function SignUpSubmitButton({ children }: { children?: Rea
   );
 }
 
-SignUp.Separator = function SignUpSeparator({ children = "Or continue with" }: { children?: React.ReactNode }) {
+/**
+ * Props for the SignUpSeparator component.
+ */
+export interface SignUpSeparatorProps {
+  /**
+   * Custom text for the separator. Defaults to "Or continue with".
+   */
+  children?: React.ReactNode
+}
+
+SignUp.Separator = function SignUpSeparator({ children = "Or continue with" }: SignUpSeparatorProps) {
   return (
     <div className="relative my-6">
       <div className="absolute inset-0 flex items-center"><Separator /></div>
@@ -235,7 +311,22 @@ SignUp.Separator = function SignUpSeparator({ children = "Or continue with" }: {
   );
 }
 
-SignUp.Footer = function SignUpFooter({ signinPath, children }: { signinPath?: string, children?: React.ReactNode }) {
+/**
+ * Props for the SignUpFooter component.
+ */
+export interface SignUpFooterProps {
+  /**
+   * An optional path to redirect to for sign in.
+   * If provided, an "Already have an account? Sign in" link is displayed.
+   */
+  signinPath?: string
+  /**
+   * Custom content to display in the footer.
+   */
+  children?: React.ReactNode
+}
+
+SignUp.Footer = function SignUpFooter({ signinPath, children }: SignUpFooterProps) {
   if (!signinPath && !children) return null;
   return (
     <CardFooter className="flex flex-col space-y-4">
@@ -252,7 +343,17 @@ SignUp.Footer = function SignUpFooter({ signinPath, children }: { signinPath?: s
   );
 }
 
-export function SignupSuccessView({ redirectUrl }: { redirectUrl: string }) {
+/**
+ * Props for the SignupSuccessView component.
+ */
+export interface SignupSuccessViewProps {
+  /**
+   * The URL to navigate to when the user clicks the "Continue" button.
+   */
+  redirectUrl: string
+}
+
+export function SignupSuccessView({ redirectUrl }: SignupSuccessViewProps) {
   return (
     <div className="w-full max-w-md mx-auto">
       <AlertCard

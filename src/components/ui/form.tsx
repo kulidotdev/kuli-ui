@@ -15,6 +15,9 @@ import {
 import { cn } from "../../lib/utils"
 import { Label } from "./label"
 
+/**
+ * Provider for the React Hook Form.
+ */
 const Form = FormProvider
 
 type FormFieldContextValue<
@@ -28,6 +31,9 @@ const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 )
 
+/**
+ * A wrapper for a single form field using react-hook-form Controller.
+ */
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
@@ -72,7 +78,18 @@ const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 )
 
-function FormItem({ className, ...props }: React.ComponentProps<"div">) {
+/**
+ * Props for the FormItem component.
+ */
+export interface FormItemProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+/**
+ * Wrapper for an individual form item, providing context for the label, control, and messages.
+ */
+function FormItem({ className, ...props }: FormItemProps & React.ComponentProps<"div">) {
   const id = React.useId()
 
   return (
@@ -86,10 +103,21 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+/**
+ * Props for the FormLabel component.
+ */
+export interface FormLabelProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+/**
+ * Label for a form item. Automatically handles accessibility linking to the control and error states.
+ */
 function FormLabel({
   className,
   ...props
-}: React.ComponentProps<typeof LabelPrimitive.Root>) {
+}: FormLabelProps & React.ComponentProps<typeof LabelPrimitive.Root>) {
   const { error, formItemId } = useFormField()
 
   return (
@@ -103,7 +131,17 @@ function FormLabel({
   )
 }
 
-function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
+/**
+ * Props for the FormControl component.
+ */
+export interface FormControlProps {
+  children?: React.ReactNode
+}
+
+/**
+ * Wraps the actual input/control. Applies the necessary accessibility attributes.
+ */
+function FormControl({ ...props }: FormControlProps & React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (
@@ -121,7 +159,18 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot.Root>) {
   )
 }
 
-function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
+/**
+ * Props for the FormDescription component.
+ */
+export interface FormDescriptionProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+/**
+ * Provides a description for the form field.
+ */
+function FormDescription({ className, ...props }: FormDescriptionProps & React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField()
 
   return (
@@ -134,7 +183,18 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
+/**
+ * Props for the FormMessage component.
+ */
+export interface FormMessageProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+/**
+ * Displays error messages associated with the form field.
+ */
+function FormMessage({ className, ...props }: FormMessageProps & React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? "") : props.children
 

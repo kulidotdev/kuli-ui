@@ -37,18 +37,58 @@ import { type TwoFactorValues, type TwoFactorMethod } from "./two-factor-types"
 import { TwoFactorContext, useTwoFactorContext, type TwoFactorContextValue } from "../../hooks/use-two-factor"
 
 // --- Provider ---
+
+/**
+ * Props for the TwoFactor component.
+ */
 export interface TwoFactorProps {
+  /**
+   * The initial authentication method to display. Defaults to "totp".
+   */
   currentView?: TwoFactorMethod
+  /**
+   * The allowed authentication methods. Defaults to ["totp", "otp"].
+   */
   twofactorMethods?: TwoFactorMethod[]
+  /**
+   * Callback for when the user submits a verification code.
+   */
   onSubmit?: (method: TwoFactorMethod, values: TwoFactorValues) => Promise<void>
+  /**
+   * Callback for when the user requests a new OTP (only used if "otp" method is enabled).
+   */
   onResendOtp?: () => Promise<void>
+  /**
+   * Whether the component is currently in a loading state (e.g. submitting).
+   */
   isLoading?: boolean
+  /**
+   * Whether the component is currently resending an OTP.
+   */
   isResending?: boolean
+  /**
+   * An optional API error to display at the top of the form.
+   */
   apiError?: { message: string; code?: string } | null
+  /**
+   * The expected length of TOTP codes. Defaults to 6.
+   */
   totpLength?: number
+  /**
+   * The expected length of email/SMS OTP codes. Defaults to 6.
+   */
   otpLength?: number
+  /**
+   * The cooldown time in seconds before the user can request another OTP. Defaults to 60.
+   */
   resendCooldown?: number
+  /**
+   * If provided, displays a "Trust this device" checkbox with this description.
+   */
   trustDeviceDescription?: string
+  /**
+   * The subcomponents to render within the two-factor card.
+   */
   children: React.ReactNode
 }
 
@@ -149,7 +189,21 @@ export function TwoFactor({
 
 // --- Compound Components ---
 
-TwoFactor.Header = function TwoFactorHeader({ title, description }: { title?: React.ReactNode, description?: React.ReactNode }) {
+/**
+ * Props for the TwoFactorHeader component.
+ */
+export interface TwoFactorHeaderProps {
+  /**
+   * The title of the card. Automatically changes based on active method if omitted.
+   */
+  title?: React.ReactNode
+  /**
+   * The description of the card. Automatically changes based on active method if omitted.
+   */
+  description?: React.ReactNode
+}
+
+TwoFactor.Header = function TwoFactorHeader({ title, description }: TwoFactorHeaderProps) {
   const { activeView, currentLength } = useTwoFactorContext()
 
   const defaultTitle = 
@@ -170,7 +224,17 @@ TwoFactor.Header = function TwoFactorHeader({ title, description }: { title?: Re
   )
 }
 
-TwoFactor.Content = function TwoFactorContent({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the TwoFactorContent component.
+ */
+export interface TwoFactorContentProps {
+  /**
+   * Content to render inside the card body, typically the form.
+   */
+  children: React.ReactNode
+}
+
+TwoFactor.Content = function TwoFactorContent({ children }: TwoFactorContentProps) {
   const { apiError } = useTwoFactorContext()
   return (
     <CardContent>
@@ -186,7 +250,17 @@ TwoFactor.Content = function TwoFactorContent({ children }: { children: React.Re
   )
 }
 
-TwoFactor.Form = function TwoFactorForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the TwoFactorForm component.
+ */
+export interface TwoFactorFormProps {
+  /**
+   * Form fields for the two-factor flow.
+   */
+  children: React.ReactNode
+}
+
+TwoFactor.Form = function TwoFactorForm({ children }: TwoFactorFormProps) {
   const { form, onSubmit, activeView } = useTwoFactorContext()
 
   const handleSubmit = async (values: TwoFactorValues) => {
@@ -271,7 +345,17 @@ TwoFactor.TrustDevice = function TwoFactorTrustDevice() {
   )
 }
 
-TwoFactor.SubmitButton = function TwoFactorSubmitButton({ children }: { children?: React.ReactNode }) {
+/**
+ * Props for the TwoFactorSubmitButton component.
+ */
+export interface TwoFactorSubmitButtonProps {
+  /**
+   * Custom label for the submit button. Defaults to "Verify Code".
+   */
+  children?: React.ReactNode
+}
+
+TwoFactor.SubmitButton = function TwoFactorSubmitButton({ children }: TwoFactorSubmitButtonProps) {
   const { form, isLoading, activeView, currentLength } = useTwoFactorContext()
   const codeValue = form.watch("code") || ""
 
@@ -287,7 +371,17 @@ TwoFactor.SubmitButton = function TwoFactorSubmitButton({ children }: { children
   )
 }
 
-TwoFactor.Footer = function TwoFactorFooter({ children }: { children?: React.ReactNode }) {
+/**
+ * Props for the TwoFactorFooter component.
+ */
+export interface TwoFactorFooterProps {
+  /**
+   * Custom content to display in the footer. The resend button and alternative methods are rendered automatically below this if applicable.
+   */
+  children?: React.ReactNode
+}
+
+TwoFactor.Footer = function TwoFactorFooter({ children }: TwoFactorFooterProps) {
   const { activeView, twofactorMethods } = useTwoFactorContext()
   const alternativeMethods = twofactorMethods.filter((m) => m !== activeView)
 

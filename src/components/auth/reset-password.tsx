@@ -34,12 +34,34 @@ import {
 import { ResetPasswordContext, useResetPasswordContext, type ResetPasswordMethod, type ResetPasswordContextValue } from "../../hooks/use-reset-password"
 
 // --- Provider ---
+
+/**
+ * Props for the ResetPassword component.
+ */
 export interface ResetPasswordProps {
+  /**
+   * The reset method being used. "email" expects just a new password, "phone" also expects an OTP code.
+   */
   method?: ResetPasswordMethod
+  /**
+   * Callback for when the user submits their new password via the email flow.
+   */
   onSubmitEmail?: (values: ResetPasswordEmailValues) => Promise<void>
+  /**
+   * Callback for when the user submits their new password and OTP via the phone flow.
+   */
   onSubmitPhone?: (values: ResetPasswordPhoneValues) => Promise<void>
+  /**
+   * Whether the component is currently in a loading state (e.g. submitting).
+   */
   isLoading?: boolean
+  /**
+   * An optional API error to display at the top of the form.
+   */
   apiError?: { message: string; code?: string } | null
+  /**
+   * The subcomponents to render within the reset password card.
+   */
   children: React.ReactNode
 }
 
@@ -84,7 +106,21 @@ export function ResetPassword({
 
 // --- Compound Components ---
 
-ResetPassword.Header = function ResetPasswordHeader({ title = "Reset Password", description = "Enter your new password below." }: { title?: React.ReactNode, description?: React.ReactNode }) {
+/**
+ * Props for the ResetPasswordHeader component.
+ */
+export interface ResetPasswordHeaderProps {
+  /**
+   * The title of the card. Defaults to "Reset Password".
+   */
+  title?: React.ReactNode
+  /**
+   * The description of the card. Defaults to "Enter your new password below."
+   */
+  description?: React.ReactNode
+}
+
+ResetPassword.Header = function ResetPasswordHeader({ title = "Reset Password", description = "Enter your new password below." }: ResetPasswordHeaderProps) {
   return (
     <CardHeader>
       <CardTitle>{title}</CardTitle>
@@ -93,7 +129,17 @@ ResetPassword.Header = function ResetPasswordHeader({ title = "Reset Password", 
   )
 }
 
-ResetPassword.Content = function ResetPasswordContent({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ResetPasswordContent component.
+ */
+export interface ResetPasswordContentProps {
+  /**
+   * Content to render inside the card body, typically the form.
+   */
+  children: React.ReactNode
+}
+
+ResetPassword.Content = function ResetPasswordContent({ children }: ResetPasswordContentProps) {
   const { apiError } = useResetPasswordContext()
   return (
     <CardContent>
@@ -109,7 +155,17 @@ ResetPassword.Content = function ResetPasswordContent({ children }: { children: 
   )
 }
 
-ResetPassword.Form = function ResetPasswordForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ResetPasswordForm component.
+ */
+export interface ResetPasswordFormProps {
+  /**
+   * Form fields for the password reset flow.
+   */
+  children: React.ReactNode
+}
+
+ResetPassword.Form = function ResetPasswordForm({ children }: ResetPasswordFormProps) {
   const { method, emailForm, phoneForm, onSubmitEmail, onSubmitPhone } = useResetPasswordContext()
 
   if (method === "email") {
@@ -220,7 +276,17 @@ ResetPassword.ConfirmPasswordField = function ResetPasswordConfirmPasswordField(
   )
 }
 
-ResetPassword.SubmitButton = function ResetPasswordSubmitButton({ children }: { children?: React.ReactNode }) {
+/**
+ * Props for the ResetPasswordSubmitButton component.
+ */
+export interface ResetPasswordSubmitButtonProps {
+  /**
+   * Custom label for the submit button. Defaults to "Reset Password".
+   */
+  children?: React.ReactNode
+}
+
+ResetPassword.SubmitButton = function ResetPasswordSubmitButton({ children }: ResetPasswordSubmitButtonProps) {
   const { isLoading } = useResetPasswordContext()
   return (
     <Button className="w-full" type="submit" disabled={isLoading}>
@@ -230,11 +296,19 @@ ResetPassword.SubmitButton = function ResetPasswordSubmitButton({ children }: { 
   )
 }
 
+/**
+ * Props for the ResetPasswordSuccessView component.
+ */
+export interface ResetPasswordSuccessViewProps {
+  /**
+   * The URL to navigate to when the user clicks the "Continue" button.
+   */
+  redirectTo: string
+}
+
 export function ResetPasswordSuccessView({
   redirectTo,
-}: {
-  redirectTo: string
-}) {
+}: ResetPasswordSuccessViewProps) {
   return (
     <div className="mx-auto w-full max-w-md">
       <AlertCard

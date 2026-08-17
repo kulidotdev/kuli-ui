@@ -45,32 +45,75 @@ export default function SignUpPage() {
 }
 ```
 
-## Props
+## Components
 
-### `<SignUp>` (Root Provider)
+### `<SignUp>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `onSubmit` | `(values: SignupFormValues) => void` | — | **Required.** Submit callback |
-| `isLoading` | `boolean` | `false` | Disables all inputs |
-| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error to display |
-| `showUsername` | `boolean` | `false` | Show `SignUp.UsernameField` |
-| `showPhone` | `boolean` | `false` | Show `SignUp.PhoneField` |
-| `children` | `ReactNode` | — | **Required.** |
+The root provider component that manages the registration state, forms, and context for all child components. 
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpProps" />
 
 ### `<SignUp.Header>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `title` | `ReactNode` | `"Sign Up"` | Card title |
-| `description` | `ReactNode` | `"Create an account to get started"` | Card subtitle |
+Displays the title and description at the top of the sign-up card.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpHeaderProps" />
+
+### `<SignUp.Content>`
+
+The main container for the sign-up form and other authentication elements. It automatically displays the `apiError` banner if an error is present.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpContentProps" />
+
+### `<SignUp.Form>`
+
+A wrapper around the form elements that connects to the root `SignUp` context to handle submissions.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpFormProps" />
+
+### `<SignUp.NameField>`
+
+Renders an input field for the user's name. Always visible.
+
+### `<SignUp.EmailField>`
+
+Renders an input field for the user's email address. Always visible.
+
+### `<SignUp.UsernameField>`
+
+Renders an input field for a username. Only visible when the `showUsername` prop is set to `true` on the root provider.
+
+### `<SignUp.PhoneField>`
+
+Renders a specialized phone input field with country code selection. Only visible when the `showPhone` prop is set to `true` on the root provider.
+
+### `<SignUp.PasswordField>`
+
+Renders a password input field for the user's new password. Always visible.
+
+### `<SignUp.SubmitButton>`
+
+The primary button to submit the sign-up form. Automatically shows a loading state if the root `isLoading` prop is true.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpSubmitButtonProps" />
+
+### `<SignUp.Separator>`
+
+A visual divider used to separate the main sign-up form from alternative methods (like social logins if you choose to add them).
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpSeparatorProps" />
 
 ### `<SignUp.Footer>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `signinPath` | `string` | — | Sign-in page URL. Shows "Already have an account?" when set |
-| `children` | `ReactNode` | — | Additional custom content |
+The bottom section of the card, often used to display links to other authentication pages, like sign-in.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignUpFooterProps" />
+
+### `<SignupSuccessView>`
+
+A standalone success screen component that you can render after a successful registration.
+
+<AutoTypeTable path="../src/components/auth/signup.tsx" name="SignupSuccessViewProps" />
 
 ## Types
 
@@ -98,19 +141,3 @@ type SignupFormValues = {
   `username` and `phone` are **optional** in the Zod schema — only validated if the user fills them in.
 </Callout>
 
-## Sub-Components
-
-| Sub-component | Description |
-|---|---|
-| `<SignUp.Header>` | Card header with title and description |
-| `<SignUp.Content>` | Card content wrapper, automatically renders `apiError` |
-| `<SignUp.Form>` | `<form>` wrapper connected to React Hook Form |
-| `<SignUp.NameField>` | "Name" field — always visible |
-| `<SignUp.EmailField>` | "Email" field — always visible |
-| `<SignUp.UsernameField>` | "Username" field — visible when `showUsername={true}` |
-| `<SignUp.PhoneField>` | "Phone Number" field — visible when `showPhone={true}` |
-| `<SignUp.PasswordField>` | "Password" field — always visible |
-| `<SignUp.SubmitButton>` | Submit button with built-in loading state |
-| `<SignUp.Separator>` | Horizontal separator with a text label |
-| `<SignUp.Footer>` | Card footer with "Already have an account?" link |
-| `<SignupSuccessView>` | Standalone success screen after registration |

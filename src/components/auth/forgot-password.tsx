@@ -28,12 +28,35 @@ import {
 import { ForgotPasswordContext, useForgotPasswordContext, type ForgotPasswordTab, type ForgotPasswordContextValue } from "../../hooks/use-forgot-password"
 
 // --- Provider ---
+
+/**
+ * Props for the ForgotPassword component.
+ */
 export interface ForgotPasswordProps {
+  /**
+   * Callback for when the user submits their email address.
+   */
   onSubmitEmail: (values: ForgotPasswordEmailValues) => Promise<void>
+  /**
+   * Callback for when the user submits their phone number (if allowPhone is true).
+   */
   onSubmitPhone?: (values: ForgotPasswordPhoneValues) => Promise<void>
+  /**
+   * Whether the component is currently in a loading state (e.g. submitting).
+   * Disables all inputs and buttons.
+   */
   isLoading?: boolean
+  /**
+   * An optional API error to display at the top of the form.
+   */
   apiError?: { message: string; code?: string } | null
+  /**
+   * If true, enables the phone number OTP flow and displays tabs to switch methods.
+   */
   allowPhone?: boolean
+  /**
+   * The subcomponents to render within the forgot password card.
+   */
   children: React.ReactNode
 }
 
@@ -82,7 +105,21 @@ export function ForgotPassword({
 
 // --- Compound Components ---
 
-ForgotPassword.Header = function ForgotPasswordHeader({ title = "Forgot Password", description }: { title?: React.ReactNode, description?: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordHeader component.
+ */
+export interface ForgotPasswordHeaderProps {
+  /**
+   * The title of the card. Defaults to "Forgot Password".
+   */
+  title?: React.ReactNode
+  /**
+   * The description of the card. Automatically changes based on active tab and allowPhone if omitted.
+   */
+  description?: React.ReactNode
+}
+
+ForgotPassword.Header = function ForgotPasswordHeader({ title = "Forgot Password", description }: ForgotPasswordHeaderProps) {
   const { allowPhone, activeTab } = useForgotPasswordContext()
 
   const defaultDescription = allowPhone
@@ -99,7 +136,17 @@ ForgotPassword.Header = function ForgotPasswordHeader({ title = "Forgot Password
   )
 }
 
-ForgotPassword.Content = function ForgotPasswordContent({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordContent component.
+ */
+export interface ForgotPasswordContentProps {
+  /**
+   * Content to render inside the card body, typically the forms.
+   */
+  children: React.ReactNode
+}
+
+ForgotPassword.Content = function ForgotPasswordContent({ children }: ForgotPasswordContentProps) {
   const { apiError } = useForgotPasswordContext()
   return (
     <CardContent className="space-y-4">
@@ -111,7 +158,18 @@ ForgotPassword.Content = function ForgotPasswordContent({ children }: { children
   )
 }
 
-ForgotPassword.Tabs = function ForgotPasswordTabs({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordTabs component.
+ */
+export interface ForgotPasswordTabsProps {
+  /**
+   * The forms to render within the tabs.
+   * If allowPhone is false, renders children directly without tabs.
+   */
+  children: React.ReactNode
+}
+
+ForgotPassword.Tabs = function ForgotPasswordTabs({ children }: ForgotPasswordTabsProps) {
   const { allowPhone, activeTab, setActiveTab } = useForgotPasswordContext()
 
   if (!allowPhone) {
@@ -129,7 +187,17 @@ ForgotPassword.Tabs = function ForgotPasswordTabs({ children }: { children: Reac
   )
 }
 
-ForgotPassword.EmailForm = function ForgotPasswordEmailForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordEmailForm component.
+ */
+export interface ForgotPasswordEmailFormProps {
+  /**
+   * Form fields for the email reset flow.
+   */
+  children: React.ReactNode
+}
+
+ForgotPassword.EmailForm = function ForgotPasswordEmailForm({ children }: ForgotPasswordEmailFormProps) {
   const { emailForm, onSubmitEmail, activeTab, allowPhone } = useForgotPasswordContext()
 
   if (allowPhone && activeTab !== "email") return null
@@ -143,7 +211,17 @@ ForgotPassword.EmailForm = function ForgotPasswordEmailForm({ children }: { chil
   )
 }
 
-ForgotPassword.PhoneForm = function ForgotPasswordPhoneForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordPhoneForm component.
+ */
+export interface ForgotPasswordPhoneFormProps {
+  /**
+   * Form fields for the phone OTP flow.
+   */
+  children: React.ReactNode
+}
+
+ForgotPassword.PhoneForm = function ForgotPasswordPhoneForm({ children }: ForgotPasswordPhoneFormProps) {
   const { phoneForm, onSubmitPhone, activeTab, allowPhone } = useForgotPasswordContext()
 
   if (!allowPhone || activeTab !== "phone") return null
@@ -211,7 +289,18 @@ ForgotPassword.PhoneField = function ForgotPasswordPhoneField() {
   )
 }
 
-ForgotPassword.SubmitButton = function ForgotPasswordSubmitButton({ children }: { children?: React.ReactNode }) {
+/**
+ * Props for the ForgotPasswordSubmitButton component.
+ */
+export interface ForgotPasswordSubmitButtonProps {
+  /**
+   * Custom label for the submit button. 
+   * Defaults to "Send Reset Link" (email) or "Send OTP" (phone).
+   */
+  children?: React.ReactNode
+}
+
+ForgotPassword.SubmitButton = function ForgotPasswordSubmitButton({ children }: ForgotPasswordSubmitButtonProps) {
   const { isLoading, activeTab } = useForgotPasswordContext()
 
   const defaultText = activeTab === "email" ? "Send Reset Link" : "Send OTP"
@@ -224,7 +313,17 @@ ForgotPassword.SubmitButton = function ForgotPasswordSubmitButton({ children }: 
   )
 }
 
-export function ForgotPasswordSuccessView({ backUrl }: { backUrl: string }) {
+/**
+ * Props for the ForgotPasswordSuccessView component.
+ */
+export interface ForgotPasswordSuccessViewProps {
+  /**
+   * The URL to navigate to when the user clicks the "Go Back" button.
+   */
+  backUrl: string
+}
+
+export function ForgotPasswordSuccessView({ backUrl }: ForgotPasswordSuccessViewProps) {
   return (
     <div className="mx-auto w-full max-w-md">
       <AlertCard

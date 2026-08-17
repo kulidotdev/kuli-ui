@@ -2,6 +2,9 @@ import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
 import { type TwoFactorValues, type TwoFactorMethod } from "../components/auth/two-factor-types"
 
+/**
+ * Context value for the TwoFactor compound components.
+ */
 export interface TwoFactorContextValue {
   activeView: TwoFactorMethod
   setActiveView: (view: TwoFactorMethod) => void
@@ -23,6 +26,10 @@ export interface TwoFactorContextValue {
 
 export const TwoFactorContext = React.createContext<TwoFactorContextValue | undefined>(undefined)
 
+/**
+ * Hook to access the two-factor context.
+ * Must be used within a <TwoFactor> provider.
+ */
 export function useTwoFactorContext() {
   const context = React.useContext(TwoFactorContext)
   if (!context) {

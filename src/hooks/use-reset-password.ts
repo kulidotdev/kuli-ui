@@ -4,6 +4,9 @@ import { type ResetPasswordEmailValues, type ResetPasswordPhoneValues } from "..
 
 export type ResetPasswordMethod = "email" | "phone"
 
+/**
+ * Context value for the ResetPassword compound components.
+ */
 export interface ResetPasswordContextValue {
   method: ResetPasswordMethod
   emailForm: UseFormReturn<ResetPasswordEmailValues>
@@ -16,6 +19,10 @@ export interface ResetPasswordContextValue {
 
 export const ResetPasswordContext = React.createContext<ResetPasswordContextValue | undefined>(undefined)
 
+/**
+ * Hook to access the reset-password context.
+ * Must be used within a <ResetPassword> provider.
+ */
 export function useResetPasswordContext() {
   const context = React.useContext(ResetPasswordContext)
   if (!context) {

@@ -27,26 +27,19 @@ Files added to your project:
 
 <ComponentPreview name="two-factor/multi-method" />
 
-## Props
+## Components
 
-### `<TwoFactor>` (Root Provider)
+### `<TwoFactor>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `onSubmit` | `(method: TwoFactorMethod, values: TwoFactorValues) => Promise<void>` | `async () => {}` | Verification callback |
-| `twofactorMethods` | `TwoFactorMethod[]` | `["totp", "otp"]` | Available methods |
-| `currentView` | `TwoFactorMethod` | `"totp"` | Method active on first render |
-| `onResendOtp` | `() => Promise<void>` | — | Resend OTP callback. Required when `"otp"` is in `twofactorMethods` |
-| `isLoading` | `boolean` | `false` | Disables all inputs |
-| `isResending` | `boolean` | `false` | Loading state specific to the resend button |
-| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error to display |
-| `totpLength` | `number` | `6` | Number of digits for TOTP |
-| `otpLength` | `number` | `6` | Number of digits for email OTP |
-| `resendCooldown` | `number` | `60` | Cooldown in seconds after resending OTP |
-| `trustDeviceDescription` | `string` | — | Description for the "Trust device" checkbox. Hidden when not provided |
-| `children` | `ReactNode` | — | **Required.** |
+The root provider component that manages the 2FA state, handles countdown timers for OTP resends, manages active authentication methods, and provides context for child components.
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorProps" />
 
 ### `<TwoFactor.Header>`
+
+Displays the title and description at the top of the card. Automatically adapts the title and description text depending on the currently active 2FA method (TOTP, Email OTP, or Backup Code).
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorHeaderProps" />
 
 Automatically changes title and description based on `activeView`:
 
@@ -56,17 +49,45 @@ Automatically changes title and description based on `activeView`:
 | `"otp"` | `"Email Verification"` | "Enter the N-digit code sent to your email address." |
 | `"backup_code"` | `"Backup Code"` | "Enter one of your emergency backup codes." |
 
+### `<TwoFactor.Content>`
+
+The main container for the two-factor form elements. It also automatically displays the `apiError` banner if an error is present.
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorContentProps" />
+
+### `<TwoFactor.Form>`
+
+A wrapper around the form elements that connects to the root `TwoFactor` context to handle submissions and dynamically generate schema validation based on the active method.
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorFormProps" />
+
+### `<TwoFactor.CodeInput>`
+
+Renders the input field for the verification code. When the active method is "totp" or "otp", it renders an `InputOTP` segmented field. When the method is "backup_code", it renders a standard text input field instead.
+
 ### `<TwoFactor.TrustDevice>`
 
-"Trust this device" checkbox. Only rendered when `trustDeviceDescription` is set on the root.
+Renders a "Trust this device" checkbox. It is only visible when the `trustDeviceDescription` prop is provided on the root provider.
+
+### `<TwoFactor.SubmitButton>`
+
+The primary button to submit the verification code. It disables itself automatically if the code length doesn't meet the required validation for the active method, and shows a loading state during submission.
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorSubmitButtonProps" />
 
 ### `<TwoFactor.ResendOtp>`
 
-Only rendered when `activeView === "otp"`. Shows a "Resend" button with a countdown timer.
+Only rendered when the active method is "otp". It displays a "Resend" button and automatically handles the countdown timer based on the `resendCooldown` prop.
 
 ### `<TwoFactor.AlternativeMethods>`
 
-Rendered inside `<TwoFactor.Footer>`. Displays ghost buttons for every method not currently active.
+Usually placed inside `<TwoFactor.Footer>`. It displays ghost buttons that allow the user to switch to any other allowed authentication methods that are not currently active.
+
+### `<TwoFactor.Footer>`
+
+The bottom section of the card, often used to display the `<TwoFactor.ResendOtp>` and `<TwoFactor.AlternativeMethods>` components.
+
+<AutoTypeTable path="../src/components/auth/two-factor.tsx" name="TwoFactorFooterProps" />
 
 ## Types
 

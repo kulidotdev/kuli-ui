@@ -62,11 +62,31 @@ const schemaFor = {
 } as const
 
 // --- Provider ---
+
+/**
+ * Props for the SignIn component.
+ */
 export interface SignInProps {
+  /**
+   * Callback for when the user successfully submits the sign in form.
+   */
   onSubmit: (values: SigninFormValues) => void
+  /**
+   * Whether the component is currently in a loading state (e.g. submitting).
+   */
   isLoading?: boolean
+  /**
+   * An optional API error to display at the top of the form.
+   */
   apiError?: { message: string; code?: string } | null
+  /**
+   * Allowed sign-in methods (e.g. "email", "username", "phone").
+   * Defaults to ["email", "username", "phone"].
+   */
   methods?: SigninMethod[]
+  /**
+   * The subcomponents to render within the sign in card.
+   */
   children: React.ReactNode
 }
 
@@ -131,13 +151,24 @@ export function SignIn({
 
 // --- Compound Components ---
 
+/**
+ * Props for the SignInHeader component.
+ */
+export interface SignInHeaderProps {
+  /**
+   * The title of the card. Defaults to "Sign In".
+   */
+  title?: React.ReactNode
+  /**
+   * The description of the card. Defaults to "Select your preferred authentication method".
+   */
+  description?: React.ReactNode
+}
+
 SignIn.Header = function SignInHeader({
   title = "Sign In",
   description = "Select your preferred authentication method",
-}: {
-  title?: React.ReactNode
-  description?: React.ReactNode
-}) {
+}: SignInHeaderProps) {
   return (
     <CardHeader className="space-y-1 text-center">
       <CardTitle className="text-2xl font-bold tracking-tight">
@@ -148,11 +179,19 @@ SignIn.Header = function SignInHeader({
   )
 }
 
+/**
+ * Props for the SignInContent component.
+ */
+export interface SignInContentProps {
+  /**
+   * Content to render inside the card body, typically the sign in form.
+   */
+  children: React.ReactNode
+}
+
 SignIn.Content = function SignInContent({
   children,
-}: {
-  children: React.ReactNode
-}) {
+}: SignInContentProps) {
   const { apiError } = useSignInContext()
   return (
     <CardContent>
@@ -193,7 +232,17 @@ SignIn.MethodSwitch = function SignInMethodSwitch() {
   )
 }
 
-SignIn.Form = function SignInForm({ children }: { children: React.ReactNode }) {
+/**
+ * Props for the SignInForm component.
+ */
+export interface SignInFormProps {
+  /**
+   * Form fields for the sign in flow.
+   */
+  children: React.ReactNode
+}
+
+SignIn.Form = function SignInForm({ children }: SignInFormProps) {
   const { form, onSubmit, methods } = useSignInContext()
 
   if (methods.length === 0) return null
@@ -268,11 +317,20 @@ SignIn.IdentifierField = function SignInIdentifierField() {
   )
 }
 
+/**
+ * Props for the SignInPasswordField component.
+ */
+export interface SignInPasswordFieldProps {
+  /**
+   * An optional path to redirect to for password reset.
+   * If provided, a "Forgot password?" link is displayed.
+   */
+  forgotPasswordPath?: string
+}
+
 SignIn.PasswordField = function SignInPasswordField({
   forgotPasswordPath,
-}: {
-  forgotPasswordPath?: string
-}) {
+}: SignInPasswordFieldProps) {
   const { form, isLoading } = useSignInContext()
   return (
     <FormField
@@ -327,11 +385,19 @@ SignIn.RememberMe = function SignInRememberMe() {
   )
 }
 
+/**
+ * Props for the SignInSubmitButton component.
+ */
+export interface SignInSubmitButtonProps {
+  /**
+   * Custom label for the submit button. Defaults to "Sign In".
+   */
+  children?: React.ReactNode
+}
+
 SignIn.SubmitButton = function SignInSubmitButton({
   children,
-}: {
-  children?: React.ReactNode
-}) {
+}: SignInSubmitButtonProps) {
   const { isLoading } = useSignInContext()
   return (
     <Button type="submit" className="w-full" disabled={isLoading}>
@@ -341,11 +407,19 @@ SignIn.SubmitButton = function SignInSubmitButton({
   )
 }
 
+/**
+ * Props for the SignInSeparator component.
+ */
+export interface SignInSeparatorProps {
+  /**
+   * Custom text for the separator. Defaults to "Or continue with".
+   */
+  children?: React.ReactNode
+}
+
 SignIn.Separator = function SignInSeparator({
   children = "Or continue with",
-}: {
-  children?: React.ReactNode
-}) {
+}: SignInSeparatorProps) {
   return (
     <div className="relative my-6">
       <div className="absolute inset-0 flex items-center">
@@ -358,13 +432,25 @@ SignIn.Separator = function SignInSeparator({
   )
 }
 
+/**
+ * Props for the SignInFooter component.
+ */
+export interface SignInFooterProps {
+  /**
+   * An optional path to redirect to for sign up.
+   * If provided, a "Don't have an account? Sign up" link is displayed.
+   */
+  signupPath?: string
+  /**
+   * Custom content to display in the footer.
+   */
+  children?: React.ReactNode
+}
+
 SignIn.Footer = function SignInFooter({
   signupPath,
   children,
-}: {
-  signupPath?: string
-  children?: React.ReactNode
-}) {
+}: SignInFooterProps) {
   if (!signupPath && !children) return null
   return (
     <CardFooter className="flex flex-col">
@@ -413,10 +499,25 @@ SignIn.SocialProviderButton = function SignInSocialProviderButton(
   )
 }
 
+/**
+ * Props for the SignInPasswordless component.
+ */
 export interface SignInPasswordlessProps {
+  /**
+   * Whether to display the Magic Link button.
+   */
   magicLink?: boolean
+  /**
+   * Whether to display the Passkey button.
+   */
   passkey?: boolean
+  /**
+   * Whether to show a separator above the passwordless buttons.
+   */
   showSeparator?: boolean
+  /**
+   * Custom text for the separator if displayed.
+   */
   separatorText?: React.ReactNode
 }
 
@@ -438,6 +539,9 @@ SignIn.Passwordless = function SignInPasswordless({
   )
 }
 
+/**
+ * Configuration for a social authentication provider.
+ */
 export interface SocialProviderConfig {
   id: string
   label: string
@@ -445,9 +549,21 @@ export interface SocialProviderConfig {
   onClick?: (id: string) => void
 }
 
+/**
+ * Props for the SignInSocial component.
+ */
 export interface SignInSocialProps {
+  /**
+   * An array of social providers to display.
+   */
   providers: SocialProviderConfig[]
+  /**
+   * Whether to show a separator above the social buttons.
+   */
   showSeparator?: boolean
+  /**
+   * Custom text for the separator if displayed.
+   */
   separatorText?: React.ReactNode
 }
 

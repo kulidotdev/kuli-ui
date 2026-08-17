@@ -4,6 +4,9 @@ import { type ForgotPasswordEmailValues, type ForgotPasswordPhoneValues } from "
 
 export type ForgotPasswordTab = "email" | "phone"
 
+/**
+ * Context value for the ForgotPassword compound components.
+ */
 export interface ForgotPasswordContextValue {
   activeTab: ForgotPasswordTab
   setActiveTab: (tab: ForgotPasswordTab) => void
@@ -18,6 +21,10 @@ export interface ForgotPasswordContextValue {
 
 export const ForgotPasswordContext = React.createContext<ForgotPasswordContextValue | undefined>(undefined)
 
+/**
+ * Hook to access the forgot-password context.
+ * Must be used within a <ForgotPassword> provider.
+ */
 export function useForgotPasswordContext() {
   const context = React.useContext(ForgotPasswordContext)
   if (!context) {

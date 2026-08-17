@@ -50,13 +50,7 @@ function MyCustomView() {
 
 ## Props
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `enabled` | `boolean` | `false` | Current 2FA status. Determines the initial view |
-| `onEnable` | `(password: string) => Promise<TotpData>` | — | Enable callback. **Must** return `TotpData` |
-| `onVerifyOtp` | `(otp: string, trustedDevice: boolean) => Promise<void>` | — | First-time OTP verification callback |
-| `onDisable` | `(password: string) => Promise<void>` | — | Disable callback |
-| `children` | `ReactNode` | — | When omitted, renders `TwoFactorDefaultViews` |
+<AutoTypeTable path="../src/components/auth/two-factor-registration.tsx" name="TwoFactorRegistrationProps" />
 
 ## Types
 

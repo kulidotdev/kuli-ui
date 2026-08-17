@@ -1,5 +1,8 @@
 import * as React from "react"
 
+/**
+ * Represents a registered passkey.
+ */
 export interface Passkey {
   id: string
   name?: string
@@ -10,6 +13,9 @@ export interface Passkey {
   [key: string]: any
 }
 
+/**
+ * Context value for the PasskeyManager compound components.
+ */
 export interface PasskeyContextValue {
   passkeys: Passkey[]
   isLoading: boolean
@@ -20,6 +26,10 @@ export interface PasskeyContextValue {
 
 export const PasskeyContext = React.createContext<PasskeyContextValue | undefined>(undefined)
 
+/**
+ * Hook to access the passkey manager context.
+ * Must be used within a <PasskeyManager> provider.
+ */
 export function usePasskeyContext() {
   const context = React.useContext(PasskeyContext)
   if (!context) {
@@ -28,12 +38,19 @@ export function usePasskeyContext() {
   return context
 }
 
+/**
+ * Context value for an individual passkey item.
+ */
 export interface PasskeyItemContextValue {
   passkey: Passkey
 }
 
 export const PasskeyItemContext = React.createContext<PasskeyItemContextValue | undefined>(undefined)
 
+/**
+ * Hook to access the context of a specific passkey item.
+ * Must be used within a <PasskeyManager.Item>.
+ */
 export function usePasskeyItemContext() {
   const context = React.useContext(PasskeyItemContext)
   if (!context) {

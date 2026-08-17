@@ -2,6 +2,9 @@ import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
 import { type SignupFormValues } from "../components/auth/signup-types"
 
+/**
+ * Context value for the SignUp compound components.
+ */
 export interface SignUpContextValue {
   form: UseFormReturn<SignupFormValues>
   isLoading: boolean
@@ -15,6 +18,10 @@ export const SignUpContext = React.createContext<SignUpContextValue | undefined>
   undefined
 )
 
+/**
+ * Hook to access the sign-up context.
+ * Must be used within a <SignUp> provider.
+ */
 export function useSignUpContext() {
   const context = React.useContext(SignUpContext)
   if (!context) {

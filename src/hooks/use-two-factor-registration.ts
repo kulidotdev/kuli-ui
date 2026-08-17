@@ -13,6 +13,9 @@ export interface TotpData {
   backupCodes: string[]
 }
 
+/**
+ * Context value for the TwoFactorRegistration compound components.
+ */
 export interface TwoFactorContextValue {
   view: TwoFactorViewState
   setView: React.Dispatch<React.SetStateAction<TwoFactorViewState>>
@@ -37,6 +40,10 @@ export const TwoFactorContext = React.createContext<TwoFactorContextValue | unde
   undefined
 )
 
+/**
+ * Hook to access the two-factor registration context.
+ * Must be used within a <TwoFactorRegistration> provider.
+ */
 export function useTwoFactorRegistration() {
   const context = React.useContext(TwoFactorContext)
   if (!context) {

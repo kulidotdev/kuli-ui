@@ -28,6 +28,10 @@ interface StorytellingContextValue {
 const StorytellingContext =
   React.createContext<StorytellingContextValue | null>(null)
 
+/**
+ * Hook to access the storytelling context.
+ * Must be used within a <Storytelling> provider.
+ */
 export function useStorytelling() {
   const context = React.useContext(StorytellingContext)
   if (!context) {
@@ -42,10 +46,27 @@ export function useStorytelling() {
 // 1. Storytelling (Root Container)
 // ---------------------------------------------------------------------------
 
-export interface StorytellingProps extends React.HTMLAttributes<HTMLDivElement> {
+/**
+ * Props for the root Storytelling component.
+ */
+export interface StorytellingProps {
+  /**
+   * Total number of steps in the storytelling sequence.
+   * @default 3
+   */
   stepCount?: number
+  /**
+   * The initial step index to start at.
+   * @default 0
+   */
   initialStep?: number
+  /**
+   * Callback fired when the active step changes.
+   */
   onStepChange?: (step: number) => void
+  /**
+   * Class name applied to the sticky container.
+   */
   stickyTopClassName?: string
   /**
    * Multiplier for scroll distance per step (in viewport units, e.g. 1.0, 1.3, 1.5).
@@ -58,9 +79,15 @@ export interface StorytellingProps extends React.HTMLAttributes<HTMLDivElement> 
    * Default is false.
    */
   snapToSteps?: boolean
+  /**
+   * The storytelling content and subcomponents.
+   */
   children: React.ReactNode
 }
 
+/**
+ * Root component that provides storytelling context and handles scroll-based navigation.
+ */
 export function Storytelling({
   stepCount = 3,
   initialStep = 0,
@@ -72,7 +99,7 @@ export function Storytelling({
   style,
   children,
   ...props
-}: StorytellingProps) {
+}: StorytellingProps & React.HTMLAttributes<HTMLDivElement>) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const [activeStep, setActiveStep] = React.useState<number>(initialStep)
 
@@ -226,6 +253,9 @@ export function Storytelling({
 // 2. StorytellingHeader
 // ---------------------------------------------------------------------------
 
+/**
+ * Header component for the storytelling section.
+ */
 export function StorytellingHeader({
   className,
   children,
@@ -249,21 +279,34 @@ export function StorytellingHeader({
 // 3. StorytellingTabs
 // ---------------------------------------------------------------------------
 
+/**
+ * Represents a single tab item in the storytelling navigation.
+ */
 export interface StorytellingTabItem {
   label: string
   shortLabel?: string
   icon?: React.ComponentType<{ className?: string }>
 }
 
-export interface StorytellingTabsProps extends React.ComponentProps<"div"> {
+/**
+ * Props for the StorytellingTabs component.
+ */
+export interface StorytellingTabsProps {
+  /**
+   * Optional custom tab items. If not provided, generates default tabs based on step count.
+   */
   items?: StorytellingTabItem[]
+  className?: string
 }
 
+/**
+ * Navigation tabs for the storytelling steps.
+ */
 export function StorytellingTabs({
   items = [],
   className,
   ...props
-}: StorytellingTabsProps) {
+}: StorytellingTabsProps & React.ComponentProps<"div">) {
   const { activeStep, totalSteps, scrollToStep } = useStorytelling()
 
   const tabs: StorytellingTabItem[] =
@@ -311,6 +354,9 @@ export function StorytellingTabs({
 // 4. StorytellingGrid / Content Wrapper
 // ---------------------------------------------------------------------------
 
+/**
+ * Grid layout wrapper for storytelling content.
+ */
 export function StorytellingGrid({
   className,
   children,
@@ -334,16 +380,24 @@ export function StorytellingGrid({
 // 5. StorytellingNarrative (Left Column)
 // ---------------------------------------------------------------------------
 
-export interface StorytellingNarrativeProps extends React.ComponentProps<"div"> {
+/**
+ * Props for the StorytellingNarrative component.
+ */
+export interface StorytellingNarrativeProps {
   stepIndex?: number
   transitionDuration?: number
+  className?: string
+  children?: React.ReactNode
 }
 
+/**
+ * Displays the text narrative (left column) for the current storytelling step.
+ */
 export function StorytellingNarrative({
   className,
   children,
   ...props
-}: React.ComponentProps<"div">) {
+}: StorytellingNarrativeProps & React.ComponentProps<"div">) {
   const { activeStep } = useStorytelling()
 
   return (
@@ -375,6 +429,9 @@ export function StorytellingNarrative({
 // 6. StorytellingPreview (Right Column Card)
 // ---------------------------------------------------------------------------
 
+/**
+ * Displays the visual preview (right column) for the current storytelling step.
+ */
 export function StorytellingPreview({
   className,
   children,
@@ -418,21 +475,34 @@ export function StorytellingPreview({
 // 7. StorytellingContent (Unified Auto-Responsive Steps Container)
 // ---------------------------------------------------------------------------
 
+/**
+ * Represents the content for a single storytelling step.
+ */
 export interface StorytellingStepItem {
   narrative: React.ReactNode
   preview: React.ReactNode
   showCornerTicks?: boolean
 }
 
-export interface StorytellingContentProps extends React.ComponentProps<"div"> {
+/**
+ * Props for the StorytellingContent component.
+ */
+export interface StorytellingContentProps {
+  /**
+   * The list of steps to display.
+   */
   steps: StorytellingStepItem[]
   mobileGapClassName?: string
   gridClassName?: string
   narrativeClassName?: string
   previewClassName?: string
   previewCardClassName?: string
+  className?: string
 }
 
+/**
+ * Unified container that handles rendering steps automatically based on viewport size.
+ */
 export function StorytellingContent({
   steps,
   mobileGapClassName = "gap-12 sm:gap-16",
@@ -442,7 +512,7 @@ export function StorytellingContent({
   previewCardClassName,
   className,
   ...props
-}: StorytellingContentProps) {
+}: StorytellingContentProps & React.ComponentProps<"div">) {
   const { activeStep } = useStorytelling()
 
   return (
@@ -493,6 +563,9 @@ export function StorytellingContent({
 // 8. StorytellingCornerTicks (CAD/Nova aesthetic crosshairs)
 // ---------------------------------------------------------------------------
 
+/**
+ * Decorative corner ticks component for visual styling.
+ */
 export function StorytellingCornerTicks({ className }: { className?: string }) {
   return (
     <div
@@ -519,6 +592,9 @@ export function StorytellingCornerTicks({ className }: { className?: string }) {
 // 9. StorytellingProgress (Bottom Indicator with Mobile Prev/Next Controls)
 // ---------------------------------------------------------------------------
 
+/**
+ * Progress indicator for storytelling steps.
+ */
 export function StorytellingProgress({
   label = "",
   className,

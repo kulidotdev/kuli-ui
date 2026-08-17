@@ -138,20 +138,58 @@ PhoneInputContainer.displayName = "PhoneInputContainer";
 // Public PhoneInput component
 // ---------------------------------------------------------------------------
 
+/**
+ * Props for the PhoneInput component.
+ */
 export interface PhoneInputProps {
-  /** E.164 phone number value, e.g. "+12133734253" */
+  /** 
+   * E.164 phone number value, e.g. "+12133734253".
+   */
   value?: Value;
+  /**
+   * Callback fired when the phone number value changes.
+   */
   onChange: (value?: Value) => void;
+  /**
+   * The default country code to select initially (ISO 3166-1 alpha-2).
+   * @default "ID"
+   */
   defaultCountry?: Country;
+  /**
+   * Placeholder text for the input field.
+   * @default "Phone number"
+   */
   placeholder?: string;
+  /**
+   * Whether the input is disabled.
+   */
   disabled?: boolean;
+  /**
+   * Whether the input is read-only.
+   */
   readOnly?: boolean;
+  /**
+   * Whether the input is required.
+   */
   required?: boolean;
+  /**
+   * HTML id attribute for the input.
+   */
   id?: string;
+  /**
+   * HTML name attribute for the input.
+   */
   name?: string;
+  /**
+   * Optional CSS class name for styling the container.
+   */
   className?: string;
 }
 
+/**
+ * PhoneInput component for international phone numbers with a country selector.
+ * Wraps `react-phone-number-input` to match the project's design system.
+ */
 function PhoneInput({
   value,
   onChange,

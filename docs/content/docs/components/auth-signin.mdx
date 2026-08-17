@@ -55,53 +55,61 @@ Pass `apiError` to render an `AlertError` banner at the top of `SignIn.Content`.
 
 <ComponentPreview name="signin/with-error" />
 
-## Props
+## Components
 
-### `<SignIn>` (Root Provider)
+### `<SignIn>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `onSubmit` | `(values: SigninFormValues) => void` | — | **Required.** Called when the form is submitted with valid values |
-| `methods` | `SigninMethod[]` | `["email", "username", "phone"]` | Identifier methods to show. An empty array hides the form entirely |
-| `isLoading` | `boolean` | `false` | Disables all inputs and shows a spinner |
-| `apiError` | `{ message: string; code?: string } \| null` | `null` | Server error displayed as an `AlertError` banner |
-| `children` | `ReactNode` | — | **Required.** |
+The root provider component that manages the authentication state, forms, and context for all child components. It handles method switching and form validation out of the box.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInProps" />
 
 ### `<SignIn.Header>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `title` | `ReactNode` | `"Sign In"` | Card title |
-| `description` | `ReactNode` | `"Select your preferred authentication method"` | Card subtitle |
+Displays the title and description at the top of the sign-in card.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInHeaderProps" />
+
+### `<SignIn.Content>`
+
+The main container for the sign-in form and other authentication elements. It also automatically displays the `apiError` banner if an error is present.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInContentProps" />
+
+### `<SignIn.Form>`
+
+A wrapper around the form elements that connects to the root `SignIn` context to handle submissions.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInFormProps" />
 
 ### `<SignIn.PasswordField>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `forgotPasswordPath` | `string` | — | URL for the "Forgot password?" link. Omit to hide the link |
+Renders a password input field. Can optionally display a "Forgot password?" link.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInPasswordFieldProps" />
+
+### `<SignIn.SubmitButton>`
+
+The primary button to submit the sign-in form. Automatically shows a loading state if the root `isLoading` prop is true.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInSubmitButtonProps" />
 
 ### `<SignIn.Separator>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `children` | `ReactNode` | `"Or continue with"` | Text in the middle of the separator |
+A visual divider used to separate the main sign-in form from alternative methods like passwordless or social logins.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInSeparatorProps" />
 
 ### `<SignIn.Passwordless>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `magicLink` | `boolean` | `true` | Show Magic Link button |
-| `passkey` | `boolean` | `true` | Show Passkey button |
-| `showSeparator` | `boolean` | `true` | Show separator above the buttons |
-| `separatorText` | `ReactNode` | `"Or continue with"` | Separator label |
+Renders passwordless authentication options, such as Magic Link and Passkey buttons.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInPasswordlessProps" />
 
 ### `<SignIn.Social>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `providers` | `SocialProviderConfig[]` | — | **Required.** List of providers |
-| `showSeparator` | `boolean` | `true` | Show separator above the grid |
-| `separatorText` | `ReactNode` | `"Or continue with"` | Separator label |
+Renders a grid of social authentication providers.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInSocialProps" />
 
 ```ts
 interface SocialProviderConfig {
@@ -114,10 +122,9 @@ interface SocialProviderConfig {
 
 ### `<SignIn.Footer>`
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `signupPath` | `string` | — | Shows "Don't have an account?" when set |
-| `children` | `ReactNode` | — | Custom content inside the footer |
+The bottom section of the card, often used to display links to other authentication pages, like sign-up.
+
+<AutoTypeTable path="../src/components/auth/signin.tsx" name="SignInFooterProps" />
 
 ## Types
 

@@ -33,24 +33,19 @@ Omit `onUpdatePasskey` — the rename option hides automatically:
 
 ### `<PasskeyManager>` (Root Provider)
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `passkeys` | `Passkey[]` | — | **Required.** List of passkeys to display |
-| `onAddPasskey` | `() => Promise<void> \| void` | — | Register a new passkey |
-| `onRemovePasskey` | `(id: string) => Promise<void> \| void` | — | Delete a passkey |
-| `onUpdatePasskey` | `(passkey: Passkey) => Promise<void> \| void` | — | Rename a passkey |
-| `isLoading` | `boolean` | `false` | Disables `AddAction` |
-| `className` | `string` | — | Additional CSS class for the container |
+<AutoTypeTable path="../src/components/auth/passkey-manager.tsx" name="PasskeyManagerProps" />
 
 ### `<PasskeyManager.ItemDetails>`
 
 Renders an icon (auto-selected by `deviceType`) and the passkey name + dates.
 
+import { Smartphone, Laptop, Fingerprint, KeyRound } from 'lucide-react';
+
 Icon mapping:
-- `phone` / `mobile` → `Smartphone`
-- `mac` / `windows` / `laptop` / `desktop` → `Laptop`
-- `fingerprint` / `touch` → `Fingerprint`
-- Anything else → `KeyRound`
+- `phone` / `mobile` → <Smartphone className="inline-block w-4 h-4" />
+- `mac` / `windows` / `laptop` / `desktop` → <Laptop className="inline-block w-4 h-4" />
+- `fingerprint` / `touch` → <Fingerprint className="inline-block w-4 h-4" />
+- Anything else → <KeyRound className="inline-block w-4 h-4" />
 
 ### `<PasskeyManager.ItemActions>`
 
@@ -79,9 +74,3 @@ interface Passkey {
   deviceType?: string;
 }
 ```
-
-## Accessibility
-
-- Every action button has a `sr-only` label for screen readers.
-- Dropdown uses Radix UI `DropdownMenu` — fully keyboard navigable.
-- Loading state is managed per-item to avoid disabling the entire list.
