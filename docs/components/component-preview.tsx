@@ -4,6 +4,7 @@ import { Tabs, Tab } from "fumadocs-ui/components/tabs"
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock"
 import { previewRegistry } from "./previews/registry"
 import { registryUrl } from "@/lib/shared"
+import { cn } from "@/lib/cn"
 
 export function readPreviewSource(name: string): string {
   const filePath = join(process.cwd(), "components/previews", `${name}.tsx`)
@@ -47,11 +48,14 @@ export function ComponentPreview({
   return (
     <Tabs
       items={["Preview", "Code"]}
-      className={`not-prose my-6 ${className ?? ""}`}
+      className={cn("not-prose my-6", className)}
     >
       <Tab value="Preview">
         <div
-          className={`preview-root rounded-xl border px-4 py-12${centered ? "flex items-center justify-center" : ""}`}
+          className={cn(
+            "preview-root rounded-xl border px-4 py-12",
+            centered && "flex items-center justify-center"
+          )}
         >
           <Component />
         </div>
