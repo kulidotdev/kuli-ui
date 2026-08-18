@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { motion } from "motion/react"
-import { ArrowRight, BookOpen } from "lucide-react"
+import { ArrowRight, BookOpen, Heart } from "lucide-react"
 import { AnimatedGradientText } from "@kuli-ui/components/components/ui/animated-gradient-text"
 import { MorphingText } from "@kuli-ui/components/components/ui/morphing-text"
 import { Highlighter } from "@kuli-ui/components/components/ui/highlighter"
@@ -118,8 +118,17 @@ export function HeroSection() {
 
           {/* Tech Stack Highlights */}
           <div className="text-fd-muted-foreground mt-16 flex flex-wrap items-center justify-center gap-4 text-xs font-medium sm:gap-6">
-            <span className="text-fd-foreground/80 text-[11px] font-semibold tracking-wider uppercase">
-              Built with ❤️ by kuli.dev
+            <span className="inline-flex items-center gap-1">
+              Crafted with{" "}
+              <Heart className="h-3 w-3 fill-rose-500 text-rose-500" /> by{" "}
+              <a
+                href="https://kuli.dev"
+                target="_blank"
+                rel="noreferrer"
+                className="text-fd-foreground hover:text-fd-primary font-medium underline underline-offset-4 transition-colors"
+              >
+                kuli.dev
+              </a>
             </span>
             <span className="bg-fd-border hidden h-1 w-1 rounded-full sm:inline-block" />
             <span>React 19</span>

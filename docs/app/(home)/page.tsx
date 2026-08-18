@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { HeroSection } from "@/components/home/hero-section"
 import { WhySection } from "@/components/home/why-section"
-
 import { CtaSection } from "@/components/home/cta-section"
+import { Footer } from "@/components/home/footer"
 
 export const metadata: Metadata = {
   title: "kuli/ui · Reusable UI Components with Pre-designed Flows",
@@ -19,8 +19,11 @@ export default function HomePage() {
       {/* 2. Why Section (Features & Architecture) */}
       <WhySection />
 
-      {/* 4. Bottom Call to Action & GitHub Links */}
+      {/* 3. Bottom Call to Action & GitHub Links */}
       <CtaSection />
+
+      {/* 4. Footer */}
+      <Footer />
     </main>
   )
 }

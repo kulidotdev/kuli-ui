@@ -11,7 +11,7 @@ const quickCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
 
 export function CtaSection() {
   return (
-    <section className="border-fd-border/70 relative min-h-[820px] w-full border-t py-24">
+    <section className="border-fd-border/70 relative w-full border-t py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-4 sm:px-6">
         <div className="border-fd-border/80 from-fd-card to-fd-muted/30 relative overflow-hidden rounded-3xl border bg-gradient-to-b p-8 text-center shadow-2xl backdrop-blur-xl sm:p-14">
           {/* Ambient Glow Orbs */}
