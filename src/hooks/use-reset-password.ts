@@ -1,6 +1,9 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type ResetPasswordEmailValues, type ResetPasswordPhoneValues } from "../components/auth/forgot-password-types"
+import {
+  type ResetPasswordEmailValues,
+  type ResetPasswordPhoneValues,
+} from "../components/auth/forgot-password-types"
 
 export type ResetPasswordMethod = "email" | "phone"
 
@@ -17,7 +20,9 @@ export interface ResetPasswordContextValue {
   apiError: { message: string; code?: string } | null
 }
 
-export const ResetPasswordContext = React.createContext<ResetPasswordContextValue | undefined>(undefined)
+export const ResetPasswordContext = React.createContext<
+  ResetPasswordContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the reset-password context.
@@ -26,7 +31,9 @@ export const ResetPasswordContext = React.createContext<ResetPasswordContextValu
 export function useResetPasswordContext() {
   const context = React.useContext(ResetPasswordContext)
   if (!context) {
-    throw new Error("ResetPassword components must be used within a ResetPassword provider")
+    throw new Error(
+      "ResetPassword components must be used within a ResetPassword provider"
+    )
   }
   return context
 }

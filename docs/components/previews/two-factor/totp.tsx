@@ -1,27 +1,38 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { TwoFactor } from '@kuli-ui/components/components/auth/two-factor';
-import type { TwoFactorMethod, TwoFactorValues } from '@kuli-ui/components/components/auth/two-factor-types';
+import { useState } from "react"
+import { TwoFactor } from "@kuli-ui/components/components/auth/two-factor"
+import type {
+  TwoFactorMethod,
+  TwoFactorValues,
+} from "@kuli-ui/components/components/auth/two-factor-types"
 
 export function TwoFactorTotp() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [apiError, setApiError] = useState<{ message: string } | null>(null)
 
-  const handleSubmit = async (_method: TwoFactorMethod, _values: TwoFactorValues) => {
-    setIsLoading(true);
-    setApiError(null);
+  const handleSubmit = async (
+    _method: TwoFactorMethod,
+    _values: TwoFactorValues
+  ) => {
+    setIsLoading(true)
+    setApiError(null)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     } catch {
-      setApiError({ message: 'Invalid code.' });
+      setApiError({ message: "Invalid code." })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
-    <TwoFactor onSubmit={handleSubmit} isLoading={isLoading} apiError={apiError} twofactorMethods={['totp']}>
+    <TwoFactor
+      onSubmit={handleSubmit}
+      isLoading={isLoading}
+      apiError={apiError}
+      twofactorMethods={["totp"]}
+    >
       <TwoFactor.Header />
       <TwoFactor.Content>
         <TwoFactor.Form>
@@ -31,5 +42,5 @@ export function TwoFactorTotp() {
         </TwoFactor.Form>
       </TwoFactor.Content>
     </TwoFactor>
-  );
+  )
 }

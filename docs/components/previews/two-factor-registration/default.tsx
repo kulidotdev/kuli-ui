@@ -1,29 +1,30 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { TwoFactorRegistration } from '@kuli-ui/components/components/auth/two-factor-registration';
+import { useState } from "react"
+import { TwoFactorRegistration } from "@kuli-ui/components/components/auth/two-factor-registration"
 
 export function TwoFactorRegistrationDefault() {
-  const [is2FAEnabled, setIs2FAEnabled] = useState(false);
+  const [is2FAEnabled, setIs2FAEnabled] = useState(false)
 
   const handleEnable = async (_password: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000))
     return {
-      totpUri: 'otpauth://totp/Acme:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Acme',
-      secret: 'JBSWY3DPEHPK3PXP',
-      backupCodes: ['12345-67890', '09876-54321', '11111-22222', '33333-44444'],
-    };
-  };
+      totpUri:
+        "otpauth://totp/Acme:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=Acme",
+      secret: "JBSWY3DPEHPK3PXP",
+      backupCodes: ["12345-67890", "09876-54321", "11111-22222", "33333-44444"],
+    }
+  }
 
   const handleVerifyOtp = async (_otp: string, _trustedDevice: boolean) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIs2FAEnabled(true);
-  };
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setIs2FAEnabled(true)
+  }
 
   const handleDisable = async (_password: string) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setIs2FAEnabled(false);
-  };
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setIs2FAEnabled(false)
+  }
 
   return (
     <TwoFactorRegistration
@@ -32,5 +33,5 @@ export function TwoFactorRegistrationDefault() {
       onVerifyOtp={handleVerifyOtp}
       onDisable={handleDisable}
     />
-  );
+  )
 }

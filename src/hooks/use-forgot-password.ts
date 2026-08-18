@@ -1,6 +1,9 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type ForgotPasswordEmailValues, type ForgotPasswordPhoneValues } from "../components/auth/forgot-password-types"
+import {
+  type ForgotPasswordEmailValues,
+  type ForgotPasswordPhoneValues,
+} from "../components/auth/forgot-password-types"
 
 export type ForgotPasswordTab = "email" | "phone"
 
@@ -19,7 +22,9 @@ export interface ForgotPasswordContextValue {
   allowPhone: boolean
 }
 
-export const ForgotPasswordContext = React.createContext<ForgotPasswordContextValue | undefined>(undefined)
+export const ForgotPasswordContext = React.createContext<
+  ForgotPasswordContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the forgot-password context.
@@ -28,7 +33,9 @@ export const ForgotPasswordContext = React.createContext<ForgotPasswordContextVa
 export function useForgotPasswordContext() {
   const context = React.useContext(ForgotPasswordContext)
   if (!context) {
-    throw new Error("ForgotPassword components must be used within a ForgotPassword provider")
+    throw new Error(
+      "ForgotPassword components must be used within a ForgotPassword provider"
+    )
   }
   return context
 }

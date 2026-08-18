@@ -1,10 +1,10 @@
-'use client';
+"use client"
 
-import { SignIn } from '@kuli-ui/components/components/auth/signin';
+import { SignIn } from "@kuli-ui/components/components/auth/signin"
 
 export function SignInLoading() {
   return (
-    <SignIn onSubmit={() => {}} isLoading methods={['email']}>
+    <SignIn onSubmit={() => {}} isLoading methods={["email"]}>
       <SignIn.Header />
       <SignIn.Content>
         <SignIn.Form>
@@ -14,5 +14,5 @@ export function SignInLoading() {
         </SignIn.Form>
       </SignIn.Content>
     </SignIn>
-  );
+  )
 }

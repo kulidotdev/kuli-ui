@@ -1,30 +1,30 @@
-import * as React from "react";
+import * as React from "react"
 import PhoneInputPrimitive, {
   type Country,
   type Value,
-} from "react-phone-number-input";
-import flags from "react-phone-number-input/flags";
-import "react-phone-number-input/style.css";
+} from "react-phone-number-input"
+import flags from "react-phone-number-input/flags"
+import "react-phone-number-input/style.css"
 
-import { cn } from "../../lib/utils";
-import { Input } from "./input";
+import { cn } from "../../lib/utils"
+import { Input } from "./input"
 
 // ---------------------------------------------------------------------------
 // Country select — flag icon + invisible native <select> overlay
 // Props are injected by react-phone-number-input
 // ---------------------------------------------------------------------------
 
-type CountryOption = { value?: string; label: string; divider?: boolean };
+type CountryOption = { value?: string; label: string; divider?: boolean }
 
 interface CountrySelectProps {
-  value?: Country;
-  options: CountryOption[];
-  onChange: (country?: Country) => void;
-  onFocus?: React.FocusEventHandler;
-  onBlur?: React.FocusEventHandler;
-  disabled?: boolean;
-  readOnly?: boolean;
-  iconComponent: React.ElementType;
+  value?: Country
+  options: CountryOption[]
+  onChange: (country?: Country) => void
+  onFocus?: React.FocusEventHandler
+  onBlur?: React.FocusEventHandler
+  disabled?: boolean
+  readOnly?: boolean
+  iconComponent: React.ElementType
 }
 
 function CountrySelect({
@@ -39,15 +39,15 @@ function CountrySelect({
 }: CountrySelectProps) {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
-      const v = e.target.value;
-      onChange(v === "ZZ" ? undefined : (v as Country));
+      const v = e.target.value
+      onChange(v === "ZZ" ? undefined : (v as Country))
     },
     [onChange]
-  );
+  )
 
   return (
     // border-r provides the visual divider between flag and number input
-    <div className="relative flex h-full items-center border-r border-input pl-3 pr-1">
+    <div className="relative flex h-full items-center border-r border-input pr-1 pl-3">
       {/* Flag icon — pointer-events-none so clicks pass through to <select> */}
       <span aria-hidden className="pointer-events-none flex items-center">
         <Icon country={value} label={value ?? "International"} />
@@ -90,7 +90,7 @@ function CountrySelect({
         ))}
       </select>
     </div>
-  );
+  )
 }
 
 // ---------------------------------------------------------------------------
@@ -110,8 +110,8 @@ const PhoneNumberInput = React.forwardRef<
       props.className
     )}
   />
-));
-PhoneNumberInput.displayName = "PhoneNumberInput";
+))
+PhoneNumberInput.displayName = "PhoneNumberInput"
 
 // ---------------------------------------------------------------------------
 // Container — styled outer wrapper; receives className/style from the lib
@@ -131,8 +131,8 @@ const PhoneInputContainer = React.forwardRef<
     )}
     {...props}
   />
-));
-PhoneInputContainer.displayName = "PhoneInputContainer";
+))
+PhoneInputContainer.displayName = "PhoneInputContainer"
 
 // ---------------------------------------------------------------------------
 // Public PhoneInput component
@@ -142,48 +142,48 @@ PhoneInputContainer.displayName = "PhoneInputContainer";
  * Props for the PhoneInput component.
  */
 export interface PhoneInputProps {
-  /** 
+  /**
    * E.164 phone number value, e.g. "+12133734253".
    */
-  value?: Value;
+  value?: Value
   /**
    * Callback fired when the phone number value changes.
    */
-  onChange: (value?: Value) => void;
+  onChange: (value?: Value) => void
   /**
    * The default country code to select initially (ISO 3166-1 alpha-2).
    * @default "ID"
    */
-  defaultCountry?: Country;
+  defaultCountry?: Country
   /**
    * Placeholder text for the input field.
    * @default "Phone number"
    */
-  placeholder?: string;
+  placeholder?: string
   /**
    * Whether the input is disabled.
    */
-  disabled?: boolean;
+  disabled?: boolean
   /**
    * Whether the input is read-only.
    */
-  readOnly?: boolean;
+  readOnly?: boolean
   /**
    * Whether the input is required.
    */
-  required?: boolean;
+  required?: boolean
   /**
    * HTML id attribute for the input.
    */
-  id?: string;
+  id?: string
   /**
    * HTML name attribute for the input.
    */
-  name?: string;
+  name?: string
   /**
    * Optional CSS class name for styling the container.
    */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -216,7 +216,7 @@ function PhoneInput({
       }}
       {...props}
     />
-  );
+  )
 }
 
-export { PhoneInput };
+export { PhoneInput }

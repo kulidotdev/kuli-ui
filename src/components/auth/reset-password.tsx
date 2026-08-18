@@ -31,7 +31,12 @@ import {
   type ResetPasswordPhoneValues,
 } from "./forgot-password-types"
 
-import { ResetPasswordContext, useResetPasswordContext, type ResetPasswordMethod, type ResetPasswordContextValue } from "../../hooks/use-reset-password"
+import {
+  ResetPasswordContext,
+  useResetPasswordContext,
+  type ResetPasswordMethod,
+  type ResetPasswordContextValue,
+} from "../../hooks/use-reset-password"
 
 // --- Provider ---
 
@@ -97,9 +102,7 @@ export function ResetPassword({
 
   return (
     <ResetPasswordContext.Provider value={contextValue}>
-      <Card className="mx-auto w-full max-w-md">
-        {children}
-      </Card>
+      <Card className="mx-auto w-full max-w-md">{children}</Card>
     </ResetPasswordContext.Provider>
   )
 }
@@ -120,7 +123,10 @@ export interface ResetPasswordHeaderProps {
   description?: React.ReactNode
 }
 
-ResetPassword.Header = function ResetPasswordHeader({ title = "Reset Password", description = "Enter your new password below." }: ResetPasswordHeaderProps) {
+ResetPassword.Header = function ResetPasswordHeader({
+  title = "Reset Password",
+  description = "Enter your new password below.",
+}: ResetPasswordHeaderProps) {
   return (
     <CardHeader>
       <CardTitle>{title}</CardTitle>
@@ -139,7 +145,9 @@ export interface ResetPasswordContentProps {
   children: React.ReactNode
 }
 
-ResetPassword.Content = function ResetPasswordContent({ children }: ResetPasswordContentProps) {
+ResetPassword.Content = function ResetPasswordContent({
+  children,
+}: ResetPasswordContentProps) {
   const { apiError } = useResetPasswordContext()
   return (
     <CardContent>
@@ -165,13 +173,19 @@ export interface ResetPasswordFormProps {
   children: React.ReactNode
 }
 
-ResetPassword.Form = function ResetPasswordForm({ children }: ResetPasswordFormProps) {
-  const { method, emailForm, phoneForm, onSubmitEmail, onSubmitPhone } = useResetPasswordContext()
+ResetPassword.Form = function ResetPasswordForm({
+  children,
+}: ResetPasswordFormProps) {
+  const { method, emailForm, phoneForm, onSubmitEmail, onSubmitPhone } =
+    useResetPasswordContext()
 
   if (method === "email") {
     return (
       <Form {...emailForm}>
-        <form onSubmit={emailForm.handleSubmit(onSubmitEmail!)} className="space-y-4">
+        <form
+          onSubmit={emailForm.handleSubmit(onSubmitEmail!)}
+          className="space-y-4"
+        >
           {children}
         </form>
       </Form>
@@ -180,7 +194,10 @@ ResetPassword.Form = function ResetPasswordForm({ children }: ResetPasswordFormP
 
   return (
     <Form {...phoneForm}>
-      <form onSubmit={phoneForm.handleSubmit(onSubmitPhone!)} className="space-y-4">
+      <form
+        onSubmit={phoneForm.handleSubmit(onSubmitPhone!)}
+        className="space-y-4"
+      >
         {children}
       </form>
     </Form>
@@ -225,7 +242,7 @@ ResetPassword.PasswordField = function ResetPasswordPasswordField() {
   return (
     <FormField
       // react-hook-form's FormField expects a single, strict generic type for control.
-      // Since formControl is a union type (EmailControl | PhoneControl), we cast to any 
+      // Since formControl is a union type (EmailControl | PhoneControl), we cast to any
       // to bypass the TS mismatch, as the 'password' field exists in both schemas.
       control={formControl as any}
       name="password"
@@ -247,34 +264,37 @@ ResetPassword.PasswordField = function ResetPasswordPasswordField() {
   )
 }
 
-ResetPassword.ConfirmPasswordField = function ResetPasswordConfirmPasswordField() {
-  const { method, emailForm, phoneForm, isLoading } = useResetPasswordContext()
-  const formControl = method === "email" ? emailForm.control : phoneForm.control
+ResetPassword.ConfirmPasswordField =
+  function ResetPasswordConfirmPasswordField() {
+    const { method, emailForm, phoneForm, isLoading } =
+      useResetPasswordContext()
+    const formControl =
+      method === "email" ? emailForm.control : phoneForm.control
 
-  return (
-    <FormField
-      // react-hook-form's FormField expects a single, strict generic type for control.
-      // Since formControl is a union type (EmailControl | PhoneControl), we cast to any 
-      // to bypass the TS mismatch, as the 'confirmPassword' field exists in both schemas.
-      control={formControl as any}
-      name="confirmPassword"
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel>Confirm New Password</FormLabel>
-          <FormControl>
-            <Input
-              type="password"
-              placeholder={method === "email" ? "Confirm New Password" : ""}
-              disabled={isLoading}
-              {...field}
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
-  )
-}
+    return (
+      <FormField
+        // react-hook-form's FormField expects a single, strict generic type for control.
+        // Since formControl is a union type (EmailControl | PhoneControl), we cast to any
+        // to bypass the TS mismatch, as the 'confirmPassword' field exists in both schemas.
+        control={formControl as any}
+        name="confirmPassword"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Confirm New Password</FormLabel>
+            <FormControl>
+              <Input
+                type="password"
+                placeholder={method === "email" ? "Confirm New Password" : ""}
+                disabled={isLoading}
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    )
+  }
 
 /**
  * Props for the ResetPasswordSubmitButton component.
@@ -286,7 +306,9 @@ export interface ResetPasswordSubmitButtonProps {
   children?: React.ReactNode
 }
 
-ResetPassword.SubmitButton = function ResetPasswordSubmitButton({ children }: ResetPasswordSubmitButtonProps) {
+ResetPassword.SubmitButton = function ResetPasswordSubmitButton({
+  children,
+}: ResetPasswordSubmitButtonProps) {
   const { isLoading } = useResetPasswordContext()
   return (
     <Button className="w-full" type="submit" disabled={isLoading}>

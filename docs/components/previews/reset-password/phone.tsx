@@ -1,28 +1,31 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { ResetPassword, ResetPasswordSuccessView } from '@kuli-ui/components/components/auth/reset-password';
-import type { ResetPasswordPhoneValues } from '@kuli-ui/components/components/auth/forgot-password-types';
+import { useState } from "react"
+import {
+  ResetPassword,
+  ResetPasswordSuccessView,
+} from "@kuli-ui/components/components/auth/reset-password"
+import type { ResetPasswordPhoneValues } from "@kuli-ui/components/components/auth/forgot-password-types"
 
 export function ResetPasswordPhone() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [done, setDone] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [done, setDone] = useState(false)
+  const [apiError, setApiError] = useState<{ message: string } | null>(null)
 
   const handleSubmit = async (_values: ResetPasswordPhoneValues) => {
-    setIsLoading(true);
-    setApiError(null);
+    setIsLoading(true)
+    setApiError(null)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setDone(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setDone(true)
     } catch {
-      setApiError({ message: 'Reset failed.' });
+      setApiError({ message: "Reset failed." })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
-  if (done) return <ResetPasswordSuccessView redirectTo="#" />;
+  if (done) return <ResetPasswordSuccessView redirectTo="#" />
 
   return (
     <ResetPassword
@@ -41,5 +44,5 @@ export function ResetPasswordPhone() {
         </ResetPassword.Form>
       </ResetPassword.Content>
     </ResetPassword>
-  );
+  )
 }

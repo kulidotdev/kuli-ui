@@ -1,10 +1,10 @@
-'use client';
+"use client"
 
-import { SignIn } from '@kuli-ui/components/components/auth/signin';
+import { SignIn } from "@kuli-ui/components/components/auth/signin"
 
 export function SignInEmailOnly() {
   return (
-    <SignIn onSubmit={() => {}} methods={['email']}>
+    <SignIn onSubmit={() => {}} methods={["email"]}>
       <SignIn.Header />
       <SignIn.Content>
         <SignIn.Form>
@@ -16,5 +16,5 @@ export function SignInEmailOnly() {
       </SignIn.Content>
       <SignIn.Footer signupPath="#" />
     </SignIn>
-  );
+  )
 }

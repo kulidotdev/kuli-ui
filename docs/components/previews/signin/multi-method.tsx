@@ -1,10 +1,10 @@
-'use client';
+"use client"
 
-import { SignIn } from '@kuli-ui/components/components/auth/signin';
+import { SignIn } from "@kuli-ui/components/components/auth/signin"
 
 export function SignInMultiMethod() {
   return (
-    <SignIn onSubmit={() => {}} methods={['email', 'username', 'phone']}>
+    <SignIn onSubmit={() => {}} methods={["email", "username", "phone"]}>
       <SignIn.Header />
       <SignIn.Content>
         <SignIn.Form>
@@ -16,5 +16,5 @@ export function SignInMultiMethod() {
       </SignIn.Content>
       <SignIn.Footer signupPath="#" />
     </SignIn>
-  );
+  )
 }

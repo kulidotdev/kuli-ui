@@ -1,47 +1,47 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
+import { useState } from "react"
 import {
   ForgotPassword,
   ForgotPasswordSuccessView,
-} from '@kuli-ui/components/components/auth/forgot-password';
+} from "@kuli-ui/components/components/auth/forgot-password"
 import type {
   ForgotPasswordEmailValues,
   ForgotPasswordPhoneValues,
-} from '@kuli-ui/components/components/auth/forgot-password-types';
+} from "@kuli-ui/components/components/auth/forgot-password-types"
 
 export function ForgotPasswordWithPhone() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [apiError, setApiError] = useState<{ message: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [apiError, setApiError] = useState<{ message: string } | null>(null)
 
   const handleEmail = async (_values: ForgotPasswordEmailValues) => {
-    setIsLoading(true);
-    setApiError(null);
+    setIsLoading(true)
+    setApiError(null)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSent(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setSent(true)
     } catch {
-      setApiError({ message: 'Failed to send reset link.' });
+      setApiError({ message: "Failed to send reset link." })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const handlePhone = async (_values: ForgotPasswordPhoneValues) => {
-    setIsLoading(true);
-    setApiError(null);
+    setIsLoading(true)
+    setApiError(null)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      setSent(true);
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      setSent(true)
     } catch {
-      setApiError({ message: 'Failed to send OTP.' });
+      setApiError({ message: "Failed to send OTP." })
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
-  if (sent) return <ForgotPasswordSuccessView backUrl="#" />;
+  if (sent) return <ForgotPasswordSuccessView backUrl="#" />
 
   return (
     <ForgotPassword
@@ -65,5 +65,5 @@ export function ForgotPasswordWithPhone() {
         </ForgotPassword.Tabs>
       </ForgotPassword.Content>
     </ForgotPassword>
-  );
+  )
 }

@@ -1,18 +1,18 @@
-import * as React from "react";
-import { ShieldAlert, Info, AlertTriangle, CheckCircle } from "lucide-react";
+import * as React from "react"
+import { ShieldAlert, Info, AlertTriangle, CheckCircle } from "lucide-react"
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
-  CardFooter
-} from "./card";
+  CardFooter,
+} from "./card"
 
 /**
  * Represents the available visual variants for the alert card.
  * Controls the color scheme, gradient, and default icon.
  */
-export type AlertVariant = "info" | "error" | "warning" | "success";
+export type AlertVariant = "info" | "error" | "warning" | "success"
 
 /**
  * Props for the AlertCard component.
@@ -22,34 +22,37 @@ export interface AlertCardProps {
    * The visual variant of the alert.
    * @default "info"
    */
-  variant?: AlertVariant;
+  variant?: AlertVariant
   /**
    * The main title text of the alert.
    */
-  title: string;
+  title: string
   /**
    * The detailed description or message of the alert.
    */
-  description: React.ReactNode;
+  description: React.ReactNode
   /**
    * Optional custom icon to replace the default variant icon.
    */
-  icon?: React.ReactNode;
+  icon?: React.ReactNode
   /**
    * Optional footer content, typically used for action buttons.
    */
-  footer?: React.ReactNode;
+  footer?: React.ReactNode
 }
 
-const variantStyles: Record<AlertVariant, {
-  border: string;
-  gradientBg: string;
-  gradientTop: string;
-  iconBg: string;
-  iconRing: string;
-  iconColor: string;
-  DefaultIcon: React.ElementType;
-}> = {
+const variantStyles: Record<
+  AlertVariant,
+  {
+    border: string
+    gradientBg: string
+    gradientTop: string
+    iconBg: string
+    iconRing: string
+    iconColor: string
+    DefaultIcon: React.ElementType
+  }
+> = {
   info: {
     border: "border-blue-500/20",
     gradientBg: "from-blue-50/50 dark:from-blue-950/20",
@@ -86,23 +89,39 @@ const variantStyles: Record<AlertVariant, {
     iconColor: "text-green-600 dark:text-green-400",
     DefaultIcon: CheckCircle,
   },
-};
+}
 
 /**
  * AlertCard displays a prominent message card with an icon, title, description, and optional footer actions.
  * It's suitable for important notifications, error messages, or success states.
  */
-export function AlertCard({ variant = "info", title, description, icon, footer }: AlertCardProps) {
-  const styles = variantStyles[variant];
-  const IconComponent = styles.DefaultIcon;
+export function AlertCard({
+  variant = "info",
+  title,
+  description,
+  icon,
+  footer,
+}: AlertCardProps) {
+  const styles = variantStyles[variant]
+  const IconComponent = styles.DefaultIcon
 
   return (
-    <div className="w-full max-w-md mx-auto">
-      <Card className={`w-full shadow-lg ${styles.border} bg-gradient-to-b ${styles.gradientBg} to-white dark:to-background overflow-hidden relative`}>
-        <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${styles.gradientTop}`} />
-        <CardHeader className="space-y-3 text-center pb-8 pt-8">
-          <div className={`mx-auto w-12 h-12 ${styles.iconBg} rounded-full flex items-center justify-center mb-2 shadow-sm ring-4 ${styles.iconRing}`}>
-            {icon ? icon : <IconComponent className={`w-6 h-6 ${styles.iconColor}`} />}
+    <div className="mx-auto w-full max-w-md">
+      <Card
+        className={`w-full shadow-lg ${styles.border} bg-gradient-to-b ${styles.gradientBg} relative overflow-hidden to-white dark:to-background`}
+      >
+        <div
+          className={`absolute top-0 left-0 h-1 w-full bg-gradient-to-r ${styles.gradientTop}`}
+        />
+        <CardHeader className="space-y-3 pt-8 pb-8 text-center">
+          <div
+            className={`mx-auto h-12 w-12 ${styles.iconBg} mb-2 flex items-center justify-center rounded-full shadow-sm ring-4 ${styles.iconRing}`}
+          >
+            {icon ? (
+              icon
+            ) : (
+              <IconComponent className={`h-6 w-6 ${styles.iconColor}`} />
+            )}
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight text-foreground">
             {title}
@@ -118,5 +137,5 @@ export function AlertCard({ variant = "info", title, description, icon, footer }
         )}
       </Card>
     </div>
-  );
+  )
 }

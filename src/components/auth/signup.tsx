@@ -1,31 +1,42 @@
 "use client"
 
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import * as React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Loader2 } from "lucide-react"
 
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { PhoneInput } from "../ui/phone-input";
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { PhoneInput } from "../ui/phone-input"
 import {
-  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
-} from "../ui/card";
-import { Separator } from "../ui/separator";
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card"
+import { Separator } from "../ui/separator"
 import {
-  Form, FormControl, FormField, FormItem, FormLabel, FormMessage,
-} from "../ui/form";
-import { AlertError } from "../ui/alert-error";
-import { AlertCard } from "../ui/alert-card";
-import {
-  signupSchema,
-  type SignupFormValues,
-} from "./signup-types";
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form"
+import { AlertError } from "../ui/alert-error"
+import { AlertCard } from "../ui/alert-card"
+import { signupSchema, type SignupFormValues } from "./signup-types"
 
-export type { SignupFormValues };
-export { signupSchema };
+export type { SignupFormValues }
+export { signupSchema }
 
-import { SignUpContext, useSignUpContext, type SignUpContextValue } from "../../hooks/use-signup";
+import {
+  SignUpContext,
+  useSignUpContext,
+  type SignUpContextValue,
+} from "../../hooks/use-signup"
 
 // --- Provider ---
 
@@ -36,27 +47,27 @@ export interface SignUpProps {
   /**
    * Callback for when the user successfully submits the registration form.
    */
-  onSubmit: (values: SignupFormValues) => void;
+  onSubmit: (values: SignupFormValues) => void
   /**
    * Whether the component is currently in a loading state (e.g. submitting).
    */
-  isLoading?: boolean;
+  isLoading?: boolean
   /**
    * An optional API error to display at the top of the form.
    */
-  apiError?: { message: string; code?: string } | null;
+  apiError?: { message: string; code?: string } | null
   /**
    * Whether to display the username field.
    */
-  showUsername?: boolean;
+  showUsername?: boolean
   /**
    * Whether to display the phone number field.
    */
-  showPhone?: boolean;
+  showPhone?: boolean
   /**
    * The subcomponents to render within the sign up card.
    */
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function SignUp({
@@ -77,7 +88,7 @@ export function SignUp({
       username: "",
       phone: "",
     },
-  });
+  })
 
   const contextValue: SignUpContextValue = {
     form,
@@ -86,15 +97,13 @@ export function SignUp({
     showUsername,
     showPhone,
     onSubmit,
-  };
+  }
 
   return (
     <SignUpContext.Provider value={contextValue}>
-      <Card className="w-full max-w-md mx-auto">
-        {children}
-      </Card>
+      <Card className="mx-auto w-full max-w-md">{children}</Card>
     </SignUpContext.Provider>
-  );
+  )
 }
 
 // --- Compound Components ---
@@ -113,7 +122,10 @@ export interface SignUpHeaderProps {
   description?: React.ReactNode
 }
 
-SignUp.Header = function SignUpHeader({ title = "Sign Up", description = "Create an account to get started" }: SignUpHeaderProps) {
+SignUp.Header = function SignUpHeader({
+  title = "Sign Up",
+  description = "Create an account to get started",
+}: SignUpHeaderProps) {
   return (
     <CardHeader className="space-y-1 text-center">
       <CardTitle className="text-2xl font-bold tracking-tight">
@@ -121,7 +133,7 @@ SignUp.Header = function SignUpHeader({ title = "Sign Up", description = "Create
       </CardTitle>
       {description && <CardDescription>{description}</CardDescription>}
     </CardHeader>
-  );
+  )
 }
 
 /**
@@ -135,13 +147,19 @@ export interface SignUpContentProps {
 }
 
 SignUp.Content = function SignUpContent({ children }: SignUpContentProps) {
-  const { apiError } = useSignUpContext();
+  const { apiError } = useSignUpContext()
   return (
     <CardContent>
-      {apiError && <AlertError message={apiError.message} code={apiError.code} className="mb-4" />}
+      {apiError && (
+        <AlertError
+          message={apiError.message}
+          code={apiError.code}
+          className="mb-4"
+        />
+      )}
       {children}
     </CardContent>
-  );
+  )
 }
 
 /**
@@ -155,21 +173,25 @@ export interface SignUpFormProps {
 }
 
 SignUp.Form = function SignUpForm({ children }: SignUpFormProps) {
-  const { form, onSubmit } = useSignUpContext();
+  const { form, onSubmit } = useSignUpContext()
 
-  const handleSubmit = (values: SignupFormValues) => onSubmit(values);
+  const handleSubmit = (values: SignupFormValues) => onSubmit(values)
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} method="post" className="space-y-4">
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        method="post"
+        className="space-y-4"
+      >
         {children}
       </form>
     </Form>
-  );
+  )
 }
 
 SignUp.NameField = function SignUpNameField() {
-  const { form, isLoading } = useSignUpContext();
+  const { form, isLoading } = useSignUpContext()
   return (
     <FormField
       control={form.control}
@@ -184,11 +206,11 @@ SignUp.NameField = function SignUpNameField() {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 SignUp.EmailField = function SignUpEmailField() {
-  const { form, isLoading } = useSignUpContext();
+  const { form, isLoading } = useSignUpContext()
   return (
     <FormField
       control={form.control}
@@ -197,18 +219,23 @@ SignUp.EmailField = function SignUpEmailField() {
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
-            <Input placeholder="m@example.com" type="email" disabled={isLoading} {...field} />
+            <Input
+              placeholder="m@example.com"
+              type="email"
+              disabled={isLoading}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 SignUp.UsernameField = function SignUpUsernameField() {
-  const { form, isLoading, showUsername } = useSignUpContext();
-  if (!showUsername) return null;
+  const { form, isLoading, showUsername } = useSignUpContext()
+  if (!showUsername) return null
   return (
     <FormField
       control={form.control}
@@ -223,12 +250,12 @@ SignUp.UsernameField = function SignUpUsernameField() {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 SignUp.PhoneField = function SignUpPhoneField() {
-  const { form, isLoading, showPhone } = useSignUpContext();
-  if (!showPhone) return null;
+  const { form, isLoading, showPhone } = useSignUpContext()
+  if (!showPhone) return null
   return (
     <FormField
       control={form.control}
@@ -248,11 +275,11 @@ SignUp.PhoneField = function SignUpPhoneField() {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 SignUp.PasswordField = function SignUpPasswordField() {
-  const { form, isLoading } = useSignUpContext();
+  const { form, isLoading } = useSignUpContext()
   return (
     <FormField
       control={form.control}
@@ -267,7 +294,7 @@ SignUp.PasswordField = function SignUpPasswordField() {
         </FormItem>
       )}
     />
-  );
+  )
 }
 
 /**
@@ -280,14 +307,16 @@ export interface SignUpSubmitButtonProps {
   children?: React.ReactNode
 }
 
-SignUp.SubmitButton = function SignUpSubmitButton({ children }: SignUpSubmitButtonProps) {
-  const { isLoading } = useSignUpContext();
+SignUp.SubmitButton = function SignUpSubmitButton({
+  children,
+}: SignUpSubmitButtonProps) {
+  const { isLoading } = useSignUpContext()
   return (
     <Button type="submit" className="w-full" disabled={isLoading}>
       {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
       {children || (isLoading ? "Signing up..." : "Create account")}
     </Button>
-  );
+  )
 }
 
 /**
@@ -300,15 +329,19 @@ export interface SignUpSeparatorProps {
   children?: React.ReactNode
 }
 
-SignUp.Separator = function SignUpSeparator({ children = "Or continue with" }: SignUpSeparatorProps) {
+SignUp.Separator = function SignUpSeparator({
+  children = "Or continue with",
+}: SignUpSeparatorProps) {
   return (
     <div className="relative my-6">
-      <div className="absolute inset-0 flex items-center"><Separator /></div>
+      <div className="absolute inset-0 flex items-center">
+        <Separator />
+      </div>
       <div className="relative flex justify-center text-xs uppercase">
         <span className="bg-card px-2 text-muted-foreground">{children}</span>
       </div>
     </div>
-  );
+  )
 }
 
 /**
@@ -326,21 +359,27 @@ export interface SignUpFooterProps {
   children?: React.ReactNode
 }
 
-SignUp.Footer = function SignUpFooter({ signinPath, children }: SignUpFooterProps) {
-  if (!signinPath && !children) return null;
+SignUp.Footer = function SignUpFooter({
+  signinPath,
+  children,
+}: SignUpFooterProps) {
+  if (!signinPath && !children) return null
   return (
     <CardFooter className="flex flex-col space-y-4">
       {children}
       {signinPath && (
-        <div className="text-center text-sm text-muted-foreground mt-2">
+        <div className="mt-2 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
-          <a href={signinPath} className="font-medium text-primary hover:underline">
+          <a
+            href={signinPath}
+            className="font-medium text-primary hover:underline"
+          >
             Sign in
           </a>
         </div>
       )}
     </CardFooter>
-  );
+  )
 }
 
 /**
@@ -355,7 +394,7 @@ export interface SignupSuccessViewProps {
 
 export function SignupSuccessView({ redirectUrl }: SignupSuccessViewProps) {
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="mx-auto w-full max-w-md">
       <AlertCard
         variant="success"
         title="Registration Successful"
@@ -367,5 +406,5 @@ export function SignupSuccessView({ redirectUrl }: SignupSuccessViewProps) {
         }
       />
     </div>
-  );
+  )
 }

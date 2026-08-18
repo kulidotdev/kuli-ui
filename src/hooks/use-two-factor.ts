@@ -1,6 +1,9 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type TwoFactorValues, type TwoFactorMethod } from "../components/auth/two-factor-types"
+import {
+  type TwoFactorValues,
+  type TwoFactorMethod,
+} from "../components/auth/two-factor-types"
 
 /**
  * Context value for the TwoFactor compound components.
@@ -24,7 +27,9 @@ export interface TwoFactorContextValue {
   trustDeviceDescription?: string
 }
 
-export const TwoFactorContext = React.createContext<TwoFactorContextValue | undefined>(undefined)
+export const TwoFactorContext = React.createContext<
+  TwoFactorContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the two-factor context.
@@ -33,7 +38,9 @@ export const TwoFactorContext = React.createContext<TwoFactorContextValue | unde
 export function useTwoFactorContext() {
   const context = React.useContext(TwoFactorContext)
   if (!context) {
-    throw new Error("TwoFactor components must be used within a TwoFactor provider")
+    throw new Error(
+      "TwoFactor components must be used within a TwoFactor provider"
+    )
   }
   return context
 }

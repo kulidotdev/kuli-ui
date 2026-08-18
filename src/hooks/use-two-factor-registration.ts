@@ -36,9 +36,9 @@ export interface TwoFactorContextValue {
   onVerifyOtp?: (otp: string, trustedDevice: boolean) => Promise<void>
 }
 
-export const TwoFactorContext = React.createContext<TwoFactorContextValue | undefined>(
-  undefined
-)
+export const TwoFactorContext = React.createContext<
+  TwoFactorContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the two-factor registration context.

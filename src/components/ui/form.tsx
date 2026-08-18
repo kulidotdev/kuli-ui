@@ -89,7 +89,10 @@ export interface FormItemProps {
 /**
  * Wrapper for an individual form item, providing context for the label, control, and messages.
  */
-function FormItem({ className, ...props }: FormItemProps & React.ComponentProps<"div">) {
+function FormItem({
+  className,
+  ...props
+}: FormItemProps & React.ComponentProps<"div">) {
   const id = React.useId()
 
   return (
@@ -141,7 +144,9 @@ export interface FormControlProps {
 /**
  * Wraps the actual input/control. Applies the necessary accessibility attributes.
  */
-function FormControl({ ...props }: FormControlProps & React.ComponentProps<typeof Slot.Root>) {
+function FormControl({
+  ...props
+}: FormControlProps & React.ComponentProps<typeof Slot.Root>) {
   const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
 
   return (
@@ -170,7 +175,10 @@ export interface FormDescriptionProps {
 /**
  * Provides a description for the form field.
  */
-function FormDescription({ className, ...props }: FormDescriptionProps & React.ComponentProps<"p">) {
+function FormDescription({
+  className,
+  ...props
+}: FormDescriptionProps & React.ComponentProps<"p">) {
   const { formDescriptionId } = useFormField()
 
   return (
@@ -194,7 +202,10 @@ export interface FormMessageProps {
 /**
  * Displays error messages associated with the form field.
  */
-function FormMessage({ className, ...props }: FormMessageProps & React.ComponentProps<"p">) {
+function FormMessage({
+  className,
+  ...props
+}: FormMessageProps & React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField()
   const body = error ? String(error?.message ?? "") : props.children
 

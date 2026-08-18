@@ -29,11 +29,7 @@ import {
 } from "../ui/collapsible"
 import { AlertError } from "../ui/alert-error"
 import QRCode from "react-qr-code"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "../ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 import {
   TwoFactorContext,
   useTwoFactorRegistration,

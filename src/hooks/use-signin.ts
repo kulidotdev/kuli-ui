@@ -1,6 +1,10 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type BaseFormValues, type SigninMethod, type SigninFormValues } from "../components/auth/signin-types"
+import {
+  type BaseFormValues,
+  type SigninMethod,
+  type SigninFormValues,
+} from "../components/auth/signin-types"
 
 /**
  * Context value for the SignIn compound components.
@@ -15,9 +19,9 @@ export interface SignInContextValue {
   apiError: { message: string; code?: string } | null
 }
 
-export const SignInContext = React.createContext<SignInContextValue | undefined>(
-  undefined
-)
+export const SignInContext = React.createContext<
+  SignInContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the sign-in context.

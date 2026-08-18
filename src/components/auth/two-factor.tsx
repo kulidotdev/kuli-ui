@@ -16,11 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "../ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 import { Checkbox } from "../ui/checkbox"
 import { AlertError } from "../ui/alert-error"
 import {
@@ -34,7 +30,11 @@ import {
 
 import { type TwoFactorValues, type TwoFactorMethod } from "./two-factor-types"
 
-import { TwoFactorContext, useTwoFactorContext, type TwoFactorContextValue } from "../../hooks/use-two-factor"
+import {
+  TwoFactorContext,
+  useTwoFactorContext,
+  type TwoFactorContextValue,
+} from "../../hooks/use-two-factor"
 
 // --- Provider ---
 
@@ -110,7 +110,8 @@ export function TwoFactor({
     ? currentView
     : twofactorMethods[0] || "totp"
 
-  const [activeView, setActiveView] = React.useState<TwoFactorMethod>(initialView)
+  const [activeView, setActiveView] =
+    React.useState<TwoFactorMethod>(initialView)
   const [countdown, setCountdown] = React.useState(0)
 
   React.useEffect(() => {
@@ -180,9 +181,7 @@ export function TwoFactor({
 
   return (
     <TwoFactorContext.Provider value={contextValue}>
-      <Card className="mx-auto w-full max-w-md">
-        {children}
-      </Card>
+      <Card className="mx-auto w-full max-w-md">{children}</Card>
     </TwoFactorContext.Provider>
   )
 }
@@ -203,18 +202,25 @@ export interface TwoFactorHeaderProps {
   description?: React.ReactNode
 }
 
-TwoFactor.Header = function TwoFactorHeader({ title, description }: TwoFactorHeaderProps) {
+TwoFactor.Header = function TwoFactorHeader({
+  title,
+  description,
+}: TwoFactorHeaderProps) {
   const { activeView, currentLength } = useTwoFactorContext()
 
-  const defaultTitle = 
-    activeView === "totp" ? "Authenticator App" :
-    activeView === "otp" ? "Email Verification" :
-    "Backup Code"
+  const defaultTitle =
+    activeView === "totp"
+      ? "Authenticator App"
+      : activeView === "otp"
+        ? "Email Verification"
+        : "Backup Code"
 
   const defaultDescription =
-    activeView === "totp" ? `Enter the ${currentLength}-digit code from your authenticator app.` :
-    activeView === "otp" ? `Enter the ${currentLength}-digit code sent to your email address.` :
-    "Enter one of your emergency backup codes."
+    activeView === "totp"
+      ? `Enter the ${currentLength}-digit code from your authenticator app.`
+      : activeView === "otp"
+        ? `Enter the ${currentLength}-digit code sent to your email address.`
+        : "Enter one of your emergency backup codes."
 
   return (
     <CardHeader>
@@ -234,7 +240,9 @@ export interface TwoFactorContentProps {
   children: React.ReactNode
 }
 
-TwoFactor.Content = function TwoFactorContent({ children }: TwoFactorContentProps) {
+TwoFactor.Content = function TwoFactorContent({
+  children,
+}: TwoFactorContentProps) {
   const { apiError } = useTwoFactorContext()
   return (
     <CardContent>
@@ -355,13 +363,17 @@ export interface TwoFactorSubmitButtonProps {
   children?: React.ReactNode
 }
 
-TwoFactor.SubmitButton = function TwoFactorSubmitButton({ children }: TwoFactorSubmitButtonProps) {
+TwoFactor.SubmitButton = function TwoFactorSubmitButton({
+  children,
+}: TwoFactorSubmitButtonProps) {
   const { form, isLoading, activeView, currentLength } = useTwoFactorContext()
   const codeValue = form.watch("code") || ""
 
-  const isDisabled = isLoading || (
-    activeView === "backup_code" ? codeValue.length === 0 : codeValue.length !== currentLength
-  )
+  const isDisabled =
+    isLoading ||
+    (activeView === "backup_code"
+      ? codeValue.length === 0
+      : codeValue.length !== currentLength)
 
   return (
     <Button type="submit" className="w-full" disabled={isDisabled}>
@@ -381,7 +393,9 @@ export interface TwoFactorFooterProps {
   children?: React.ReactNode
 }
 
-TwoFactor.Footer = function TwoFactorFooter({ children }: TwoFactorFooterProps) {
+TwoFactor.Footer = function TwoFactorFooter({
+  children,
+}: TwoFactorFooterProps) {
   const { activeView, twofactorMethods } = useTwoFactorContext()
   const alternativeMethods = twofactorMethods.filter((m) => m !== activeView)
 
@@ -399,7 +413,15 @@ TwoFactor.Footer = function TwoFactorFooter({ children }: TwoFactorFooterProps) 
 }
 
 TwoFactor.ResendOtp = function TwoFactorResendOtp() {
-  const { activeView, countdown, setCountdown, isLoading, isResending, resendCooldown, onResendOtp } = useTwoFactorContext()
+  const {
+    activeView,
+    countdown,
+    setCountdown,
+    isLoading,
+    isResending,
+    resendCooldown,
+    onResendOtp,
+  } = useTwoFactorContext()
 
   if (activeView !== "otp") return null
 
@@ -434,7 +456,8 @@ TwoFactor.ResendOtp = function TwoFactorResendOtp() {
 }
 
 TwoFactor.AlternativeMethods = function TwoFactorAlternativeMethods() {
-  const { activeView, twofactorMethods, setActiveView, isLoading } = useTwoFactorContext()
+  const { activeView, twofactorMethods, setActiveView, isLoading } =
+    useTwoFactorContext()
   const alternativeMethods = twofactorMethods.filter((m) => m !== activeView)
 
   if (alternativeMethods.length === 0) return null

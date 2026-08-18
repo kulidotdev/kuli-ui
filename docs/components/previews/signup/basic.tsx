@@ -1,18 +1,21 @@
-'use client';
+"use client"
 
-import { useState } from 'react';
-import { SignUp, SignupSuccessView } from '@kuli-ui/components/components/auth/signup';
+import { useState } from "react"
+import {
+  SignUp,
+  SignupSuccessView,
+} from "@kuli-ui/components/components/auth/signup"
 
 export function SignUpBasic() {
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false)
 
-  if (success) return <SignupSuccessView redirectUrl="#" />;
+  if (success) return <SignupSuccessView redirectUrl="#" />
 
   return (
     <SignUp
       onSubmit={async (_values) => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        setSuccess(true);
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+        setSuccess(true)
       }}
     >
       <SignUp.Header />
@@ -26,5 +29,5 @@ export function SignUpBasic() {
       </SignUp.Content>
       <SignUp.Footer signinPath="#" />
     </SignUp>
-  );
+  )
 }

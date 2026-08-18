@@ -14,9 +14,9 @@ export interface SignUpContextValue {
   onSubmit: (values: SignupFormValues) => void
 }
 
-export const SignUpContext = React.createContext<SignUpContextValue | undefined>(
-  undefined
-)
+export const SignUpContext = React.createContext<
+  SignUpContextValue | undefined
+>(undefined)
 
 /**
  * Hook to access the sign-up context.

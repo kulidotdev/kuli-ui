@@ -281,7 +281,7 @@ function Step3Preview() {
           Install directly into your codebase
         </span>
         <div className="bg-fd-background/80 text-fd-foreground mt-1 flex items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 font-mono text-xs">
-          <span className="flex-1 min-w-0 overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <span className="min-w-0 flex-1 [scrollbar-width:none] overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden">
             {installCmd}
           </span>
           <CopyButton text={installCmd} variant="icon" />

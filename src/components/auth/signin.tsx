@@ -4,7 +4,11 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
-import { SignInContext, useSignInContext, type SignInContextValue } from "../../hooks/use-signin"
+import {
+  SignInContext,
+  useSignInContext,
+  type SignInContextValue,
+} from "../../hooks/use-signin"
 
 import { Button } from "../ui/button"
 import { Input } from "../ui/input"
@@ -26,12 +30,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "../ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select"
 import { AlertError } from "../ui/alert-error"
 import { PhoneInput } from "../ui/phone-input"
 import { AlertCard } from "../ui/alert-card"
@@ -189,9 +188,7 @@ export interface SignInContentProps {
   children: React.ReactNode
 }
 
-SignIn.Content = function SignInContent({
-  children,
-}: SignInContentProps) {
+SignIn.Content = function SignInContent({ children }: SignInContentProps) {
   const { apiError } = useSignInContext()
   return (
     <CardContent>

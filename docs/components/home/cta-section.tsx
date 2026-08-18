@@ -38,7 +38,7 @@ export function CtaSection() {
           <div className="border-fd-border bg-fd-background/90 mx-auto mt-8 flex max-w-lg items-center justify-between rounded-xl border p-3 shadow-inner">
             <div className="text-fd-foreground flex min-w-0 flex-1 items-center gap-2 font-mono text-xs">
               <Terminal className="text-fd-primary h-3.5 w-3.5 shrink-0" />
-              <span className="overflow-x-auto whitespace-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <span className="[scrollbar-width:none] overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden">
                 {quickCmd}
               </span>
             </div>

@@ -25,7 +25,12 @@ import {
   type ForgotPasswordPhoneValues,
 } from "./forgot-password-types"
 
-import { ForgotPasswordContext, useForgotPasswordContext, type ForgotPasswordTab, type ForgotPasswordContextValue } from "../../hooks/use-forgot-password"
+import {
+  ForgotPasswordContext,
+  useForgotPasswordContext,
+  type ForgotPasswordTab,
+  type ForgotPasswordContextValue,
+} from "../../hooks/use-forgot-password"
 
 // --- Provider ---
 
@@ -96,9 +101,7 @@ export function ForgotPassword({
 
   return (
     <ForgotPasswordContext.Provider value={contextValue}>
-      <Card className="mx-auto w-full max-w-md">
-        {children}
-      </Card>
+      <Card className="mx-auto w-full max-w-md">{children}</Card>
     </ForgotPasswordContext.Provider>
   )
 }
@@ -119,7 +122,10 @@ export interface ForgotPasswordHeaderProps {
   description?: React.ReactNode
 }
 
-ForgotPassword.Header = function ForgotPasswordHeader({ title = "Forgot Password", description }: ForgotPasswordHeaderProps) {
+ForgotPassword.Header = function ForgotPasswordHeader({
+  title = "Forgot Password",
+  description,
+}: ForgotPasswordHeaderProps) {
   const { allowPhone, activeTab } = useForgotPasswordContext()
 
   const defaultDescription = allowPhone
@@ -146,7 +152,9 @@ export interface ForgotPasswordContentProps {
   children: React.ReactNode
 }
 
-ForgotPassword.Content = function ForgotPasswordContent({ children }: ForgotPasswordContentProps) {
+ForgotPassword.Content = function ForgotPasswordContent({
+  children,
+}: ForgotPasswordContentProps) {
   const { apiError } = useForgotPasswordContext()
   return (
     <CardContent className="space-y-4">
@@ -169,7 +177,9 @@ export interface ForgotPasswordTabsProps {
   children: React.ReactNode
 }
 
-ForgotPassword.Tabs = function ForgotPasswordTabs({ children }: ForgotPasswordTabsProps) {
+ForgotPassword.Tabs = function ForgotPasswordTabs({
+  children,
+}: ForgotPasswordTabsProps) {
   const { allowPhone, activeTab, setActiveTab } = useForgotPasswordContext()
 
   if (!allowPhone) {
@@ -177,8 +187,11 @@ ForgotPassword.Tabs = function ForgotPasswordTabs({ children }: ForgotPasswordTa
   }
 
   return (
-    <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ForgotPasswordTab)}>
-      <TabsList className="grid w-full grid-cols-2 mb-4">
+    <Tabs
+      value={activeTab}
+      onValueChange={(v) => setActiveTab(v as ForgotPasswordTab)}
+    >
+      <TabsList className="mb-4 grid w-full grid-cols-2">
         <TabsTrigger value="email">Email</TabsTrigger>
         <TabsTrigger value="phone">Phone</TabsTrigger>
       </TabsList>
@@ -197,14 +210,20 @@ export interface ForgotPasswordEmailFormProps {
   children: React.ReactNode
 }
 
-ForgotPassword.EmailForm = function ForgotPasswordEmailForm({ children }: ForgotPasswordEmailFormProps) {
-  const { emailForm, onSubmitEmail, activeTab, allowPhone } = useForgotPasswordContext()
+ForgotPassword.EmailForm = function ForgotPasswordEmailForm({
+  children,
+}: ForgotPasswordEmailFormProps) {
+  const { emailForm, onSubmitEmail, activeTab, allowPhone } =
+    useForgotPasswordContext()
 
   if (allowPhone && activeTab !== "email") return null
 
   return (
     <Form {...emailForm}>
-      <form onSubmit={emailForm.handleSubmit(onSubmitEmail)} className="space-y-4">
+      <form
+        onSubmit={emailForm.handleSubmit(onSubmitEmail)}
+        className="space-y-4"
+      >
         {children}
       </form>
     </Form>
@@ -221,8 +240,11 @@ export interface ForgotPasswordPhoneFormProps {
   children: React.ReactNode
 }
 
-ForgotPassword.PhoneForm = function ForgotPasswordPhoneForm({ children }: ForgotPasswordPhoneFormProps) {
-  const { phoneForm, onSubmitPhone, activeTab, allowPhone } = useForgotPasswordContext()
+ForgotPassword.PhoneForm = function ForgotPasswordPhoneForm({
+  children,
+}: ForgotPasswordPhoneFormProps) {
+  const { phoneForm, onSubmitPhone, activeTab, allowPhone } =
+    useForgotPasswordContext()
 
   if (!allowPhone || activeTab !== "phone") return null
 
@@ -234,7 +256,10 @@ ForgotPassword.PhoneForm = function ForgotPasswordPhoneForm({ children }: Forgot
 
   return (
     <Form {...phoneForm}>
-      <form onSubmit={phoneForm.handleSubmit(handlePhoneSubmit)} className="space-y-4">
+      <form
+        onSubmit={phoneForm.handleSubmit(handlePhoneSubmit)}
+        className="space-y-4"
+      >
         {children}
       </form>
     </Form>
@@ -294,13 +319,15 @@ ForgotPassword.PhoneField = function ForgotPasswordPhoneField() {
  */
 export interface ForgotPasswordSubmitButtonProps {
   /**
-   * Custom label for the submit button. 
+   * Custom label for the submit button.
    * Defaults to "Send Reset Link" (email) or "Send OTP" (phone).
    */
   children?: React.ReactNode
 }
 
-ForgotPassword.SubmitButton = function ForgotPasswordSubmitButton({ children }: ForgotPasswordSubmitButtonProps) {
+ForgotPassword.SubmitButton = function ForgotPasswordSubmitButton({
+  children,
+}: ForgotPasswordSubmitButtonProps) {
   const { isLoading, activeTab } = useForgotPasswordContext()
 
   const defaultText = activeTab === "email" ? "Send Reset Link" : "Send OTP"
@@ -323,7 +350,9 @@ export interface ForgotPasswordSuccessViewProps {
   backUrl: string
 }
 
-export function ForgotPasswordSuccessView({ backUrl }: ForgotPasswordSuccessViewProps) {
+export function ForgotPasswordSuccessView({
+  backUrl,
+}: ForgotPasswordSuccessViewProps) {
   return (
     <div className="mx-auto w-full max-w-md">
       <AlertCard

@@ -1,6 +1,6 @@
-import type { BaseLayoutProps, LinkItemType } from 'fumadocs-ui/layouts/shared';
-import Image from 'next/image';
-import { appName, gitConfig } from './shared';
+import type { BaseLayoutProps, LinkItemType } from "fumadocs-ui/layouts/shared"
+import Image from "next/image"
+import { appName, gitConfig } from "./shared"
 
 export function baseOptions(): BaseLayoutProps {
   return {
@@ -19,23 +19,23 @@ export function baseOptions(): BaseLayoutProps {
       ),
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
-  };
+  }
 }
 
 export const homeNavLinks: LinkItemType[] = [
   {
-    text: 'Home',
-    url: '/',
-    active: 'url',
+    text: "Home",
+    url: "/",
+    active: "url",
   },
   {
-    text: 'Docs',
-    url: '/docs',
-    active: 'url',
+    text: "Docs",
+    url: "/docs",
+    active: "url",
   },
   {
-    text: 'Components',
-    url: '/docs/components/auth-signin',
-    active: 'nested-url',
+    text: "Components",
+    url: "/docs/components/auth-signin",
+    active: "nested-url",
   },
-];
+]
