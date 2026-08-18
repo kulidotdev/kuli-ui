@@ -217,7 +217,12 @@ ResetPassword.OtpField = function ResetPasswordOtpField() {
         <FormItem>
           <FormLabel>Verification Code</FormLabel>
           <FormControl>
-            <InputOTP maxLength={6} disabled={isLoading} {...field}>
+            <InputOTP
+              maxLength={6}
+              autoComplete="one-time-code"
+              disabled={isLoading}
+              {...field}
+            >
               <InputOTPGroup>
                 <InputOTPSlot index={0} />
                 <InputOTPSlot index={1} />
@@ -253,6 +258,7 @@ ResetPassword.PasswordField = function ResetPasswordPasswordField() {
             <Input
               type="password"
               placeholder={method === "email" ? "New Password" : ""}
+              autoComplete="new-password"
               disabled={isLoading}
               {...field}
             />
@@ -285,6 +291,7 @@ ResetPassword.ConfirmPasswordField =
               <Input
                 type="password"
                 placeholder={method === "email" ? "Confirm New Password" : ""}
+                autoComplete="new-password"
                 disabled={isLoading}
                 {...field}
               />

@@ -279,6 +279,7 @@ ForgotPassword.EmailField = function ForgotPasswordEmailField() {
               id="forgot-email"
               type="email"
               placeholder="name@example.com"
+              autoComplete="email"
               disabled={isLoading}
               {...field}
             />
@@ -301,6 +302,7 @@ ForgotPassword.PhoneField = function ForgotPasswordPhoneField() {
           <FormControl>
             <PhoneInput
               id="forgot-phone"
+              name={field.name}
               disabled={isLoading}
               value={field.value}
               onChange={field.onChange}

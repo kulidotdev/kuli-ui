@@ -299,12 +299,13 @@ TwoFactor.CodeInput = function TwoFactorCodeInput() {
               <Input
                 disabled={isLoading}
                 placeholder="e.g. 1a2b3c4d5e"
-                autoComplete="off"
+                autoComplete="one-time-code"
                 {...field}
               />
             ) : (
               <InputOTP
                 maxLength={currentLength}
+                autoComplete="one-time-code"
                 disabled={isLoading}
                 {...field}
               >
@@ -336,6 +337,7 @@ TwoFactor.TrustDevice = function TwoFactorTrustDevice() {
         <FormItem className="flex flex-row items-start space-y-0 space-x-3">
           <FormControl>
             <Checkbox
+              name={field.name}
               checked={field.value}
               onCheckedChange={field.onChange}
               disabled={isLoading}

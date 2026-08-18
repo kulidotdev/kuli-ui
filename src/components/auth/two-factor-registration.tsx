@@ -203,10 +203,12 @@ export function TwoFactorEnablingPasswordView() {
         {error && <AlertError message={error} className="mb-4" />}
         <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
           <div className="w-full space-y-2 text-left">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="enabling-password">Password</Label>
             <Input
-              id="password"
+              id="enabling-password"
+              name="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
@@ -359,6 +361,8 @@ export function TwoFactorShowQrView() {
             </div>
             <InputOTP
               id="otp"
+              name="otp"
+              autoComplete="one-time-code"
               maxLength={6}
               value={otp}
               onChange={setOtp}
@@ -375,6 +379,7 @@ export function TwoFactorShowQrView() {
           <div className="flex items-center space-x-2">
             <Checkbox
               id="trustedDevice"
+              name="trustedDevice"
               checked={trustedDevice}
               onCheckedChange={(c) => setTrustedDevice(!!c)}
               disabled={isSubmitting}
@@ -473,10 +478,12 @@ export function TwoFactorDisablingPasswordView() {
         {error && <AlertError message={error} className="mb-4" />}
         <form onSubmit={handleSubmit} className="flex w-full flex-col gap-4">
           <div className="w-full space-y-2 text-left">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="disabling-password">Password</Label>
             <Input
-              id="password"
+              id="disabling-password"
+              name="password"
               type="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"

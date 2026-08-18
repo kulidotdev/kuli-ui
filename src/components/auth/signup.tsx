@@ -200,7 +200,12 @@ SignUp.NameField = function SignUpNameField() {
         <FormItem>
           <FormLabel>Name</FormLabel>
           <FormControl>
-            <Input placeholder="John Doe" disabled={isLoading} {...field} />
+            <Input
+              placeholder="John Doe"
+              autoComplete="name"
+              disabled={isLoading}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -222,6 +227,7 @@ SignUp.EmailField = function SignUpEmailField() {
             <Input
               placeholder="m@example.com"
               type="email"
+              autoComplete="email"
               disabled={isLoading}
               {...field}
             />
@@ -244,7 +250,12 @@ SignUp.UsernameField = function SignUpUsernameField() {
         <FormItem>
           <FormLabel>Username</FormLabel>
           <FormControl>
-            <Input placeholder="johndoe123" disabled={isLoading} {...field} />
+            <Input
+              placeholder="johndoe123"
+              autoComplete="username"
+              disabled={isLoading}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -267,6 +278,7 @@ SignUp.PhoneField = function SignUpPhoneField() {
             <PhoneInput
               value={field.value}
               onChange={field.onChange}
+              name={field.name}
               defaultCountry="US"
               disabled={isLoading}
             />
@@ -288,7 +300,12 @@ SignUp.PasswordField = function SignUpPasswordField() {
         <FormItem>
           <FormLabel>Password</FormLabel>
           <FormControl>
-            <Input type="password" disabled={isLoading} {...field} />
+            <Input
+              type="password"
+              autoComplete="new-password"
+              disabled={isLoading}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>

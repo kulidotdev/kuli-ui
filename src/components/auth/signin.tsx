@@ -211,6 +211,7 @@ SignIn.MethodSwitch = function SignInMethodSwitch() {
 
   return (
     <Select
+      name="method_switch"
       value={method}
       onValueChange={(v) => setMethod(v as SigninMethod)}
       disabled={isLoading}
@@ -286,6 +287,7 @@ SignIn.IdentifierField = function SignInIdentifierField() {
                 <Input
                   type="email"
                   placeholder="m@example.com"
+                  autoComplete="email"
                   disabled={isLoading}
                   {...field}
                 />
@@ -301,6 +303,7 @@ SignIn.IdentifierField = function SignInIdentifierField() {
                 <PhoneInput
                   value={field.value}
                   onChange={field.onChange}
+                  name={field.name}
                   defaultCountry="US"
                   disabled={isLoading}
                 />
@@ -347,7 +350,12 @@ SignIn.PasswordField = function SignInPasswordField({
             )}
           </div>
           <FormControl>
-            <Input type="password" disabled={isLoading} {...field} />
+            <Input
+              type="password"
+              autoComplete="current-password"
+              disabled={isLoading}
+              {...field}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -366,6 +374,7 @@ SignIn.RememberMe = function SignInRememberMe() {
         <FormItem className="flex flex-row items-start space-y-0">
           <FormControl>
             <Checkbox
+              name={field.name}
               checked={field.value}
               onCheckedChange={field.onChange}
               disabled={isLoading}

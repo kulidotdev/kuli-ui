@@ -25,6 +25,9 @@ interface CountrySelectProps {
   disabled?: boolean
   readOnly?: boolean
   iconComponent: React.ElementType
+  name?: string
+  id?: string
+  autoComplete?: string
 }
 
 function CountrySelect({
@@ -36,6 +39,9 @@ function CountrySelect({
   disabled,
   readOnly,
   iconComponent: Icon,
+  name = "country",
+  id,
+  autoComplete = "country",
 }: CountrySelectProps) {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -71,6 +77,9 @@ function CountrySelect({
 
       {/* Full-area transparent <select> — keyboard navigable, accessible */}
       <select
+        id={id}
+        name={name}
+        autoComplete={autoComplete}
         className="absolute inset-0 cursor-pointer opacity-0 disabled:cursor-not-allowed"
         value={value ?? "ZZ"}
         onChange={handleChange}
@@ -104,6 +113,8 @@ const PhoneNumberInput = React.forwardRef<
 >((props, ref) => (
   <Input
     ref={ref}
+    type="tel"
+    autoComplete="tel"
     {...props}
     className={cn(
       "h-full flex-1 rounded-none border-0 bg-transparent px-3 text-sm shadow-none focus-visible:ring-0",
@@ -181,6 +192,11 @@ export interface PhoneInputProps {
    */
   name?: string
   /**
+   * HTML autocomplete attribute for the input.
+   * @default "tel"
+   */
+  autoComplete?: string
+  /**
    * Optional CSS class name for styling the container.
    */
   className?: string
@@ -197,10 +213,16 @@ function PhoneInput({
   placeholder = "Phone number",
   disabled,
   className,
+  id,
+  name,
+  autoComplete = "tel",
   ...props
 }: PhoneInputProps) {
   return (
     <PhoneInputPrimitive
+      id={id}
+      name={name}
+      autoComplete={autoComplete}
       value={value}
       onChange={onChange}
       defaultCountry={defaultCountry}
@@ -209,6 +231,11 @@ function PhoneInput({
       international
       flags={flags}
       countrySelectComponent={CountrySelect}
+      countrySelectProps={{
+        id: id ? `${id}-country` : undefined,
+        name: name ? `${name}_country` : "country",
+        autoComplete: "country",
+      }}
       inputComponent={PhoneNumberInput}
       containerComponent={PhoneInputContainer}
       containerComponentProps={{
