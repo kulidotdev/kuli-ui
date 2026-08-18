@@ -7,7 +7,6 @@
 <p align="center">
   <a href="https://ui.kuli.dev">Documentation</a> &bull;
   <a href="https://ui.kuli.dev/docs/components">Components</a> &bull;
-  <a href="https://github.com/kulidotdev/kuli-ui">GitHub</a>
 </p>
 
 <p align="center">
@@ -48,6 +47,7 @@ Instead of assembling forms, validation schemas, OTP timers, passkey managers, a
 ### 1. Prerequisites
 
 Ensure your project has:
+
 - **React 18+** (React 19 recommended)
 - **Tailwind CSS v4**
 - **TypeScript**
@@ -154,25 +154,25 @@ export default function SignInPage() {
 
 ### Authentication & Security
 
-| Component | CLI Command | Description |
-|---|---|---|
-| **Sign In** | `add @kuli-ui/auth-signin` | Sign-in flow supporting email, username, phone, magic link, passkey, and social logins. |
-| **Sign Up** | `add @kuli-ui/auth-signup` | Registration form with name, email, password, optional username, and phone number. |
-| **Forgot Password** | `add @kuli-ui/auth-forgot-password` | Password recovery flow via email reset link or phone OTP. |
-| **Reset Password** | `add @kuli-ui/auth-reset-password` | Set a new password via secure token or SMS OTP with validation feedback. |
-| **Two-Factor Verify** | `add @kuli-ui/auth-two-factor` | 2FA verification supporting authenticator app (TOTP), SMS OTP, and backup recovery codes. |
-| **Two-Factor Setup** | `add @kuli-ui/auth-two-factor-registration` | Setup flow for 2FA with interactive QR code scanning and backup code generator. |
-| **Passkey Manager** | `add @kuli-ui/auth-passkey-manager` | Passkey/WebAuthn management dashboard to list, register, rename, and revoke credentials. |
+| Component             | CLI Command                                 | Description                                                                               |
+| --------------------- | ------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| **Sign In**           | `add @kuli-ui/auth-signin`                  | Sign-in flow supporting email, username, phone, magic link, passkey, and social logins.   |
+| **Sign Up**           | `add @kuli-ui/auth-signup`                  | Registration form with name, email, password, optional username, and phone number.        |
+| **Forgot Password**   | `add @kuli-ui/auth-forgot-password`         | Password recovery flow via email reset link or phone OTP.                                 |
+| **Reset Password**    | `add @kuli-ui/auth-reset-password`          | Set a new password via secure token or SMS OTP with validation feedback.                  |
+| **Two-Factor Verify** | `add @kuli-ui/auth-two-factor`              | 2FA verification supporting authenticator app (TOTP), SMS OTP, and backup recovery codes. |
+| **Two-Factor Setup**  | `add @kuli-ui/auth-two-factor-registration` | Setup flow for 2FA with interactive QR code scanning and backup code generator.           |
+| **Passkey Manager**   | `add @kuli-ui/auth-passkey-manager`         | Passkey/WebAuthn management dashboard to list, register, rename, and revoke credentials.  |
 
 ### UI & Enhancements
 
-| Component | CLI Command | Description |
-|---|---|---|
-| **Phone Input** | `add @kuli-ui/phone-input` | International phone input with country selector, flags, and E.164 formatting. |
-| **Storytelling** | `add @kuli-ui/storytelling` | Rich animated onboarding / presentation slide container powered by Motion. |
-| **Alert Card** | `add @kuli-ui/alert-card` | Styled status and confirmation card for action outcomes. |
-| **Alert Error** | `add @kuli-ui/alert-error` | Standardized error banner for server-side error feedback. |
-| **Form** | `add @kuli-ui/form` | Accessible form wrapper integrating React Hook Form with Radix UI labels. |
+| Component        | CLI Command                 | Description                                                                   |
+| ---------------- | --------------------------- | ----------------------------------------------------------------------------- |
+| **Phone Input**  | `add @kuli-ui/phone-input`  | International phone input with country selector, flags, and E.164 formatting. |
+| **Storytelling** | `add @kuli-ui/storytelling` | Rich animated onboarding / presentation slide container powered by Motion.    |
+| **Alert Card**   | `add @kuli-ui/alert-card`   | Styled status and confirmation card for action outcomes.                      |
+| **Alert Error**  | `add @kuli-ui/alert-error`  | Standardized error banner for server-side error feedback.                     |
+| **Form**         | `add @kuli-ui/form`         | Accessible form wrapper integrating React Hook Form with Radix UI labels.     |
 
 ---
 
@@ -245,7 +245,7 @@ pnpm format
 ## Tech Stack
 
 - **Frameworks & Bundlers**: [React 19](https://react.dev), [Next.js](https://nextjs.org), [Vite](https://vite.dev)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com), `clsx`, `tailwind-merge`, `class-variance-authority`
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
 - **Primitives**: [Radix UI](https://www.radix-ui.com), [shadcn/ui](https://ui.shadcn.com)
 - **Forms & Validation**: [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev)
 - **Animation & Icons**: [Motion](https://motion.dev), [Lucide React](https://lucide.dev)
