@@ -29,6 +29,7 @@ export interface TwoFactorContextValue {
   setTotpData: React.Dispatch<React.SetStateAction<TotpData | null>>
   otp: string
   setOtp: React.Dispatch<React.SetStateAction<string>>
+  totpLength: number
   trustedDevice: boolean
   setTrustedDevice: React.Dispatch<React.SetStateAction<boolean>>
   onEnable?: (password: string) => Promise<TotpData>

@@ -47,6 +47,10 @@ export interface TwoFactorRegistrationProps {
    */
   enabled?: boolean
   /**
+   * The expected length of TOTP codes. Defaults to 6.
+   */
+  totpLength?: number
+  /**
    * Callback to verify password and enable 2FA.
    * Should return the necessary 2FA details on success.
    */
@@ -70,6 +74,7 @@ export interface TwoFactorRegistrationProps {
  */
 export function TwoFactorRegistration({
   enabled = false,
+  totpLength = 6,
   onEnable,
   onDisable,
   onVerifyOtp,
@@ -103,6 +108,7 @@ export function TwoFactorRegistration({
     setTotpData,
     otp,
     setOtp,
+    totpLength,
     trustedDevice,
     setTrustedDevice,
     onEnable,
@@ -240,6 +246,7 @@ export function TwoFactorShowQrView() {
     setView,
     otp,
     setOtp,
+    totpLength,
     isSubmitting,
     setIsSubmitting,
     error,
@@ -356,20 +363,20 @@ export function TwoFactorShowQrView() {
             <div className="space-y-1">
               <Label htmlFor="otp">Authentication Code</Label>
               <p className="text-start text-xs text-muted-foreground">
-                Enter the 6-digit code from your authenticator app.
+                Enter the {totpLength}-digit code from your authenticator app.
               </p>
             </div>
             <InputOTP
               id="otp"
               name="otp"
               autoComplete="one-time-code"
-              maxLength={6}
+              maxLength={totpLength}
               value={otp}
               onChange={setOtp}
               disabled={isSubmitting}
             >
               <InputOTPGroup>
-                {Array.from({ length: 6 }).map((_, i) => (
+                {Array.from({ length: totpLength }).map((_, i) => (
                   <InputOTPSlot key={i} index={i} />
                 ))}
               </InputOTPGroup>
@@ -396,7 +403,7 @@ export function TwoFactorShowQrView() {
           <Button
             type="submit"
             className="mt-2 w-full"
-            disabled={isSubmitting || otp.length !== 6}
+            disabled={isSubmitting || otp.length !== totpLength}
           >
             {isSubmitting ? "Verifying..." : "Verify and Enable"}
           </Button>
