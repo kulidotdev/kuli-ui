@@ -35,7 +35,7 @@ export const homeNavLinks: LinkItemType[] = [
   },
   {
     text: "Components",
-    url: "/docs/components/auth-signin",
+    url: "/docs/components/auth/auth-signin",
     active: "nested-url",
   },
 ]

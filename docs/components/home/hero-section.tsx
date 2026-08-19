@@ -100,7 +100,7 @@ export function HeroSection() {
             className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4"
           >
             <Link
-              href="/docs/components/auth-signin"
+              href="/docs/components/auth/auth-signin"
               className="group bg-fd-primary text-fd-primary-foreground hover:shadow-fd-primary/20 relative inline-flex items-center gap-2 overflow-hidden rounded-xl px-6 py-3 text-sm font-semibold shadow-md transition-all hover:opacity-95 hover:shadow-lg active:scale-[0.98]"
             >
               <span>Explore Components</span>

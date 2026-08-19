@@ -15,21 +15,21 @@ const docLinks = [
 ]
 
 const componentLinks = [
-  { label: "Sign In", href: "/docs/components/auth-signin", badge: "Popular" },
-  { label: "Sign Up", href: "/docs/components/auth-signup" },
-  { label: "Forgot Password", href: "/docs/components/auth-forgot-password" },
-  { label: "Reset Password", href: "/docs/components/auth-reset-password" },
+  { label: "Sign In", href: "/docs/components/auth/auth-signin", badge: "Popular" },
+  { label: "Sign Up", href: "/docs/components/auth/auth-signup" },
+  { label: "Forgot Password", href: "/docs/components/auth/auth-forgot-password" },
+  { label: "Reset Password", href: "/docs/components/auth/auth-reset-password" },
   {
     label: "Two-Factor Authentication",
-    href: "/docs/components/auth-two-factor",
+    href: "/docs/components/auth/auth-two-factor",
   },
   {
     label: "2FA Registration",
-    href: "/docs/components/auth-two-factor-registration",
+    href: "/docs/components/auth/auth-two-factor-registration",
   },
   {
     label: "Passkey Manager",
-    href: "/docs/components/auth-passkey-manager",
+    href: "/docs/components/auth/auth-passkey-manager",
     badge: "New",
   },
 ]
