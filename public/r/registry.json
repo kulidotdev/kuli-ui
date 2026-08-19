@@ -8,6 +8,9 @@
       "dependencies": [
         "lucide-react"
       ],
+      "registryDependencies": [
+        "card"
+      ],
       "files": [
         {
           "path": "src/components/ui/alert-card.tsx",
@@ -96,7 +99,9 @@
         "@kuli-ui/phone-input",
         "card",
         "@kuli-ui/form",
-        "label"
+        "label",
+        "select",
+        "@kuli-ui/alert-card"
       ],
       "files": [
         {
@@ -123,7 +128,8 @@
       "dependencies": [
         "react-hook-form",
         "@hookform/resolvers",
-        "zod"
+        "zod",
+        "lucide-react"
       ],
       "registryDependencies": [
         "button",
@@ -133,7 +139,8 @@
         "@kuli-ui/alert-error",
         "card",
         "@kuli-ui/form",
-        "label"
+        "label",
+        "@kuli-ui/alert-card"
       ],
       "files": [
         {
@@ -156,7 +163,8 @@
       "dependencies": [
         "react-hook-form",
         "@hookform/resolvers",
-        "zod"
+        "zod",
+        "lucide-react"
       ],
       "registryDependencies": [
         "button",
@@ -190,7 +198,8 @@
       "dependencies": [
         "react-hook-form",
         "@hookform/resolvers",
-        "zod"
+        "zod",
+        "lucide-react"
       ],
       "registryDependencies": [
         "button",
@@ -199,7 +208,8 @@
         "@kuli-ui/alert-error",
         "@kuli-ui/form",
         "@kuli-ui/alert-card",
-        "label"
+        "label",
+        "input-otp"
       ],
       "files": [
         {

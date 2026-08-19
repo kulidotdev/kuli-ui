@@ -16,7 +16,9 @@
     "@kuli-ui/phone-input",
     "card",
     "@kuli-ui/form",
-    "label"
+    "label",
+    "select",
+    "@kuli-ui/alert-card"
   ],
   "files": [
     {
