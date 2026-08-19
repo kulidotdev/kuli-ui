@@ -1,1 +1,2 @@
-/r/:name  /r/:name.json  302
+/r/*.json  /r/:splat.json  200
+/r/*       /r/:splat.json  302
