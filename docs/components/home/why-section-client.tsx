@@ -32,8 +32,8 @@ const installCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
 
 function Step1Narrative() {
   return (
-    <>
-      <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
+    <div className="flex flex-col gap-2">
+      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-600 dark:text-blue-400">
         <Layers className="h-3.5 w-3.5" />
         <AnimatedGradientText colorFrom="#3b82f6" colorTo="#60a5fa">
           Compositional Freedom
@@ -68,7 +68,7 @@ function Step1Narrative() {
           <span>Swap, omit, or wrap elements anywhere in JSX</span>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -108,8 +108,8 @@ interface Step2Props {
 
 function Step2Narrative({ previewState, setPreviewState }: Step2Props) {
   return (
-    <>
-      <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
+    <div className="flex flex-col gap-2">
+      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-600 dark:text-amber-400">
         <Sparkles className="h-3.5 w-3.5" />
         <AnimatedGradientText colorFrom="#f59e0b" colorTo="#fbbf24">
           Pre-Engineered Lifecycle
@@ -169,7 +169,7 @@ function Step2Narrative({ previewState, setPreviewState }: Step2Props) {
           </button>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
@@ -218,8 +218,8 @@ function Step2Preview({
 
 function Step3Narrative() {
   return (
-    <>
-      <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+    <div className="flex flex-col gap-2">
+      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
         <ShieldCheck className="h-3.5 w-3.5" />
         <AnimatedGradientText colorFrom="#10b981" colorTo="#34d399">
           Full Ownership
@@ -255,7 +255,7 @@ function Step3Narrative() {
           <span>Pure TypeScript + Tailwind CSS + Radix UI</span>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

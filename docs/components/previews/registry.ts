@@ -29,6 +29,15 @@ import { TwoFactorRegistrationDefault } from "@/components/previews/two-factor-r
 import { TwoFactorTotp } from "@/components/previews/two-factor/totp"
 import { TwoFactorMultiMethod } from "@/components/previews/two-factor/multi-method"
 
+// Storytelling
+import { StorytellingDefault } from "@/components/previews/storytelling/default"
+import { StorytellingWithTabs } from "@/components/previews/storytelling/with-tabs"
+import { StorytellingCustomStyling } from "@/components/previews/storytelling/custom-styling"
+import { StorytellingCustomGrid } from "@/components/previews/storytelling/custom-grid"
+import { StorytellingMixedLayout } from "@/components/previews/storytelling/mixed-layout"
+import { StorytellingFastScroll } from "@/components/previews/storytelling/fast-scroll"
+import { StorytellingCustomControls } from "@/components/previews/storytelling/custom-controls"
+
 export const previewRegistry: Record<string, React.ComponentType> = {
   "signin/email-only": SignInEmailOnly,
   "signin/multi-method": SignInMultiMethod,
@@ -53,4 +62,12 @@ export const previewRegistry: Record<string, React.ComponentType> = {
 
   "two-factor/totp": TwoFactorTotp,
   "two-factor/multi-method": TwoFactorMultiMethod,
+
+  "storytelling/default": StorytellingDefault,
+  "storytelling/with-tabs": StorytellingWithTabs,
+  "storytelling/custom-styling": StorytellingCustomStyling,
+  "storytelling/custom-grid": StorytellingCustomGrid,
+  "storytelling/mixed-layout": StorytellingMixedLayout,
+  "storytelling/fast-scroll": StorytellingFastScroll,
+  "storytelling/custom-controls": StorytellingCustomControls,
 }

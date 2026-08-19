@@ -14,7 +14,7 @@ import { cn } from "../../lib/utils"
 // Context & Types
 // ---------------------------------------------------------------------------
 
-interface StorytellingContextValue {
+export interface StorytellingContextValue {
   activeStep: number
   totalSteps: number
   setStep: (index: number) => void
@@ -74,15 +74,6 @@ export interface StorytellingProps {
    * Default is 1.3 (130vh per step).
    */
   scrollPerStep?: number
-  /**
-   * Enable scroll snapping anchors along the track so scrolling settles on each step.
-   * Default is false.
-   */
-  snapToSteps?: boolean
-  /**
-   * The storytelling content and subcomponents.
-   */
-  children: React.ReactNode
 }
 
 /**
@@ -94,7 +85,6 @@ export function Storytelling({
   onStepChange,
   stickyTopClassName = "lg:top-14 sm:lg:top-16",
   scrollPerStep = 1.3,
-  snapToSteps = false,
   className,
   style,
   children,
@@ -151,9 +141,16 @@ export function Storytelling({
       updateStep(computedStep)
     }
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+      capture: true,
+    })
+    window.addEventListener("resize", handleScroll, { passive: true })
     handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll, { capture: true })
+      window.removeEventListener("resize", handleScroll)
+    }
   }, [stepCount, updateStep])
 
   const scrollToStep = React.useCallback(
@@ -215,25 +212,12 @@ export function Storytelling({
           ["--storytelling-height" as string]: totalHeightVh,
         }}
         className={cn(
-          "relative w-full max-w-full overflow-x-clip border-t border-border/70",
+          "relative w-full max-w-full overflow-x-clip",
           "h-auto lg:h-[var(--storytelling-height)]",
-          snapToSteps && "lg:snap-y lg:snap-mandatory",
           className
         )}
         {...props}
       >
-        {/* Optional scroll snap anchors */}
-        {snapToSteps && (
-          <div className="pointer-events-none absolute inset-0 hidden lg:block">
-            {Array.from({ length: stepCount }, (_, i) => (
-              <div
-                key={i}
-                style={{ height: `${scrollPerStep * 100}vh` }}
-                className="w-full snap-start"
-              />
-            ))}
-          </div>
-        )}
 
         <div
           className={cn(
@@ -284,7 +268,6 @@ export function StorytellingHeader({
  */
 export interface StorytellingTabItem {
   label: string
-  shortLabel?: string
   icon?: React.ComponentType<{ className?: string }>
 }
 
@@ -296,7 +279,6 @@ export interface StorytellingTabsProps {
    * Optional custom tab items. If not provided, generates default tabs based on step count.
    */
   items?: StorytellingTabItem[]
-  className?: string
 }
 
 /**
@@ -314,7 +296,6 @@ export function StorytellingTabs({
       ? items
       : Array.from({ length: totalSteps }, (_, i) => ({
           label: `Step ${i + 1}`,
-          shortLabel: `${i + 1}`,
         }))
 
   return (
@@ -342,7 +323,7 @@ export function StorytellingTabs({
             )}
           >
             {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
-            <span className="inline sm:inline">{tab.label}</span>
+            <span>{tab.label}</span>
           </button>
         )
       })}
@@ -366,7 +347,7 @@ export function StorytellingGrid({
     <div
       data-slot="storytelling-grid"
       className={cn(
-        "grid min-h-0 grid-cols-1 items-center gap-6 sm:gap-8 lg:min-h-[360px] lg:grid-cols-12 lg:gap-10",
+        "grid min-h-0 grid-cols-1 items-start gap-6 sm:gap-8 lg:min-h-[360px] lg:grid-cols-12 lg:gap-10",
         className
       )}
       {...props}
@@ -381,30 +362,20 @@ export function StorytellingGrid({
 // ---------------------------------------------------------------------------
 
 /**
- * Props for the StorytellingNarrative component.
- */
-export interface StorytellingNarrativeProps {
-  stepIndex?: number
-  transitionDuration?: number
-  className?: string
-  children?: React.ReactNode
-}
-
-/**
  * Displays the text narrative (left column) for the current storytelling step.
  */
 export function StorytellingNarrative({
   className,
   children,
   ...props
-}: StorytellingNarrativeProps & React.ComponentProps<"div">) {
+}: React.ComponentProps<"div">) {
   const { activeStep } = useStorytelling()
 
   return (
     <div
       data-slot="storytelling-narrative"
       className={cn(
-        "flex max-w-full min-w-0 flex-col justify-center lg:col-span-5",
+        "flex max-w-full min-w-0 flex-col lg:col-span-5",
         className
       )}
       {...props}
@@ -416,7 +387,6 @@ export function StorytellingNarrative({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -12 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="space-y-3 sm:space-y-4"
         >
           {children}
         </motion.div>
@@ -430,30 +400,41 @@ export function StorytellingNarrative({
 // ---------------------------------------------------------------------------
 
 /**
+ * Props for the StorytellingPreview component.
+ */
+export interface StorytellingPreviewProps {
+  /**
+   * Class name for the outer grid column container.
+   */
+  containerClassName?: string
+}
+
+/**
  * Displays the visual preview (right column) for the current storytelling step.
  */
 export function StorytellingPreview({
   className,
   children,
-  showCornerTicks = true,
+  containerClassName,
   ...props
-}: React.ComponentProps<"div"> & { showCornerTicks?: boolean }) {
+}: StorytellingPreviewProps & React.ComponentProps<"div">) {
   const { activeStep } = useStorytelling()
 
   return (
     <div
       data-slot="storytelling-preview"
-      className="w-full max-w-full min-w-0 overflow-hidden lg:col-span-7"
+      className={cn(
+        "w-full max-w-full min-w-0 overflow-hidden lg:col-span-7",
+        containerClassName
+      )}
       {...props}
     >
       <div
         className={cn(
-          "relative flex min-h-0 max-w-full flex-col justify-center rounded-2xl border border-border/80 bg-card/90 p-4 shadow-md backdrop-blur-md sm:p-5 lg:min-h-[360px] lg:p-6",
+          "relative flex min-h-0 max-w-full flex-col lg:min-h-[360px]",
           className
         )}
       >
-        {showCornerTicks && <StorytellingCornerTicks />}
-
         <AnimatePresence mode="wait">
           <motion.div
             key={`preview-${activeStep}`}
@@ -479,9 +460,21 @@ export function StorytellingPreview({
  * Represents the content for a single storytelling step.
  */
 export interface StorytellingStepItem {
+  /**
+   * The text narrative content rendered for this step.
+   */
   narrative: React.ReactNode
+  /**
+   * The visual preview/card content rendered for this step.
+   */
   preview: React.ReactNode
-  showCornerTicks?: boolean
+  /**
+   * Defines the layout order for this specific step.
+   * "narrative-first": Narrative on left/top, Preview on right/bottom.
+   * "preview-first": Preview on left/top, Narrative on right/bottom.
+   * @default "narrative-first"
+   */
+  layout?: "narrative-first" | "preview-first"
 }
 
 /**
@@ -492,12 +485,23 @@ export interface StorytellingContentProps {
    * The list of steps to display.
    */
   steps: StorytellingStepItem[]
+  /**
+   * Tailwind gap classes applied to the vertical stack on mobile/tablet viewports.
+   * @default "gap-12 sm:gap-16"
+   */
   mobileGapClassName?: string
+  /**
+   * Additional class name applied to the desktop grid container.
+   */
   gridClassName?: string
+  /**
+   * Additional class name applied to the narrative column.
+   */
   narrativeClassName?: string
+  /**
+   * Additional class name applied to the preview container.
+   */
   previewClassName?: string
-  previewCardClassName?: string
-  className?: string
 }
 
 /**
@@ -509,7 +513,6 @@ export function StorytellingContent({
   gridClassName,
   narrativeClassName,
   previewClassName,
-  previewCardClassName,
   className,
   ...props
 }: StorytellingContentProps & React.ComponentProps<"div">) {
@@ -523,33 +526,52 @@ export function StorytellingContent({
     >
       {/* 1. Mobile & Tablet Layout: Sequential full vertical stack */}
       <div className={cn("flex flex-col lg:hidden", mobileGapClassName)}>
-        {steps.map((step, idx) => (
-          <div key={`mobile-step-${idx}`} className="space-y-4">
-            <div className="space-y-3">{step.narrative}</div>
-            <div
-              className={cn(
-                "relative rounded-2xl border border-border/80 bg-card/90 p-4 shadow-md backdrop-blur-md sm:p-6",
-                previewCardClassName,
-                previewClassName
-              )}
-            >
-              {step.showCornerTicks !== false && <StorytellingCornerTicks />}
+        {steps.map((step, idx) => {
+          const isPreviewFirst = step.layout === "preview-first"
+          const NarrativeNode = <div>{step.narrative}</div>
+          const PreviewNode = (
+            <div className={cn("relative", previewClassName)}>
               {step.preview}
             </div>
-          </div>
-        ))}
+          )
+
+          return (
+            <div key={`mobile-step-${idx}`} className="flex flex-col gap-4">
+              {isPreviewFirst ? (
+                <>
+                  {PreviewNode}
+                  {NarrativeNode}
+                </>
+              ) : (
+                <>
+                  {NarrativeNode}
+                  {PreviewNode}
+                </>
+              )}
+            </div>
+          )
+        })}
       </div>
 
       {/* 2. Desktop Layout: In-Place Sticky Parallax Grid */}
       <div className="hidden lg:block">
         <StorytellingGrid className={gridClassName}>
-          <StorytellingNarrative className={narrativeClassName}>
+          <StorytellingNarrative 
+            className={cn(
+              steps[activeStep]?.layout === "preview-first" ? "lg:order-2" : "lg:order-1",
+              "transition-all duration-500",
+              narrativeClassName
+            )}
+          >
             {steps[activeStep]?.narrative}
           </StorytellingNarrative>
 
           <StorytellingPreview
-            className={cn(previewCardClassName, previewClassName)}
-            showCornerTicks={steps[activeStep]?.showCornerTicks !== false}
+            containerClassName={cn(
+              steps[activeStep]?.layout === "preview-first" ? "lg:order-1" : "lg:order-2",
+              "transition-all duration-500"
+            )}
+            className={previewClassName}
           >
             {steps[activeStep]?.preview}
           </StorytellingPreview>
@@ -560,37 +582,18 @@ export function StorytellingContent({
 }
 
 // ---------------------------------------------------------------------------
-// 8. StorytellingCornerTicks (CAD/Nova aesthetic crosshairs)
+// 9. StorytellingProgress (Bottom Indicator with Mobile Prev/Next Controls)
 // ---------------------------------------------------------------------------
 
 /**
- * Decorative corner ticks component for visual styling.
+ * Props for the StorytellingProgress component.
  */
-export function StorytellingCornerTicks({ className }: { className?: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={cn("pointer-events-none select-none", className)}
-    >
-      <span className="absolute -top-2.5 -left-2.5 flex h-5 w-5 items-center justify-center font-mono text-sm font-light text-muted-foreground/60">
-        {/* + */}
-      </span>
-      <span className="absolute -top-2.5 -right-2.5 flex h-5 w-5 items-center justify-center font-mono text-sm font-light text-muted-foreground/60">
-        {/* + */}
-      </span>
-      <span className="absolute -bottom-2.5 -left-2.5 flex h-5 w-5 items-center justify-center font-mono text-sm font-light text-muted-foreground/60">
-        {/* + */}
-      </span>
-      <span className="absolute -right-2.5 -bottom-2.5 flex h-5 w-5 items-center justify-center font-mono text-sm font-light text-muted-foreground/60">
-        {/* + */}
-      </span>
-    </div>
-  )
+export interface StorytellingProgressProps {
+  /**
+   * Optional label text shown next to the scroll arrow indicator.
+   */
+  label?: string
 }
-
-// ---------------------------------------------------------------------------
-// 9. StorytellingProgress (Bottom Indicator with Mobile Prev/Next Controls)
-// ---------------------------------------------------------------------------
 
 /**
  * Progress indicator for storytelling steps.
@@ -599,7 +602,7 @@ export function StorytellingProgress({
   label = "",
   className,
   ...props
-}: React.ComponentProps<"div"> & { label?: string }) {
+}: StorytellingProgressProps & React.ComponentProps<"div">) {
   const { activeStep, totalSteps } = useStorytelling()
 
   const formattedCurrent = String(activeStep + 1).padStart(2, "0")

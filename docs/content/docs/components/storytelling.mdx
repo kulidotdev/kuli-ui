@@ -1,0 +1,181 @@
+---
+title: Storytelling
+description: Sticky scroll-driven narrative component with responsive desktop parallax and mobile vertical flow.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/storytelling
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/storytelling
+```
+
+Files added to your project:
+
+<ComponentDepsTree name="storytelling" />
+
+## Usage
+
+### Unified Auto-Responsive Layout
+
+The fastest and recommended way to construct a storytelling section. `StorytellingContent` automatically renders a clean sequential stack on mobile devices and an in-place sticky parallax presentation on desktop screens.
+
+<ComponentPreview name="storytelling/default" centered={false} />
+
+### Mixed / Dynamic Layout
+
+Using the `layout` property inside each step item, you can dynamically reverse the position of the narrative and preview card on a per-step basis. The unified layout will automatically animate the column swapping.
+
+<ComponentPreview name="storytelling/mixed-layout" centered={false} />
+
+### Granular Compound Composition
+
+For maximum layout flexibility, you can assemble the subcomponents manually. This lets you insert custom headers, interactive tabs with icons, custom action buttons, or custom layout columns.
+
+<ComponentPreview name="storytelling/with-tabs" centered={false} />
+
+### Custom Styling
+
+Since the components are highly unopinionated, you can freely apply deep custom styles, gradients, glassmorphism, and custom border-radii without fighting built-in CSS.
+
+<ComponentPreview name="storytelling/custom-styling" centered={false} />
+
+### Reversed Custom Grid
+
+Using granular compound composition, you can completely invert the grid layout, placing the preview card on the left and the sticky narrative on the right.
+
+<ComponentPreview name="storytelling/custom-grid" centered={false} />
+
+## Components
+
+### `<Storytelling>`
+
+The root provider component that manages active step state, scroll progress tracking, smooth step navigation, and container dimensions.
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingProps" />
+
+### `<StorytellingContent>`
+
+A unified responsive container that renders steps in a sequential vertical stack on mobile/tablet viewports (`< 1024px`) and switches to an in-place sticky parallax grid on desktop viewports (`>= 1024px`).
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingContentProps" />
+
+### `<StorytellingHeader>`
+
+A header bar container placed inside `<Storytelling>`, useful for section titles, badges, action buttons, or holding `<StorytellingTabs>`. Accepts standard HTML `<div>` attributes.
+
+### `<StorytellingTabs>`
+
+Navigation tab bar that renders clickable buttons for each step with optional icons. Clicking any tab smoothly animates and scrolls to that step.
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingTabsProps" />
+
+### `<StorytellingGrid>`
+
+A 12-column responsive grid container that organizes `<StorytellingNarrative>` (5 columns on desktop) and `<StorytellingPreview>` (7 columns on desktop). Accepts standard HTML `<div>` attributes.
+
+### `<StorytellingNarrative>`
+
+The left column content container that automatically plays exit/entry slide and fade animations whenever `activeStep` changes. Accepts standard HTML `<div>` attributes.
+
+### `<StorytellingPreview>`
+
+The right column card container that displays the visual preview for the active step with smooth scale and fade transitions, optional CAD/Nova crosshair corner ticks, and backdrop blur styling.
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingPreviewProps" />
+
+### `<StorytellingProgress>`
+
+A bottom footer indicator displaying a zero-padded step counter (e.g. `01 / 03`) and an animated scroll arrow indicator.
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingProgressProps" />
+
+## Hook
+
+### `useStorytelling()`
+
+Hook to consume the storytelling context inside any child component of `<Storytelling>`.
+
+<AutoTypeTable path="../src/components/ui/storytelling.tsx" name="StorytellingContextValue" />
+
+```tsx
+import { useStorytelling } from "@/components/ui/storytelling"
+
+function CustomStepControls() {
+  const { activeStep, totalSteps, nextStep, prevStep, scrollToStep } = useStorytelling()
+
+  return (
+    <div className="flex items-center gap-2">
+      <button onClick={prevStep} disabled={activeStep === 0}>
+        Previous
+      </button>
+      <span>{activeStep + 1} of {totalSteps}</span>
+      <button onClick={nextStep} disabled={activeStep === totalSteps - 1}>
+        Next
+      </button>
+    </div>
+  )
+}
+```
+
+## Types
+
+### `StorytellingStepItem`
+
+Item definition for each step in `StorytellingContent`:
+
+```ts
+interface StorytellingStepItem {
+  /** The text narrative content rendered for this step */
+  narrative: React.ReactNode
+  /** The visual preview/card content rendered for this step */
+  preview: React.ReactNode
+}
+```
+
+### `StorytellingTabItem`
+
+Item definition for each tab in `StorytellingTabs`:
+
+```ts
+interface StorytellingTabItem {
+  /** Full label text displayed on standard screens */
+  label: string
+  /** Optional icon component to render next to the tab label */
+  icon?: React.ComponentType<{ className?: string }>
+}
+```
+
+## Behavior & Customization
+
+### Scroll Runway (`scrollPerStep`)
+
+The `scrollPerStep` prop controls how much scroll distance (in viewport heights) is allocated to each step.
+
+- **Default (`1.3`)**: Allocates `130vh` of scroll distance per step.
+- **Higher values (e.g. `1.5` - `2.0`)**: Increases scroll distance, creating a more relaxed scroll experience suitable for content-heavy steps.
+- **Lower values (e.g. `1.0`)**: Produces faster step transitions with minimal scrolling.
+
+The total sticky scroll runway height is automatically computed as:
+
+```text
+Total Height = max(2, stepCount) * max(1, scrollPerStep) * 100vh
+```
+
+<ComponentPreview name="storytelling/fast-scroll" centered={false} />
+
+### Custom Navigation & Progress
+
+Because the `<Storytelling>` component provides a robust React context (`useStorytelling`), you are completely free to build your own custom navigation controls, progress bars, and pagination markers. The `scrollYProgress` value is particularly useful for interpolating scroll completion smoothly via Framer Motion.
+
+<ComponentPreview name="storytelling/custom-controls" centered={false} />
+
+### Responsive Strategy
+
+| Viewport | Layout | Behavior |
+|---|---|---|
+| **Mobile / Tablet (`< 1024px`)** | Vertical Stack | All steps render sequentially in document flow. Avoids sticky trapping on touch screens. |
+| **Desktop (`>= 1024px`)** | Sticky Parallax Grid | Container is pinned in viewport while scrolling drives step transitions and animations. |

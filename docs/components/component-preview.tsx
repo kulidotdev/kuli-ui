@@ -48,7 +48,7 @@ export function ComponentPreview({
   return (
     <Tabs
       items={["Preview", "Code"]}
-      className={cn("not-prose my-6", className)}
+      className={cn("not-prose my-6 overflow-visible", className)}
     >
       <Tab value="Preview">
         <div

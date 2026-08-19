@@ -1,12 +1,7 @@
 {
   "title": "Components",
   "pages": [
-    "auth-signin",
-    "auth-signup",
-    "auth-forgot-password",
-    "auth-reset-password",
-    "auth-two-factor",
-    "auth-two-factor-registration",
-    "auth-passkey-manager"
+    "auth",
+    "storytelling"
   ]
 }
