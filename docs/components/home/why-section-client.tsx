@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { SiNextdotjs, SiSupabase } from "@icons-pack/react-simple-icons"
 import { CopyButton } from "./copy-button"
-import { registryUrl } from "@/lib/shared"
+
 import { AnimatedGradientText } from "@kuli-ui/components/components/ui/animated-gradient-text"
 import { Highlighter } from "@kuli-ui/components/components/ui/highlighter"
 import { previewRegistry as registry } from "@/components/previews/registry"
