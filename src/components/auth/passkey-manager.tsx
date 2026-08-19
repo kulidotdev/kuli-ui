@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Empty,
   EmptyContent,
@@ -9,13 +9,13 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "../ui/empty"
+} from "@/components/ui/empty"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import {
   Item,
   ItemActions,
@@ -24,7 +24,7 @@ import {
   ItemGroup,
   ItemMedia,
   ItemTitle,
-} from "../ui/item"
+} from "@/components/ui/item"
 import {
   Fingerprint,
   Smartphone,
@@ -36,7 +36,7 @@ import {
   Pencil,
   MoreVertical,
 } from "lucide-react"
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 import {
   type Passkey,
@@ -44,7 +44,7 @@ import {
   usePasskeyContext,
   PasskeyItemContext,
   usePasskeyItemContext,
-} from "../../hooks/use-passkey-manager"
+} from "@/hooks/use-passkey-manager"
 
 /**
  * Props for the PasskeyManager component.

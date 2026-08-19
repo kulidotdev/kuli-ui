@@ -10,10 +10,10 @@ import {
   KeyRound,
 } from "lucide-react"
 
-import { Button } from "../ui/button"
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Checkbox } from "../ui/checkbox"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Empty,
   EmptyContent,
@@ -21,22 +21,22 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "../ui/empty"
+} from "@/components/ui/empty"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "../ui/collapsible"
-import { AlertError } from "../ui/alert-error"
+} from "@/components/ui/collapsible"
+import { AlertError } from "@/components/ui/alert-error"
 import QRCode from "react-qr-code"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
 import {
   TwoFactorContext,
   useTwoFactorRegistration,
   type TotpData,
   type TwoFactorViewState,
   type TwoFactorContextValue,
-} from "../../hooks/use-two-factor-registration"
+} from "@/hooks/use-two-factor-registration"
 
 /**
  * Props for the TwoFactorRegistration component.

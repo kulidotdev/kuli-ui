@@ -4,17 +4,17 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card"
-import { Input } from "../ui/input"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
-import { AlertError } from "../ui/alert-error"
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { AlertError } from "@/components/ui/alert-error"
 import {
   Form,
   FormField,
@@ -22,8 +22,8 @@ import {
   FormMessage,
   FormControl,
   FormLabel,
-} from "../ui/form"
-import { AlertCard } from "../ui/alert-card"
+} from "@/components/ui/form"
+import { AlertCard } from "@/components/ui/alert-card"
 import {
   resetPasswordEmailSchema,
   resetPasswordPhoneSchema,
@@ -36,7 +36,7 @@ import {
   useResetPasswordContext,
   type ResetPasswordMethod,
   type ResetPasswordContextValue,
-} from "../../hooks/use-reset-password"
+} from "@/hooks/use-reset-password"
 
 // --- Provider ---
 

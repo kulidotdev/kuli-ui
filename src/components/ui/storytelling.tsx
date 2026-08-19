@@ -8,7 +8,7 @@ import {
   useMotionValueEvent,
   type MotionValue,
 } from "motion/react"
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 
 // ---------------------------------------------------------------------------
 // Context & Types

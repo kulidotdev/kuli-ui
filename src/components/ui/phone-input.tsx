@@ -6,7 +6,7 @@ import PhoneInputPrimitive, {
 import flags from "react-phone-number-input/flags"
 import "react-phone-number-input/style.css"
 
-import { cn } from "../../lib/utils"
+import { cn } from "@/lib/utils"
 import { Input } from "./input"
 
 // ---------------------------------------------------------------------------

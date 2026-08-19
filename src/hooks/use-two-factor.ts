@@ -3,7 +3,7 @@ import { type UseFormReturn } from "react-hook-form"
 import {
   type TwoFactorValues,
   type TwoFactorMethod,
-} from "../components/auth/two-factor-types"
+} from "@/components/auth/two-factor-types"
 
 /**
  * Context value for the TwoFactor compound components.

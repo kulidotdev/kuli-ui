@@ -4,20 +4,20 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Loader2 } from "lucide-react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card"
-import { Tabs, TabsList, TabsTrigger } from "../ui/tabs"
-import { Input } from "../ui/input"
-import { PhoneInput } from "../ui/phone-input"
-import { AlertError } from "../ui/alert-error"
-import { Form, FormField, FormItem, FormMessage, FormControl } from "../ui/form"
-import { AlertCard } from "../ui/alert-card"
+} from "@/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Input } from "@/components/ui/input"
+import { PhoneInput } from "@/components/ui/phone-input"
+import { AlertError } from "@/components/ui/alert-error"
+import { Form, FormField, FormItem, FormMessage, FormControl } from "@/components/ui/form"
+import { AlertCard } from "@/components/ui/alert-card"
 import {
   forgotPasswordEmailSchema,
   forgotPasswordPhoneSchema,
@@ -30,7 +30,7 @@ import {
   useForgotPasswordContext,
   type ForgotPasswordTab,
   type ForgotPasswordContextValue,
-} from "../../hooks/use-forgot-password"
+} from "@/hooks/use-forgot-password"
 
 // --- Provider ---
 

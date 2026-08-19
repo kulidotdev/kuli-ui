@@ -4,7 +4,7 @@ import {
   type BaseFormValues,
   type SigninMethod,
   type SigninFormValues,
-} from "../components/auth/signin-types"
+} from "@/components/auth/signin-types"
 
 /**
  * Context value for the SignIn compound components.

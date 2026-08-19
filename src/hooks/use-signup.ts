@@ -1,6 +1,6 @@
 import * as React from "react"
 import { type UseFormReturn } from "react-hook-form"
-import { type SignupFormValues } from "../components/auth/signup-types"
+import { type SignupFormValues } from "@/components/auth/signup-types"
 
 /**
  * Context value for the SignUp compound components.
