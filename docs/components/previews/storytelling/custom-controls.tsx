@@ -4,14 +4,16 @@ import { motion } from "motion/react"
 import { ArrowLeft, ArrowRight, MousePointerClick } from "lucide-react"
 import {
   Storytelling,
-  StorytellingContent,
+  StorytellingGrid,
+  StorytellingNarrative,
+  StorytellingPreview,
   useStorytelling,
 } from "@kuli-ui/components/components/ui/storytelling"
 
 function InlineControls() {
   const { activeStep, totalSteps, prevStep, nextStep } = useStorytelling()
 
-  // Kalkulasi persentase progress (1 sampai totalSteps)
+  // Calculate progress percentage (1 to totalSteps)
   const progressPercent = ((activeStep + 1) / totalSteps) * 100
 
   return (
@@ -54,72 +56,86 @@ function InlineControls() {
   )
 }
 
+function ControlsContent() {
+  const { activeStep } = useStorytelling()
+
+  const steps = [
+    {
+      narrative: (
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold">Custom Controls</h3>
+          <p className="text-sm text-muted-foreground">
+            Look at the inline controls below! You can build your own
+            navigation controls by consuming the <code>useStorytelling</code>{" "}
+            hook.
+          </p>
+        </div>
+      ),
+      preview: (
+        <div className="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-lg bg-indigo-500/10 text-indigo-500">
+          <MousePointerClick className="h-12 w-12" />
+          <span className="font-medium">Try clicking the arrows below</span>
+        </div>
+      ),
+    },
+    {
+      narrative: (
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold">Step-Linked Progress</h3>
+          <p className="text-sm text-muted-foreground">
+            Notice how the progress bar below is now linked to the actual step
+            number instead of scroll distance. It starts filled at step 1!
+          </p>
+        </div>
+      ),
+      preview: (
+        <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 font-medium text-emerald-500">
+          Smooth Interpolation
+        </div>
+      ),
+    },
+    {
+      narrative: (
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold">Total Freedom</h3>
+          <p className="text-sm text-muted-foreground">
+            Because the hook exposes <code>nextStep</code> and{" "}
+            <code>prevStep</code>, you aren't tied to the default
+            `StorytellingProgress` component.
+          </p>
+        </div>
+      ),
+      preview: (
+        <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 font-medium text-amber-500">
+          Build Anything
+        </div>
+      ),
+    },
+  ]
+
+  return (
+    <>
+      <StorytellingGrid>
+        <StorytellingNarrative>
+          {steps[activeStep]?.narrative}
+        </StorytellingNarrative>
+
+        <StorytellingPreview className="rounded-xl border border-border/80 bg-card p-4 shadow-sm">
+          {steps[activeStep]?.preview}
+        </StorytellingPreview>
+      </StorytellingGrid>
+
+      {/* Inject our custom inline controls inside the Storytelling provider */}
+      <InlineControls />
+    </>
+  )
+}
+
 export function StorytellingCustomControls() {
   return (
     <div className="w-full max-w-3xl">
       <Storytelling stepCount={3}>
-        <StorytellingContent
-          previewClassName="rounded-xl border border-border/80 bg-card p-4 shadow-sm"
-          steps={[
-            {
-              narrative: (
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Custom Controls</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Look at the inline controls below! You can build your own
-                    navigation controls by consuming the{" "}
-                    <code>useStorytelling</code> hook.
-                  </p>
-                </div>
-              ),
-              preview: (
-                <div className="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-lg bg-indigo-500/10 text-indigo-500">
-                  <MousePointerClick className="h-12 w-12" />
-                  <span className="font-medium">
-                    Try clicking the arrows below
-                  </span>
-                </div>
-              ),
-            },
-            {
-              narrative: (
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Step-Linked Progress</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Notice how the progress bar below is now linked to the
-                    actual step number instead of scroll distance. It starts
-                    filled at step 1!
-                  </p>
-                </div>
-              ),
-              preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 font-medium text-emerald-500">
-                  Smooth Interpolation
-                </div>
-              ),
-            },
-            {
-              narrative: (
-                <div className="space-y-2">
-                  <h3 className="text-xl font-bold">Total Freedom</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Because the hook exposes <code>nextStep</code> and{" "}
-                    <code>prevStep</code>, you aren't tied to the default
-                    `StorytellingProgress` component.
-                  </p>
-                </div>
-              ),
-              preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 font-medium text-amber-500">
-                  Build Anything
-                </div>
-              ),
-            },
-          ]}
-        />
-
-        {/* Inject our custom inline controls inside the Storytelling provider */}
-        <InlineControls />
+        <ControlsContent />
       </Storytelling>
     </div>
   )
