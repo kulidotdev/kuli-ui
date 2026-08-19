@@ -1,5 +1,8 @@
 name = "kuli-ui"
 compatibility_date = "2026-08-10"
+main = "worker.ts"
 
 [assets]
 directory = "docs/out"
+binding = "ASSETS"
+run_worker_first = ["/r/*"]
