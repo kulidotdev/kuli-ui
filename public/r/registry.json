@@ -92,10 +92,10 @@
         "input",
         "checkbox",
         "separator",
-        "alert-error",
-        "phone-input",
+        "@kuli-ui/alert-error",
+        "@kuli-ui/phone-input",
         "card",
-        "form",
+        "@kuli-ui/form",
         "label"
       ],
       "files": [
@@ -128,11 +128,11 @@
       "registryDependencies": [
         "button",
         "input",
-        "phone-input",
+        "@kuli-ui/phone-input",
         "separator",
-        "alert-error",
+        "@kuli-ui/alert-error",
         "card",
-        "form",
+        "@kuli-ui/form",
         "label"
       ],
       "files": [
@@ -163,10 +163,10 @@
         "card",
         "tabs",
         "input",
-        "phone-input",
-        "alert-error",
-        "form",
-        "alert-card",
+        "@kuli-ui/phone-input",
+        "@kuli-ui/alert-error",
+        "@kuli-ui/form",
+        "@kuli-ui/alert-card",
         "label"
       ],
       "files": [
@@ -196,9 +196,9 @@
         "button",
         "card",
         "input",
-        "alert-error",
-        "form",
-        "alert-card",
+        "@kuli-ui/alert-error",
+        "@kuli-ui/form",
+        "@kuli-ui/alert-card",
         "label"
       ],
       "files": [
@@ -226,8 +226,8 @@
         "card",
         "input",
         "input-otp",
-        "alert-error",
-        "form",
+        "@kuli-ui/alert-error",
+        "@kuli-ui/form",
         "checkbox"
       ],
       "files": [
@@ -258,7 +258,7 @@
         "label",
         "empty",
         "collapsible",
-        "alert-error",
+        "@kuli-ui/alert-error",
         "input-otp",
         "checkbox"
       ],

@@ -7,7 +7,7 @@ import { gitConfig, registryUrl } from "@/lib/shared"
 import { CopyButton } from "./copy-button"
 import { AnimatedGradientText } from "@kuli-ui/components/components/ui/animated-gradient-text"
 
-const quickCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
+const quickCmd = `pnpm dlx shadcn@latest add @kuli-ui/auth-signin`
 
 export function CtaSection() {
   return (

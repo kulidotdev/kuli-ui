@@ -183,7 +183,7 @@ function Step3Preview() {
         </span>
       </div>
       <div className="rounded-xl border border-border/60 bg-muted/40 p-2.5 font-mono text-xs text-foreground">
-        pnpm dlx shadcn@latest add REGISTRY_URL/storytelling
+        pnpm dlx shadcn@latest add @kuli-ui/storytelling
       </div>
     </div>
   )

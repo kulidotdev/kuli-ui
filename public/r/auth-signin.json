@@ -12,10 +12,10 @@
     "input",
     "checkbox",
     "separator",
-    "alert-error",
-    "phone-input",
+    "@kuli-ui/alert-error",
+    "@kuli-ui/phone-input",
     "card",
-    "form",
+    "@kuli-ui/form",
     "label"
   ],
   "files": [

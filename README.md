@@ -55,7 +55,7 @@ Ensure your project has:
 
 ### 2. Configure the Registry
 
-Add the `@kuli-ui` registry to your `components.json`:
+You **MUST** add the `@kuli-ui` registry namespace to your `components.json`. This is required for the CLI to correctly resolve internal dependencies:
 
 ```json
 {

@@ -9,11 +9,11 @@
   "registryDependencies": [
     "button",
     "input",
-    "phone-input",
+    "@kuli-ui/phone-input",
     "separator",
-    "alert-error",
+    "@kuli-ui/alert-error",
     "card",
-    "form",
+    "@kuli-ui/form",
     "label"
   ],
   "files": [

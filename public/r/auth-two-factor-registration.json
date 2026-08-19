@@ -11,7 +11,7 @@
     "label",
     "empty",
     "collapsible",
-    "alert-error",
+    "@kuli-ui/alert-error",
     "input-otp",
     "checkbox"
   ],

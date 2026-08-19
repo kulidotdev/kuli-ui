@@ -16,7 +16,7 @@ Make sure your project already has:
 
 ## Adding Components via CLI
 
-We recommend setting up the **Kuli Registry** as a namespace in your `components.json` file. This makes it easier to add components without typing the full URL every time.
+You **MUST** set up the **Kuli Registry** as a namespace in your `components.json` file. This is required because our components rely on this namespace to correctly resolve internal dependencies (such as `@kuli-ui/alert-error`).
 
 Open your `components.json` and add the `"registries"` field (if it doesn't exist):
 

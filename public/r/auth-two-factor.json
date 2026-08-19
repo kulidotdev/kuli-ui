@@ -12,8 +12,8 @@
     "card",
     "input",
     "input-otp",
-    "alert-error",
-    "form",
+    "@kuli-ui/alert-error",
+    "@kuli-ui/form",
     "checkbox"
   ],
   "files": [

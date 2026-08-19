@@ -24,7 +24,7 @@ import { Highlighter } from "@kuli-ui/components/components/ui/highlighter"
 import { previewRegistry as registry } from "@/components/previews/registry"
 import { DynamicCodeBlock } from "fumadocs-ui/components/dynamic-codeblock"
 
-const installCmd = `pnpm dlx shadcn@latest add ${registryUrl}/auth-signin`
+const installCmd = `pnpm dlx shadcn@latest add @kuli-ui/auth-signin`
 
 // ---------------------------------------------------------------------------
 // Step 1: Compound Component Architecture
