@@ -218,7 +218,6 @@ export function Storytelling({
         )}
         {...props}
       >
-
         <div
           className={cn(
             "relative w-full max-w-full py-6 sm:py-8 lg:py-2",
@@ -556,9 +555,11 @@ export function StorytellingContent({
       {/* 2. Desktop Layout: In-Place Sticky Parallax Grid */}
       <div className="hidden lg:block">
         <StorytellingGrid className={gridClassName}>
-          <StorytellingNarrative 
+          <StorytellingNarrative
             className={cn(
-              steps[activeStep]?.layout === "preview-first" ? "lg:order-2" : "lg:order-1",
+              steps[activeStep]?.layout === "preview-first"
+                ? "lg:order-2"
+                : "lg:order-1",
               "transition-all duration-500",
               narrativeClassName
             )}
@@ -568,7 +569,9 @@ export function StorytellingContent({
 
           <StorytellingPreview
             containerClassName={cn(
-              steps[activeStep]?.layout === "preview-first" ? "lg:order-1" : "lg:order-2",
+              steps[activeStep]?.layout === "preview-first"
+                ? "lg:order-1"
+                : "lg:order-2",
               "transition-all duration-500"
             )}
             className={previewClassName}

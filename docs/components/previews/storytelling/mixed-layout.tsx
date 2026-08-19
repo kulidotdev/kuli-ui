@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   Storytelling,
   StorytellingContent,
@@ -19,13 +18,15 @@ export function StorytellingMixedLayout() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">1. Narrative First</h3>
-                  <p className="text-muted-foreground text-sm">
-                    This is the standard layout. The narrative is on the left (or top on mobile), and the preview is on the right (or bottom).
+                  <p className="text-sm text-muted-foreground">
+                    This is the standard layout. The narrative is on the left
+                    (or top on mobile), and the preview is on the right (or
+                    bottom).
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-blue-500/10 text-blue-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-blue-500/10 font-medium text-blue-500">
                   Preview 1 (Right)
                 </div>
               ),
@@ -36,13 +37,16 @@ export function StorytellingMixedLayout() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">2. Preview First</h3>
-                  <p className="text-muted-foreground text-sm">
-                    For this step, we passed <code>layout: "preview-first"</code>. The layout instantly swaps, placing the preview on the left and the narrative on the right!
+                  <p className="text-sm text-muted-foreground">
+                    For this step, we passed{" "}
+                    <code>layout: "preview-first"</code>. The layout instantly
+                    swaps, placing the preview on the left and the narrative on
+                    the right!
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 font-medium text-emerald-500">
                   Preview 2 (Left)
                 </div>
               ),
@@ -53,13 +57,14 @@ export function StorytellingMixedLayout() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">3. Stay Reversed</h3>
-                  <p className="text-muted-foreground text-sm">
-                    We kept <code>layout: "preview-first"</code>, so the layout remains flipped for this step as well.
+                  <p className="text-sm text-muted-foreground">
+                    We kept <code>layout: "preview-first"</code>, so the layout
+                    remains flipped for this step as well.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 text-amber-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 font-medium text-amber-500">
                   Preview 3 (Left)
                 </div>
               ),
@@ -70,13 +75,14 @@ export function StorytellingMixedLayout() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">4. Back to Normal</h3>
-                  <p className="text-muted-foreground text-sm">
-                    And we return to the standard layout. The component automatically animates the positional swap.
+                  <p className="text-sm text-muted-foreground">
+                    And we return to the standard layout. The component
+                    automatically animates the positional swap.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-fuchsia-500/10 text-fuchsia-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-fuchsia-500/10 font-medium text-fuchsia-500">
                   Preview 4 (Right)
                 </div>
               ),

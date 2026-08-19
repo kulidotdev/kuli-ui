@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   Storytelling,
   StorytellingContent,
@@ -19,34 +18,43 @@ export function StorytellingCustomStyling() {
             {
               narrative: (
                 <div className="space-y-4">
-                  <h3 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
+                  <h3 className="bg-gradient-to-r from-indigo-400 to-pink-400 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent">
                     Total Aesthetic Freedom
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Because the component is entirely unopinionated about padding, borders, and backgrounds, you can apply extreme custom designs—like glassmorphism, glowing borders, and gradient text—without fighting built-in styles.
+                  <p className="leading-relaxed text-muted-foreground">
+                    Because the component is entirely unopinionated about
+                    padding, borders, and backgrounds, you can apply extreme
+                    custom designs—like glassmorphism, glowing borders, and
+                    gradient text—without fighting built-in styles.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-square sm:aspect-[4/3] w-full items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 shadow-inner">
-                  <span className="font-bold text-white text-2xl drop-shadow-md">Beautiful UI</span>
+                <div className="flex aspect-square w-full items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 shadow-inner sm:aspect-[4/3]">
+                  <span className="text-2xl font-bold text-white drop-shadow-md">
+                    Beautiful UI
+                  </span>
                 </div>
               ),
             },
             {
               narrative: (
                 <div className="space-y-4">
-                  <h3 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                  <h3 className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-3xl font-extrabold tracking-tight text-transparent">
                     Bring Your Own Styles
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Notice how the preview card has a custom border radius (`rounded-[2rem]`), a double border, and ring effects. Everything flows perfectly with the animation engine.
+                  <p className="leading-relaxed text-muted-foreground">
+                    Notice how the preview card has a custom border radius
+                    (`rounded-[2rem]`), a double border, and ring effects.
+                    Everything flows perfectly with the animation engine.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-square sm:aspect-[4/3] w-full items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 shadow-inner">
-                  <span className="font-bold text-white text-2xl drop-shadow-md">No Friction</span>
+                <div className="flex aspect-square w-full items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 shadow-inner sm:aspect-[4/3]">
+                  <span className="text-2xl font-bold text-white drop-shadow-md">
+                    No Friction
+                  </span>
                 </div>
               ),
             },

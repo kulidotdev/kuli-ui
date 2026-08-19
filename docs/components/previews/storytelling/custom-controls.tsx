@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import { motion } from "motion/react"
 import { ArrowLeft, ArrowRight, MousePointerClick } from "lucide-react"
 import {
@@ -17,7 +16,6 @@ function InlineControls() {
 
   return (
     <div className="mt-8 flex w-full flex-col gap-4">
-      
       {/* 1. Custom Progress Bar (Step-based, never empty) */}
       <div className="h-2 w-full overflow-hidden rounded-full bg-indigo-500/10">
         <motion.div
@@ -67,15 +65,19 @@ export function StorytellingCustomControls() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">Custom Controls</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Look at the inline controls below! You can build your own navigation controls by consuming the <code>useStorytelling</code> hook.
+                  <p className="text-sm text-muted-foreground">
+                    Look at the inline controls below! You can build your own
+                    navigation controls by consuming the{" "}
+                    <code>useStorytelling</code> hook.
                   </p>
                 </div>
               ),
               preview: (
                 <div className="flex aspect-video w-full flex-col items-center justify-center gap-4 rounded-lg bg-indigo-500/10 text-indigo-500">
                   <MousePointerClick className="h-12 w-12" />
-                  <span className="font-medium">Try clicking the arrows below</span>
+                  <span className="font-medium">
+                    Try clicking the arrows below
+                  </span>
                 </div>
               ),
             },
@@ -83,13 +85,15 @@ export function StorytellingCustomControls() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">Step-Linked Progress</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Notice how the progress bar below is now linked to the actual step number instead of scroll distance. It starts filled at step 1!
+                  <p className="text-sm text-muted-foreground">
+                    Notice how the progress bar below is now linked to the
+                    actual step number instead of scroll distance. It starts
+                    filled at step 1!
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-emerald-500/10 font-medium text-emerald-500">
                   Smooth Interpolation
                 </div>
               ),
@@ -98,20 +102,22 @@ export function StorytellingCustomControls() {
               narrative: (
                 <div className="space-y-2">
                   <h3 className="text-xl font-bold">Total Freedom</h3>
-                  <p className="text-muted-foreground text-sm">
-                    Because the hook exposes <code>nextStep</code> and <code>prevStep</code>, you aren't tied to the default `StorytellingProgress` component.
+                  <p className="text-sm text-muted-foreground">
+                    Because the hook exposes <code>nextStep</code> and{" "}
+                    <code>prevStep</code>, you aren't tied to the default
+                    `StorytellingProgress` component.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 text-amber-500 font-medium">
+                <div className="flex aspect-video w-full items-center justify-center rounded-lg bg-amber-500/10 font-medium text-amber-500">
                   Build Anything
                 </div>
               ),
             },
           ]}
         />
-        
+
         {/* Inject our custom inline controls inside the Storytelling provider */}
         <InlineControls />
       </Storytelling>

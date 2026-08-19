@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   Storytelling,
   StorytellingContent,
@@ -25,14 +24,16 @@ export function StorytellingFastScroll() {
                   </div>
                   <h3 className="text-2xl font-bold">100vh Scroll Runway</h3>
                   <p className="text-muted-foreground">
-                    By setting <code>scrollPerStep=&#123;1.0&#125;</code>, the sticky container allocates exactly one viewport height of scrolling per step.
+                    By setting <code>scrollPerStep=&#123;1.0&#125;</code>, the
+                    sticky container allocates exactly one viewport height of
+                    scrolling per step.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-square sm:aspect-[4/3] w-full flex-col items-center justify-center gap-4 rounded-lg bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                <div className="flex aspect-square w-full flex-col items-center justify-center gap-4 rounded-lg bg-orange-500/10 text-orange-600 sm:aspect-[4/3] dark:text-orange-400">
                   <Gauge className="h-12 w-12" />
-                  <span className="font-bold text-lg">Speed: High</span>
+                  <span className="text-lg font-bold">Speed: High</span>
                 </div>
               ),
             },
@@ -41,14 +42,18 @@ export function StorytellingFastScroll() {
                 <div className="space-y-3">
                   <h3 className="text-2xl font-bold">Snappy Transitions</h3>
                   <p className="text-muted-foreground">
-                    This creates a much faster, punchier scrolling experience compared to the default relaxed pace. Perfect for short content.
+                    This creates a much faster, punchier scrolling experience
+                    compared to the default relaxed pace. Perfect for short
+                    content.
                   </p>
                 </div>
               ),
               preview: (
-                <div className="flex aspect-square sm:aspect-[4/3] w-full flex-col items-center justify-center gap-4 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                <div className="flex aspect-square w-full flex-col items-center justify-center gap-4 rounded-lg bg-emerald-500/10 text-emerald-600 sm:aspect-[4/3] dark:text-emerald-400">
                   <FastForward className="h-12 w-12" />
-                  <span className="font-bold text-lg">You arrived quickly!</span>
+                  <span className="text-lg font-bold">
+                    You arrived quickly!
+                  </span>
                 </div>
               ),
             },
