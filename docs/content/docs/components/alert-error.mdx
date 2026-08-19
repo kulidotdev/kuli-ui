@@ -1,0 +1,32 @@
+---
+title: Alert Error
+description: A destructive alert component designed specifically to display error messages and error codes.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/alert-error
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/alert-error
+```
+
+## Usage
+
+### Default
+
+Use `AlertError` to display validation errors, system alerts, or any destructive feedback to the user.
+
+<ComponentPreview name="alert-error/default" />
+
+### With Error Code
+
+You can also pass an error `code` that will be rendered as the title of the alert, which is particularly useful for debugging or referencing specific API errors.
+
+<ComponentPreview name="alert-error/with-code" />
+
+## API Reference
+
+<AutoTypeTable path="../src/components/ui/alert-error.tsx" name="AlertErrorProps" />

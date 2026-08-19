@@ -38,7 +38,21 @@ import { StorytellingMixedLayout } from "@/components/previews/storytelling/mixe
 import { StorytellingFastScroll } from "@/components/previews/storytelling/fast-scroll"
 import { StorytellingCustomControls } from "@/components/previews/storytelling/custom-controls"
 
+// Alert Card
+import { AlertCardDefault } from "@/components/previews/alert-card/default"
+import { AlertCardVariants } from "@/components/previews/alert-card/variants"
+
+// Alert Error
+import { AlertErrorDefault } from "@/components/previews/alert-error/default"
+import { AlertErrorWithCode } from "@/components/previews/alert-error/with-code"
+
 export const previewRegistry: Record<string, React.ComponentType> = {
+  "alert-card/default": AlertCardDefault,
+  "alert-card/variants": AlertCardVariants,
+  
+  "alert-error/default": AlertErrorDefault,
+  "alert-error/with-code": AlertErrorWithCode,
+
   "signin/email-only": SignInEmailOnly,
   "signin/multi-method": SignInMultiMethod,
   "signin/with-social": SignInWithSocial,

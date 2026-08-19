@@ -1,0 +1,32 @@
+---
+title: Alert Card
+description: A prominent message card with an icon, title, description, and optional footer actions.
+---
+
+## Installation
+
+```bash tab="pnpm"
+pnpm dlx shadcn@latest add REGISTRY_URL/alert-card
+```
+
+```bash tab="npm"
+npx shadcn@latest add REGISTRY_URL/alert-card
+```
+
+## Usage
+
+### Default
+
+The default `AlertCard` provides a simple informational message.
+
+<ComponentPreview name="alert-card/default" />
+
+### Variants
+
+`AlertCard` supports different visual variants based on the context of the message: `info`, `error`, `warning`, and `success`. Each variant comes with a corresponding color scheme and default icon.
+
+<ComponentPreview name="alert-card/variants" />
+
+## API Reference
+
+<AutoTypeTable path="../src/components/ui/alert-card.tsx" name="AlertCardProps" />

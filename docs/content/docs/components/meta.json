@@ -2,6 +2,8 @@
   "title": "Components",
   "pages": [
     "auth",
+    "alert-card",
+    "alert-error",
     "storytelling"
   ]
 }
